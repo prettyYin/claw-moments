@@ -1,0 +1,4 @@
+# Project exclude paths
+/claw-common/target/
+/claw-gateway/target/
+/claw-pet/target/

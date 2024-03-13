@@ -1,0 +1,37 @@
+server:
+  port: 9399
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/claw-moments?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis-plus:
+  # 指定Mapper XML文件的位置，使用classpath通配符指定路径。
+  mapper-locations: classpath*:mapper/**.xml
+  # 指定实体类的包路径，用于自动扫描并注册类型别名。
+  type-aliases-package: com.zskx.service.card.model.*
+  # 全局配置
+  global-config:
+    db-config:
+      #id-type: ID_WORKER  # 主键ID的生成策略，可选值包括：AUTO、NONE、INPUT、ID_WORKER、UUID
+      id-type: AUTO
+      #驼峰下划线转换（将数据库字段的下划线命名规则转换为 Java 实体类属性的驼峰命名规则）
+      db-column-underline: true
+      #刷新mapper 调试神器
+      refresh-mapper: true
+      #数据库大写下划线转换
+      #逻辑删除配置（下面3个配置）
+      logic-delete-field: delFlag  # 逻辑删除字段名
+      logic-delete-value: -1  # 逻辑删除字段的值表示已删除
+      logic-not-delete-value: 0  # 逻辑删除字段的值表示未删除
+      #自定义SQL注入器
+      #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+      configuration:
+        # 将 Java 实体类属性的驼峰命名规则转换为数据库字段的下划线命名规则
+        map-underscore-to-camel-case: true
+        # 是否开启二级缓存。
+        cache-enabled: false
+        # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
