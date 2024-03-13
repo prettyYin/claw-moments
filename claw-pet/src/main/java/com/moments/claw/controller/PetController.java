@@ -2,7 +2,9 @@ package com.moments.claw.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.moments.claw.domain.base.entity.Pet;
+import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
+import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.service.PetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +23,7 @@ import java.util.List;
 @Api(tags = "PetController控制层", value = "/pet")
 @RestController
 @RequestMapping("/pet")
-public class PetController {
+public class PetController extends BaseController {
     /**
      * 服务对象
      */
@@ -36,9 +38,9 @@ public class PetController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public R<?> selectAll(Pet pet) {
-
-        return R.success(petService.list(new QueryWrapper<>(pet)));
+    public TableDataInfo<?> selectAll(Pet pet) {
+        startPage();
+        return getDataTable(petService.list(new QueryWrapper<>(pet)));
     }
 
     /**

@@ -1,7 +1,10 @@
 package com.moments.claw.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.moments.claw.domain.base.entity.Advertise;
+import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
+import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.service.AdvertiseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +24,7 @@ import java.util.List;
 @Api(tags = "AdvertiseController控制层", value = "/ad")
 @RestController
 @RequestMapping("/ad")
-public class AdvertiseController {
+public class AdvertiseController extends BaseController {
     /**
      * 服务对象
      */
@@ -35,8 +38,9 @@ public class AdvertiseController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public R<?> selectAll() {
-        return R.success(advertiseService.list());
+    public TableDataInfo<?> selectAll() {
+        startPage();
+        return getDataTable(advertiseService.list());
     }
 
     /**

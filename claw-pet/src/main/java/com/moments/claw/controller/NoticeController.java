@@ -1,7 +1,9 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Notice;
+import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
+import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.service.NoticeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +22,7 @@ import java.util.List;
 @Api(tags = "NoticeController控制层", value = "/notice")
 @RestController
 @RequestMapping("/notice")
-public class NoticeController {
+public class NoticeController extends BaseController {
     /**
      * 服务对象
      */
@@ -34,8 +36,8 @@ public class NoticeController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public R<?> selectAll() {
-        return R.success(noticeService.list());
+    public TableDataInfo<?> selectAll() {
+        return getDataTable(noticeService.list());
     }
 
     /**

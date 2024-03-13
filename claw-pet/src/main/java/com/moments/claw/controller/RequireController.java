@@ -1,7 +1,9 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Require;
+import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
+import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.service.RequireService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +22,7 @@ import java.util.List;
 @Api(tags = "RequireController控制层", value = "/require")
 @RestController
 @RequestMapping("/require")
-public class RequireController {
+public class RequireController extends BaseController {
     /**
      * 服务对象
      */
@@ -34,8 +36,9 @@ public class RequireController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public R<?> selectAll() {
-        return R.success(requireService.list());
+    public TableDataInfo<?> selectAll() {
+        startPage();
+        return getDataTable(requireService.list());
     }
 
     /**

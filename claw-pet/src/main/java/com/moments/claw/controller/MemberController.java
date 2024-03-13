@@ -1,7 +1,9 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Member;
+import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
+import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +23,7 @@ import java.util.List;
 @Api(tags = "MemberController控制层", value = "/member")
 @RestController
 @RequestMapping("/member")
-public class MemberController {
+public class MemberController  extends BaseController {
     /**
      * 服务对象
      */
@@ -35,8 +37,8 @@ public class MemberController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public R<?> selectAll() {
-        return R.success(memberService.list());
+    public TableDataInfo<?> selectAll() {
+        return getDataTable(memberService.list());
     }
 
     /**
