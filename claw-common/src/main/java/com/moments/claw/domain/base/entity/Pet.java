@@ -6,12 +6,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 宠物表(Pet)表实体类
@@ -19,8 +21,9 @@ import java.math.BigDecimal;
  * @author chandler
  * @since 2024-03-11 22:03:19
  */
-@SuppressWarnings("serial")
 @Data
+@EqualsAndHashCode(callSuper = true)
+
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("claw_pet")
@@ -90,18 +93,11 @@ public class Pet extends BaseEntity {
         
     @ApiModelProperty(name = "poster", value = "海报照片地址")
     private String poster;
-        
+
+    @JsonIgnore
     @ApiModelProperty(name = "imageIds", value = "照片地址ids")
     private String imageIds;
 
-    @JsonIgnore
-    @ApiModelProperty(name = "image", value = "照片地址")
-    private String image;
-
-    @TableField(exist = false)
-    @ApiModelProperty(name = "images", value = "照片地址")
-    private String[] images;
-        
     @ApiModelProperty(name = "video", value = "视频地址")
     private String video;
         
@@ -135,9 +131,6 @@ public class Pet extends BaseEntity {
     @ApiModelProperty(name = "location", value = "地点描述")
     private String location;
         
-    @ApiModelProperty(name = "content", value = "文章内容")
-    private String content;
-        
     @ApiModelProperty(name = "tags", value = "标签（以逗号分隔的字符串）")
     private String tags;
         
@@ -158,4 +151,12 @@ public class Pet extends BaseEntity {
         
     @ApiModelProperty(name = "status", value = "状态（0异常，1正常，2禁用）")
     private Integer status;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "images", value = "照片地址")
+    private List<String> images;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "comments", value = "评论")
+    private List<String> comments;
 }

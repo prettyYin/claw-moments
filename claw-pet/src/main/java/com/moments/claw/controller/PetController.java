@@ -1,19 +1,24 @@
 package com.moments.claw.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.moments.claw.domain.base.entity.Files;
 import com.moments.claw.domain.base.entity.Pet;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.service.FilesService;
 import com.moments.claw.service.PetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 宠物表(Pet)表控制层
@@ -30,7 +35,20 @@ public class PetController extends BaseController {
      */
     @Resource
     private PetService petService;
+    @Autowired
+    private FilesService filesService;
 
+    /**
+     * 赋值图片url
+     */
+    private void setImageUrl(Pet pet) {
+        if(StringUtils.isNotBlank(pet.getImageIds())) {
+            List<String> imageIds = Arrays.asList(pet.getImageIds().split(","));
+            List<Files> files = filesService.listByIds(imageIds);
+            List<String> imageUrls = files.stream().map(Files::getFileUrl).collect(Collectors.toList());
+            pet.setImages(imageUrls);
+        }
+    }
 
     /**
      * 查询所有数据
@@ -42,11 +60,7 @@ public class PetController extends BaseController {
     public TableDataInfo<?> selectAll(Pet pet) {
         startPage();
         List<Pet> list = petService.list(new QueryWrapper<>(pet));
-        list.stream().forEach(p -> {
-            if(StringUtils.isNotBlank(p.getImage())) {
-                p.setImages(p.getImage().split(","));
-            }
-        });
+        list.stream().forEach(p -> setImageUrl(p));
         return getDataTable(list);
     }
 
@@ -57,9 +71,11 @@ public class PetController extends BaseController {
      * @return 单条数据
      */
     @ApiOperation(value = "通过主键查询单条数据")
-    @GetMapping("{id}")
+    @GetMapping("/view/{id}")
     public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        return R.success(this.petService.getById(id));
+        Pet pet = this.petService.getById(id);
+        setImageUrl(pet);
+        return R.success(pet);
     }
 
     /**
