@@ -3,6 +3,8 @@ package com.moments.claw.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Require;
 
+import java.util.List;
+
 
 /**
  * 领养/救助需求表(Require)表服务接口
@@ -12,4 +14,5 @@ import com.moments.claw.domain.base.entity.Require;
  */
 public interface RequireService extends IService<Require> {
 
+	List<Require> queryRequireByPetId(Long id);
 }

@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface FilesService extends IService<Files> {
 
+	List<Files> listByFileIds(List<String> imageIds);
 }

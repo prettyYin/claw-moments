@@ -72,21 +72,39 @@ public class Pet extends BaseEntity {
         
     @ApiModelProperty(name = "vaccine", value = "是否已接种疫苗（0：不详；1：已接种；2：未接种；3：接种中）")
     private Integer vaccine;
+
+    @ApiModelProperty(name = "vaccineName", value = "接种疫苗名称")
+    private String vaccineName;
         
     @ApiModelProperty(name = "sterilize", value = "是否已绝育（0：不详；1：已绝育；2：未绝育；3：绝育中）")
     private Integer sterilize;
+
+    @ApiModelProperty(name = "sterilizeName", value = "绝育名称")
+    private String sterilizeName;
         
     @ApiModelProperty(name = "deworm", value = "是否驱虫（0：不详；1：已驱虫；2：未驱虫；3：驱虫中）")
     private Integer deworm;
+
+    @ApiModelProperty(name = "dewormName", value = "驱虫")
+    private String dewormName;
         
     @ApiModelProperty(name = "source", value = "来源（0：不详；1：个人救助；2：领养；3：家养）")
     private Integer source;
+
+    @ApiModelProperty(name = "sourceName", value = "来源名称")
+    private String sourceName;
         
     @ApiModelProperty(name = "size", value = "体型（0：不详；1：小型；2：中小型；3：中型；4：中大型；5：大型）")
     private Integer size;
+
+    @ApiModelProperty(name = "sizeName", value = "体型名称")
+    private String sizeName;
         
     @ApiModelProperty(name = "hair", value = "毛发类型（0：不详；1：短毛；2：长毛）")
     private Integer hair;
+
+    @ApiModelProperty(name = "hairName", value = "毛发类型名称")
+    private String hairName;
         
     @ApiModelProperty(name = "otherRequirement", value = "其他需求")
     private String otherRequirement;
@@ -158,8 +176,12 @@ public class Pet extends BaseEntity {
     private List<String> comments;
 
     @TableField(exist = false)
-    @ApiModelProperty(name = "tags", value = "标签（以逗号分隔的字符串）")
+    @ApiModelProperty(name = "tags", value = "标签")
     private List<String> tags;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "requirements", value = "要求")
+    private List<String> requirements;
 
     @TableField(exist = false)
     @ApiModelProperty(name = "article", value = "文章对象")

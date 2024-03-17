@@ -45,7 +45,4 @@ public class Comments extends BaseEntity {
 
 	@ApiModelProperty(name = "status", value = "状态（0异常，1正常）")
 	private Integer status;
-
-	@ApiModelProperty(name = "remark", value = "备注")
-	private String remark;
 }

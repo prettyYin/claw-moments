@@ -46,6 +46,4 @@ public class Tags extends BaseEntity {
     @ApiModelProperty(name = "status", value = "状态（-1异常，1发布，2草稿，3禁用）")
     private Integer status;
         
-    @ApiModelProperty(name = "remark", value = "备注")
-    private String remark;
 }

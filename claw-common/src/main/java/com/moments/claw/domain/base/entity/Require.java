@@ -22,10 +22,18 @@ import com.moments.claw.domain.BaseEntity;
 @TableName("claw_require")
 @ApiModel(value = "claw_require实体类",description = "用于存储传输claw_require信息")
 public class Require extends BaseEntity {
-    //主键    
     @TableId
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
+
+    @ApiModelProperty(name = "userId", value = "用户id")
+    private Long userId;
+
+    @ApiModelProperty(name = "memberId", value = "会员id")
+    private Long memberId;
+
+    @ApiModelProperty(name = "petId", value = "宠物id")
+    private Long petId;
         
     @ApiModelProperty(name = "name", value = "需求名称")
     private String name;
