@@ -36,12 +36,12 @@ public class Pet extends BaseEntity {
         
     @ApiModelProperty(name = "memberId", value = "会员id")
     private Long memberId;
-        
-    @ApiModelProperty(name = "title", value = "标题")
-    private String title;
-        
+
     @ApiModelProperty(name = "nickname", value = "宠物姓名")
     private String nickname;
+
+    @ApiModelProperty(name = "articleId", value = "文章id")
+    private Long articleId;
         
     @ApiModelProperty(name = "mode", value = "$column.comment")
     private Integer mode;
@@ -159,4 +159,12 @@ public class Pet extends BaseEntity {
     @TableField(exist = false)
     @ApiModelProperty(name = "comments", value = "评论")
     private List<String> comments;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "article", value = "文章对象")
+    private Article article;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "member", value = "会员信息")
+    private Member member;
 }

@@ -1,6 +1,8 @@
 package com.moments.claw.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.moments.claw.domain.base.entity.Comments;
+import com.moments.claw.domain.common.constant.GlobalConstants;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
@@ -46,7 +48,7 @@ public class CommentsController extends BaseController {
      */
     @GetMapping("{id}")
     public R<?> selectOne(@PathVariable Serializable id) {
-        return R.success(this.commentsService.getById(id));
+        return R.success(commentsService.getById(id));
     }
 
     /**
@@ -57,7 +59,7 @@ public class CommentsController extends BaseController {
      */
     @PostMapping
     public R<?> insert(@RequestBody Comments comments) {
-        return R.success(this.commentsService.save(comments));
+        return R.success(commentsService.save(comments));
     }
 
     /**
@@ -68,7 +70,7 @@ public class CommentsController extends BaseController {
      */
     @PutMapping
     public R<?> update(@RequestBody Comments comments) {
-        return R.success(this.commentsService.updateById(comments));
+        return R.success(commentsService.updateById(comments));
     }
 
     /**
@@ -79,7 +81,17 @@ public class CommentsController extends BaseController {
      */
     @DeleteMapping
     public R<?> delete(@RequestParam("idList") List<Long> idList) {
-        return R.success(this.commentsService.removeByIds(idList));
+        return R.success(commentsService.removeByIds(idList));
+    }
+
+    /**
+     * 根评论
+     * @return
+     */
+    @GetMapping("/rootComments")
+    public R<?> rootComments() {
+        List<Comments> rootComments = commentsService.getRootComments();
+        return R.success(rootComments);
     }
 }
 

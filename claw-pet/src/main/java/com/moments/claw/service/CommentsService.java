@@ -3,6 +3,8 @@ package com.moments.claw.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Comments;
 
+import java.util.List;
+
 
 /**
  * 评论表(Comments)表服务接口
@@ -12,4 +14,5 @@ import com.moments.claw.domain.base.entity.Comments;
  */
 public interface CommentsService extends IService<Comments> {
 
+	List<Comments> getRootComments();
 }

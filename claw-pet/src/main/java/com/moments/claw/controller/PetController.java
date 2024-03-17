@@ -1,13 +1,13 @@
 package com.moments.claw.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.moments.claw.domain.base.entity.Comments;
 import com.moments.claw.domain.base.entity.Files;
 import com.moments.claw.domain.base.entity.Pet;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import com.moments.claw.service.FilesService;
-import com.moments.claw.service.PetService;
+import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,6 +18,7 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +38,12 @@ public class PetController extends BaseController {
     private PetService petService;
     @Autowired
     private FilesService filesService;
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private CommentsService commentsService;
 
     /**
      * 赋值图片url
@@ -48,6 +55,24 @@ public class PetController extends BaseController {
             List<String> imageUrls = files.stream().map(Files::getFileUrl).collect(Collectors.toList());
             pet.setImages(imageUrls);
         }
+    }
+
+    private void setArticle(Pet pet) {
+        if (Objects.nonNull(pet.getArticleId())) {
+            pet.setArticle(articleService.getById(pet.getArticleId()));
+        }
+    }
+
+    private void setMember(Pet pet) {
+        if (Objects.nonNull(pet.getMemberId())) {
+            pet.setMember(memberService.getById(pet.getMemberId()));
+        }
+    }
+
+    private void setComments(Pet pet) {
+        List<Comments> rootComments = commentsService.getRootComments();
+        List<String> res = rootComments.stream().map(Comments::getContent).collect(Collectors.toList());
+        pet.setComments(res);
     }
 
     /**
@@ -75,6 +100,9 @@ public class PetController extends BaseController {
     public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
         Pet pet = this.petService.getById(id);
         setImageUrl(pet);
+        setArticle(pet);
+        setMember(pet);
+        setComments(pet);
         return R.success(pet);
     }
 
