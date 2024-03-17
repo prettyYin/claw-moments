@@ -62,10 +62,14 @@ public class BaseController {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected TableDataInfo getDataTable(List<?> list)
     {
+        PageInfo<?> pageInfo = new PageInfo<>(list);
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(ResultEnum.SUCCESS.getCode());
         rspData.setMsg("查询成功");
         rspData.setRows(list);
+        rspData.setCurrPage(pageInfo.getPageNum());
+        rspData.setPageNum(pageInfo.getPages());
+        rspData.setPageSize(pageInfo.getPageSize());
         rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }

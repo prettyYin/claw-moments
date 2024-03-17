@@ -1,5 +1,7 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -91,9 +93,14 @@ public class Pet extends BaseEntity {
         
     @ApiModelProperty(name = "imageIds", value = "照片地址ids")
     private String imageIds;
-        
+
+    @JsonIgnore
+    @ApiModelProperty(name = "image", value = "照片地址")
+    private String image;
+
+    @TableField(exist = false)
     @ApiModelProperty(name = "images", value = "照片地址")
-    private String images;
+    private String[] images;
         
     @ApiModelProperty(name = "video", value = "视频地址")
     private String video;

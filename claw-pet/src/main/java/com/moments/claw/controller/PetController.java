@@ -9,6 +9,7 @@ import com.moments.claw.service.PetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -40,7 +41,13 @@ public class PetController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo<?> selectAll(Pet pet) {
         startPage();
-        return getDataTable(petService.list(new QueryWrapper<>(pet)));
+        List<Pet> list = petService.list(new QueryWrapper<>(pet));
+        list.stream().forEach(p -> {
+            if(StringUtils.isNotBlank(p.getImage())) {
+                p.setImages(p.getImage().split(","));
+            }
+        });
+        return getDataTable(list);
     }
 
     /**
