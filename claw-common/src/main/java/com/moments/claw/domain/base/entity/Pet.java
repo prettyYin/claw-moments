@@ -130,10 +130,7 @@ public class Pet extends BaseEntity {
 
     @ApiModelProperty(name = "location", value = "地点描述")
     private String location;
-        
-    @ApiModelProperty(name = "tags", value = "标签（以逗号分隔的字符串）")
-    private String tags;
-        
+
     @ApiModelProperty(name = "view", value = "点击次数")
     private Long view;
         
@@ -161,10 +158,15 @@ public class Pet extends BaseEntity {
     private List<String> comments;
 
     @TableField(exist = false)
+    @ApiModelProperty(name = "tags", value = "标签（以逗号分隔的字符串）")
+    private List<String> tags;
+
+    @TableField(exist = false)
     @ApiModelProperty(name = "article", value = "文章对象")
     private Article article;
 
     @TableField(exist = false)
     @ApiModelProperty(name = "member", value = "会员信息")
     private Member member;
+
 }
