@@ -15,6 +15,11 @@ public enum ResultEnum {
      */
     SUCCESS(200, "操作成功"),
     /**
+     * 必须登录
+     */
+    NEED_LOGIN(401, "需要登录后操作"),
+
+    /**
      * 代码异常
      */
     CODE_EXCEPTION(500, "后端代码内部异常"),

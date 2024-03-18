@@ -4,10 +4,12 @@ import com.moments.claw.domain.base.entity.Pet;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -22,12 +24,15 @@ import java.util.List;
 @Api(tags = "PetController控制层", value = "/pet")
 @RestController
 @RequestMapping("/pet")
+@Slf4j
 public class PetController extends BaseController {
     /**
      * 服务对象
      */
     @Resource
     private PetService petService;
+    @Resource
+    private RedisService redisService;
 
     /**
      * 查询所有数据
@@ -39,6 +44,9 @@ public class PetController extends BaseController {
     public TableDataInfo<?> selectAll(Pet pet) {
         startPage();
         List<Pet> list = petService.selectAll(pet);
+        redisService.set("test", "test123");
+        Object redisTest = redisService.get("test");
+        log.info("redis test info {}", redisTest);
         return getDataTable(list);
     }
 
