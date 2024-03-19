@@ -11,6 +11,8 @@ import org.springframework.data.redis.connection.BitFieldSubCommands;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 
+	@Resource
 	private final RedisTemplate redisTemplate;
 
 	/**
@@ -570,18 +573,6 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	}
 
 	/**
-	 * 计算两个城市之间的距离
-	 * @param key key
-	 * @param placeOne 地点1
-	 * @param placeTow 地点2
-	 * @return 返回距离
-	 */
-	@Override
-	public Distance geoCalculationDistance(String key, V placeOne, V placeTow) {
-		return geoOps().distance(key, placeOne, placeTow, RedisGeoCommands.DistanceUnit.KILOMETERS);
-	}
-
-	/**
 	 * 获取附该地点附近的其他地点
 	 * @param key key
 	 * @param place 地点
@@ -623,7 +614,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return RedisTemplate 获取
 	 */
 	@Override
-	protected RedisTemplate<String, V> getTemplate() {
+	protected RedisTemplate getTemplate() {
 		return redisTemplate;
 	}
  

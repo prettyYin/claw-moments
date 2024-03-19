@@ -17,9 +17,9 @@ import java.util.List;
 public class LoginUser implements UserDetails, Serializable {
 	private static final long serialVersionUID = 48961531894131221L;
 
-	private User user;
+	private transient User user;
 
-	List<String> permissions;
+	private List<String> permissions;
 
 	// 权限校验
 	@Override

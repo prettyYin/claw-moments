@@ -46,7 +46,7 @@ public interface RedisService<K,V> {
 	 * @param key key值
 	 * @return 返回对象
 	 */
-	 Object get(String key);
+	 V get(String key);
 
 	/**
 	 * 从指定的 keys 批量获取属性
@@ -54,7 +54,7 @@ public interface RedisService<K,V> {
 	 * @return values list，当值为空时，该 key 对应的 value 为 null
 	 * @see <a href="http://redis.io/commands/mget">MGet Command</a>
 	 */
-	 List mGet(Collection<String> keys);
+	 List<V> mGet(Collection<String> keys);
 
 	/**
 	 * 批量获取 keys 的属性，并返回一个 map
@@ -269,7 +269,7 @@ public interface RedisService<K,V> {
 	 * @param end 结束
 	 * @return 返回查询的集合
 	 */
-	 List lRange(String key, long start, long end);
+	 List<V> lRange(String key, long start, long end);
 
 	/**
 	 * 获取List结构的长度
@@ -391,10 +391,10 @@ public interface RedisService<K,V> {
 	 * 计算两个城市之间的距离
 	 * @param key key
 	 * @param placeOne 地点1
-	 * @param placeTow 地点2
+	 * @param placeTwo 地点2
 	 * @return 返回距离
 	 */
-	Distance geoCalculationDistance(String key, String placeOne, String placeTow);
+	Distance geoCalculationDistance(String key, String placeOne, String placeTwo);
 
 	/**
 	 * 获取附该地点附近的其他地点

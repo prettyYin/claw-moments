@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.*;
 @Slf4j
 public abstract class AbstractRedisService<K,V> implements RedisService<K,V> {
 
-	public abstract Distance geoCalculationDistance(String key, V placeOne, V placeTow);
+	public abstract Distance geoCalculationDistance(String key, String placeOne, String placeTwo);
 
 	/**
 	 * Get Helper class that simplifies Redis data access code.
