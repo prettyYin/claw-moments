@@ -69,4 +69,11 @@ public class SecurityUtils {
         Long userId = getLoginUser().getUser().getId();
         return userId != null && 1L == userId;
     }
+
+    /**
+     * 获取userId
+     */
+    public static Long getUserId() {
+        return getLoginUser().getUser().getId();
+    }
 }

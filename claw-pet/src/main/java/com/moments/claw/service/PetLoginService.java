@@ -11,4 +11,6 @@ public interface PetLoginService {
 	PetLoginDomain loginBySms(LoginDto loginDto);
 
 	PetLoginDomain register(RegisterDto registerDto);
+
+	void logout();
 }

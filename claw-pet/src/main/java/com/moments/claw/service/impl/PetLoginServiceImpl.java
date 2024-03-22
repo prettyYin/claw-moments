@@ -8,6 +8,7 @@ import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.common.utils.JwtUtil;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.LoginDto;
 import com.moments.claw.domain.dto.RegisterDto;
 import com.moments.claw.domain.entity.PetLoginDomain;
@@ -79,5 +80,11 @@ public class PetLoginServiceImpl implements PetLoginService {
 		userService.save(registerUser);
 		PetLoginDomain loginUserInfoVo = CopyBeanUtils.copyBean(registerUser, PetLoginDomain.class);
 		return loginUserInfoVo;
+	}
+
+	@Override
+	public void logout() {
+		Long userId = SecurityUtils.getUserId();
+		redisService.del(PetConstants.LOGIN_USER_PREFIX + userId);
 	}
 }

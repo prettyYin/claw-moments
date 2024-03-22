@@ -58,4 +58,10 @@ public class PetLoginController {
 		}
 		return R.success(petLoginService.register(registerDto));
 	}
+
+	@PostMapping("/site/logout")
+	public R<?> logout() {
+		petLoginService.logout();
+		return R.success();
+	}
 }
