@@ -36,7 +36,10 @@ public class User extends BaseEntity {
         
     @ApiModelProperty(name = "passwordHash", value = "密码")
     private String passwordHash;
-        
+
+    @ApiModelProperty(name = "group", value = "登陆方式")
+    private String group;
+
     @ApiModelProperty(name = "merchantId", value = "商人id")
     private Long merchantId;
         

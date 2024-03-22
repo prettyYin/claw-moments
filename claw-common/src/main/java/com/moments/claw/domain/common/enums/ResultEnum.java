@@ -27,6 +27,12 @@ public enum ResultEnum {
      * 参数错误
      */
     PARAMETER_ERROR(999, "前端入参异常"),
+
+    /**
+     * 登陆失败
+     */
+    LOGIN_ERROR(501, "用户名或密码错误"),
+
     /**
      * 失败
      */
@@ -87,8 +93,7 @@ public enum ResultEnum {
      */
     SMS_SEND_ERROR(1013, "短信发送失败");
 
-
-    /**
+	/**
      * 状态码
      */
     private Integer code;
