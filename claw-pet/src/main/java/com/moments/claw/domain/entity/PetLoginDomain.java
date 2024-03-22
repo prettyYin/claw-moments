@@ -10,5 +10,5 @@ public class PetLoginDomain {
 
 	private String accessToken;
 	private String refreshToken;
-	private LoginUserVo member;
+	private LoginUserVo user;
 }

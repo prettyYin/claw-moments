@@ -30,6 +30,6 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 			result = R.fail(ResultEnum.AUTHENTICATION_ERROR.getCode(), "认证或授权失败");
 		}
 
-		WebUtils.renderString(response,JSONUtil.toJsonStr(result));
+		WebUtils.renderString(response, result.getCode(), JSONUtil.toJsonStr(result));
 	}
 }

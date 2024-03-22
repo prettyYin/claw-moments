@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Api(tags = "ClawUserController控制层", value = "/clawUser")
 @RestController
-@RequestMapping("/clawUser")
+@RequestMapping("/user")
 public class UserController extends BaseController {
     /**
      * 服务对象
@@ -48,7 +48,7 @@ public class UserController extends BaseController {
      * @return 单条数据
      */
     @ApiOperation(value = "通过主键查询单条数据")
-    @GetMapping("/{id}")
+    @GetMapping("/index/{id}")
     public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
         return R.success(userService.getById(id));
     }

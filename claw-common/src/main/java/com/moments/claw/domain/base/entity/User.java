@@ -2,6 +2,7 @@ package com.moments.claw.domain.base.entity;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,9 +37,10 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "username", value = "用户名")
     private String username;
 
-    @JsonProperty(value = "password_hash")
-    @ApiModelProperty(name = "passwordHash", value = "密码")
+    @JsonProperty(value = "password_hash",access = JsonProperty.Access.READ_WRITE)
+    @JSONField(name = "password_hash")
     @TableField(value = "password_hash")
+    @ApiModelProperty(name = "password", value = "密码")
     private String password;
 
     @ApiModelProperty(name = "loginMethod", value = "登陆方式")
@@ -65,8 +67,8 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "nickname", value = "网名")
     private String nickname;
         
-    @ApiModelProperty(name = "headPortrait", value = "头像")
-    private String headPortrait;
+    @ApiModelProperty(name = "avatar", value = "头像")
+    private String avatar;
         
     @ApiModelProperty(name = "gender", value = "性别（0：保密；1：男；2：女）")
     private Integer gender;

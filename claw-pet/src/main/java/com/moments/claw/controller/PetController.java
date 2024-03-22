@@ -44,9 +44,6 @@ public class PetController extends BaseController {
     public TableDataInfo<?> selectAll(Pet pet) {
         startPage();
         List<Pet> list = petService.selectAll(pet);
-        redisService.set("test", "test123");
-        Object redisTest = redisService.get("test");
-        log.info("redis test info {}", redisTest);
         return getDataTable(list);
     }
 

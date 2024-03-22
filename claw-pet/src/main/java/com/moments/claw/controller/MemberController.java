@@ -48,7 +48,7 @@ public class MemberController  extends BaseController {
      * @return 单条数据
      */
     @ApiOperation(value = "通过主键查询单条数据")
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
         return R.success(this.memberService.getById(id));
     }

@@ -1,5 +1,6 @@
 package com.moments.claw.domain.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.moments.claw.domain.base.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"username","password","enabled","accountNonExpired", "accountNonLocked", "credentialsNonExpired", "authorities"})
 public class LoginUser implements UserDetails, Serializable {
 	private static final long serialVersionUID = 48961531894131221L;
 

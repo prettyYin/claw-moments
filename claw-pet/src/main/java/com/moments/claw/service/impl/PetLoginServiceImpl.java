@@ -11,6 +11,7 @@ import com.moments.claw.domain.common.utils.JwtUtil;
 import com.moments.claw.domain.dto.LoginDto;
 import com.moments.claw.domain.dto.RegisterDto;
 import com.moments.claw.domain.entity.PetLoginDomain;
+import com.moments.claw.domain.vo.LoginUserVo;
 import com.moments.claw.service.PetLoginService;
 import com.moments.claw.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +25,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-//@Sfl4j
 public class PetLoginServiceImpl implements PetLoginService {
 
 	@Resource
@@ -48,11 +48,12 @@ public class PetLoginServiceImpl implements PetLoginService {
 		LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
 		String userId = loginUser.getUser().getId().toString();
 		String token = JwtUtil.createJWT(userId);
-//		log.info("token ======== {}", token);
 		PetLoginDomain loginUserInfoVo = CopyBeanUtils.copyBean(loginUser.getUser(), PetLoginDomain.class);
 		loginUserInfoVo.setAccessToken(token);
 		loginUserInfoVo.setRefreshToken(token);
-		redisService.set("claw-pet-login:" + userId,loginUser);
+		LoginUserVo loginUserVo = CopyBeanUtils.copyBean(loginUser.getUser(), LoginUserVo.class);
+		loginUserInfoVo.setUser(loginUserVo);
+		redisService.set(PetConstants.LOGIN_USER_PREFIX + userId,loginUser);
 		return loginUserInfoVo;
 	}
 

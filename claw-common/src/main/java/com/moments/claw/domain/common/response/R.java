@@ -56,6 +56,10 @@ public class R<T> {
 		return build(code, msg, data);
 	}
 
+	public static <T> R<T> success(ResultEnum resultEnum){
+		return build(resultEnum.getCode(),resultEnum.getMsg());
+	}
+
 	public static <T> R<T> fail() {
 		return build(ResultEnum.SYSTEM_EROOR.getCode(), ResultEnum.SYSTEM_EROOR.getMsg());
 	}
@@ -74,6 +78,10 @@ public class R<T> {
 
 	public static <T> R<T> fail(Integer code, T data, String msg) {
 		return build(code, msg, data);
+	}
+
+	public static <T> R<T> fail(ResultEnum resultEnum){
+		return build(resultEnum.getCode(),resultEnum.getMsg());
 	}
 
 	public static <T> R<T> build(Integer code, String message) {

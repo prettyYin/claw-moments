@@ -1,7 +1,6 @@
 package com.moments.claw.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.moments.claw.domain.base.entity.Account;
 import com.moments.claw.domain.base.entity.Member;
@@ -20,8 +19,8 @@ public class LoginUserVo {
 	@ApiModelProperty(name = "username", value = "用户名")
 	private String username;
 
-	@ApiModelProperty(name = "passwordHash", value = "密码")
-	private String passwordHash;
+	@ApiModelProperty(name = "password", value = "密码")
+	private String password;
 
 	@ApiModelProperty(name = "merchantId", value = "商人id")
 	private Long merchantId;
@@ -44,8 +43,8 @@ public class LoginUserVo {
 	@ApiModelProperty(name = "nickname", value = "网名")
 	private String nickname;
 
-	@ApiModelProperty(name = "headPortrait", value = "头像")
-	private String headPortrait;
+	@ApiModelProperty(name = "avatar", value = "头像")
+	private String avatar;
 
 	@ApiModelProperty(name = "gender", value = "性别（0：保密；1：男；2：女）")
 	private Integer gender;

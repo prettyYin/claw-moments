@@ -16,7 +16,8 @@ import java.util.UUID;
 public class JwtUtil {
 
     //有效期为
-    public static final Long JWT_TTL = 60*60*24*7L;// 7天
+//    public static final Long JWT_TTL = 60*60*24*7L;// 7天
+    public static final Long JWT_TTL = 60 * 60 * 1000L;// 1小时
     //设置秘钥明文
     public static final String JWT_KEY = "clawmoments";
 
@@ -31,8 +32,8 @@ public class JwtUtil {
      * @return
      */
     public static String createJWT(String subject) {
-        JwtBuilder builder = getJwtBuilder(subject, null, getUUID());// 设置过期时间
-        return builder.compact().substring(0,20);
+        JwtBuilder builder = getJwtBuilder(subject, JWT_TTL, getUUID());// 设置过期时间
+        return builder.compact();
     }
 
     /**
@@ -59,7 +60,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setId(uuid)              //唯一的ID
                 .setSubject(subject)   // 主题  可以是JSON数据
-                .setIssuer("sg")     // 签发者
+                .setIssuer("claw-moments")     // 签发者
                 .setIssuedAt(now)      // 签发时间
                 .signWith(signatureAlgorithm, secretKey) //使用HS256对称加密算法签名, 第二个参数为秘钥
                 .setExpiration(expDate);
@@ -78,9 +79,9 @@ public class JwtUtil {
     }
 
     public static void main(String[] args) throws Exception {
-//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjYWM2ZDVhZi1mNjVlLTQ0MDAtYjcxMi0zYWEwOGIyOTIwYjQiLCJzdWIiOiJzZyIsImlzcyI6InNnIiwiaWF0IjoxNjM4MTA2NzEyLCJleHAiOjE2MzgxMTAzMTJ9.JVsSbkP94wuczb4QryQbAke3ysBDIL5ou8fWsbt_ebg";
-        String token = "$10$znZUqM4OXgmnuRgHXfcx/ub3ZNkuZ2MYbu/xAwgPOiMPRyWAJ8H0C";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlYTA3MDQ0MzA4ODA0MTNmYmM4MGRjNDgxMmUwYTA2ZCIsInN1YiI6IjIiLCJpc3MiOiJjbGF3LW1vbWVudHMiLCJpYXQiOjE3MTExMzIwODMsImV4cCI6MTcxMTEzNTY4M30.0BprzyKfsCN1h_8eaxVqDh_Whi0AcekaUnQIU0Tdcno";
         Claims claims = parseJWT(token);
+        System.out.println(claims.getExpiration());
         System.out.println(claims);
     }
 
@@ -105,8 +106,8 @@ public class JwtUtil {
         SecretKey secretKey = generalKey();
         return Jwts.parser()
                 .setSigningKey(secretKey)
-                .parseClaimsJwt(jwt)
-//                .parseClaimsJws(jwt)
+//                .parseClaimsJwt(jwt)
+                .parseClaimsJws(jwt)
                 .getBody();
     }
 

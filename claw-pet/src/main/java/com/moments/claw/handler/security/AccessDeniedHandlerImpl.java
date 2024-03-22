@@ -19,6 +19,6 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) {
 		e.printStackTrace(); // 打印测试，方便调试
 		R<?> result = R.fail(e.getMessage());
-		WebUtils.renderString(response, JSONUtil.toJsonStr(result));
+		WebUtils.renderString(response,result.getCode(), JSONUtil.toJsonStr(result));
 	}
 }
