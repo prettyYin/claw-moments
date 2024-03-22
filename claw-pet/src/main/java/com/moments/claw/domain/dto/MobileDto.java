@@ -1,11 +1,11 @@
 package com.moments.claw.domain.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-@Getter
+@Data
 public class MobileDto {
 	/**
 	 * 手机号

@@ -31,7 +31,7 @@ public class RegisterDto {
 	 */
 	@NotBlank(message = "昵称不能为空")
 	@Size(min = 4, max = 16,message = "请输入长度为4-16位的昵称")
-	private String nickName;
+	private String nickname;
 	/**
 	 * 密码
 	 */
