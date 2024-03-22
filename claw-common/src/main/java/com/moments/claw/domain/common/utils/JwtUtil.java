@@ -18,7 +18,7 @@ public class JwtUtil {
     //有效期为
     public static final Long JWT_TTL = 60*60*24*7L;// 7天
     //设置秘钥明文
-    public static final String JWT_KEY = "claw_moments";
+    public static final String JWT_KEY = "clawmoments";
 
     public static String getUUID(){
         String token = UUID.randomUUID().toString().replaceAll("-", "");
@@ -32,7 +32,7 @@ public class JwtUtil {
      */
     public static String createJWT(String subject) {
         JwtBuilder builder = getJwtBuilder(subject, null, getUUID());// 设置过期时间
-        return builder.compact();
+        return builder.compact().substring(0,20);
     }
 
     /**
@@ -78,7 +78,8 @@ public class JwtUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjYWM2ZDVhZi1mNjVlLTQ0MDAtYjcxMi0zYWEwOGIyOTIwYjQiLCJzdWIiOiJzZyIsImlzcyI6InNnIiwiaWF0IjoxNjM4MTA2NzEyLCJleHAiOjE2MzgxMTAzMTJ9.JVsSbkP94wuczb4QryQbAke3ysBDIL5ou8fWsbt_ebg";
+//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjYWM2ZDVhZi1mNjVlLTQ0MDAtYjcxMi0zYWEwOGIyOTIwYjQiLCJzdWIiOiJzZyIsImlzcyI6InNnIiwiaWF0IjoxNjM4MTA2NzEyLCJleHAiOjE2MzgxMTAzMTJ9.JVsSbkP94wuczb4QryQbAke3ysBDIL5ou8fWsbt_ebg";
+        String token = "$10$znZUqM4OXgmnuRgHXfcx/ub3ZNkuZ2MYbu/xAwgPOiMPRyWAJ8H0C";
         Claims claims = parseJWT(token);
         System.out.println(claims);
     }
@@ -88,7 +89,7 @@ public class JwtUtil {
      * @return
      */
     public static SecretKey generalKey() {
-        byte[] encodedKey = Base64.getDecoder().decode(JwtUtil.JWT_KEY);
+        byte[] encodedKey = Base64.getUrlDecoder().decode(JwtUtil.JWT_KEY);
         SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
         return key;
     }
@@ -104,7 +105,8 @@ public class JwtUtil {
         SecretKey secretKey = generalKey();
         return Jwts.parser()
                 .setSigningKey(secretKey)
-                .parseClaimsJws(jwt)
+                .parseClaimsJwt(jwt)
+//                .parseClaimsJws(jwt)
                 .getBody();
     }
 

@@ -1,4 +1,4 @@
-package com.moments.claw.domain.common;
+package com.moments.claw.handler.filter;
 import cn.hutool.json.JSONUtil;
 import com.moments.claw.domain.common.domain.LoginUser;
 import com.moments.claw.domain.common.enums.ResultEnum;

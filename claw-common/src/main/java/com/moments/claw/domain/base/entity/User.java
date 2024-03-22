@@ -2,7 +2,9 @@ package com.moments.claw.domain.base.entity;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -33,12 +35,14 @@ public class User extends BaseEntity {
         
     @ApiModelProperty(name = "username", value = "用户名")
     private String username;
-        
-    @ApiModelProperty(name = "passwordHash", value = "密码")
-    private String passwordHash;
 
-    @ApiModelProperty(name = "group", value = "登陆方式")
-    private String group;
+    @JsonProperty(value = "password_hash")
+    @ApiModelProperty(name = "passwordHash", value = "密码")
+    @TableField(value = "password_hash")
+    private String password;
+
+    @ApiModelProperty(name = "loginMethod", value = "登陆方式")
+    private String loginMethod;
 
     @ApiModelProperty(name = "merchantId", value = "商人id")
     private Long merchantId;

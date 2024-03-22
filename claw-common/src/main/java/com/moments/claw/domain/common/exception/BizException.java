@@ -8,7 +8,7 @@ import com.moments.claw.domain.common.response.R;
  * 业务异常
  * 自定义一个异常类，用于处理我们发生的业务异常
  *
- * @author longjun
+ * @author claw-moments
  * @version 1.0.0
  * @date 2023/04/04
  */

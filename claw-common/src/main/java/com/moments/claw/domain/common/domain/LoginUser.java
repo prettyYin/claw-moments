@@ -17,7 +17,7 @@ import java.util.List;
 public class LoginUser implements UserDetails, Serializable {
 	private static final long serialVersionUID = 48961531894131221L;
 
-	private transient User user;
+	private User user;
 
 	private List<String> permissions;
 
@@ -29,7 +29,7 @@ public class LoginUser implements UserDetails, Serializable {
 
 	@Override
 	public String getPassword() {
-		return user.getPasswordHash();
+		return user.getPassword();
 	}
 
 	@Override

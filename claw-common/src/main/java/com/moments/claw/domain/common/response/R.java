@@ -57,15 +57,15 @@ public class R<T> {
 	}
 
 	public static <T> R<T> fail() {
-		return build(ResultEnum.FAIL.getCode(), ResultEnum.FAIL.getMsg());
+		return build(ResultEnum.SYSTEM_EROOR.getCode(), ResultEnum.SYSTEM_EROOR.getMsg());
 	}
 
 	public static <T> R<T> fail(T data) {
-		return build(ResultEnum.FAIL.getCode(), ResultEnum.FAIL.getMsg(), data);
+		return build(ResultEnum.SYSTEM_EROOR.getCode(), ResultEnum.SYSTEM_EROOR.getMsg(), data);
 	}
 
 	public static <T> R<T> fail(Integer code, T data) {
-		return build(code, ResultEnum.FAIL.getMsg(), data);
+		return build(code, ResultEnum.SYSTEM_EROOR.getMsg(), data);
 	}
 
 	public static <T> R<T> fail(Integer code, String msg) {

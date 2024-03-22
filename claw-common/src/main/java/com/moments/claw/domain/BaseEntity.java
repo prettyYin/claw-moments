@@ -1,5 +1,7 @@
 package com.moments.claw.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,6 +29,7 @@ public class BaseEntity {
 	@ApiModelProperty(value = "创建人")
 	private String createdBy;
 
+	@TableField(fill = FieldFill.INSERT_UPDATE)
 	@ApiModelProperty(value = "修改人")
 	private String updatedBy;
 

@@ -1,6 +1,6 @@
 package com.moments.claw.config;
 
-import com.moments.claw.domain.common.JwtAuthenticationTokenFilter;
+import com.moments.claw.handler.filter.JwtAuthenticationTokenFilter;
 import com.moments.claw.handler.security.AccessDeniedHandlerImpl;
 import com.moments.claw.handler.security.AuthenticationEntryPointImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/user/login").anonymous()
+                .antMatchers("/site/**").anonymous()
                 // 除了上面的接口任何请求都需要认证通过访问
                 .anyRequest().authenticated();
 

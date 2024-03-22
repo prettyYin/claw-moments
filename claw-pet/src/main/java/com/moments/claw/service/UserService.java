@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.User;
+import com.moments.claw.domain.dto.MobileDto;
 
 
 /**
@@ -12,4 +13,9 @@ import com.moments.claw.domain.base.entity.User;
  */
 public interface UserService extends IService<User> {
 
+	User getByMobile(String mobile);
+
+	User getByUsername(String username);
+
+	String smsCode(MobileDto mobileDto);
 }

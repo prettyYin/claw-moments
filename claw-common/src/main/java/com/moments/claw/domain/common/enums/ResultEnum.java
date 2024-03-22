@@ -14,11 +14,14 @@ public enum ResultEnum {
      * 成功
      */
     SUCCESS(200, "操作成功"),
+    /**会话已过期*/
+    SESSION_DUED(401, "需要登录后操作"),
     /**
      * 必须登录
      */
     NEED_LOGIN(401, "需要登录后操作"),
-
+    /**用户未注册*/
+    NOT_REGISTERED(403, "账号未注册"),
     /**
      * 代码异常
      */
@@ -37,6 +40,8 @@ public enum ResultEnum {
      * 失败
      */
     FAIL(501, "后端代码异常"),
+    /**系统异常*/
+    SYSTEM_EROOR(501, "系统异常"),
     /**
      * 空点
      */
@@ -91,7 +96,15 @@ public enum ResultEnum {
     /**
      * 短信发送错误
      */
-    SMS_SEND_ERROR(1013, "短信发送失败");
+    SMS_SEND_ERROR(1013, "短信发送失败"),
+    /**
+     * 账号已注册过
+     */
+    REGISTERED_ALREADY(422, "账号已注册过"),
+    /**
+     * 验证码已过期
+     */
+    CODE_DUED(422, "验证码已过期"),;
 
 	/**
      * 状态码

@@ -3,12 +3,13 @@ package com.moments.claw.domain.common.handler;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.moments.claw.domain.common.enums.ResultEnum;
 import com.moments.claw.domain.common.exception.BizException;
+import com.moments.claw.domain.common.exception.CustomException;
 import com.moments.claw.domain.common.response.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -24,9 +25,26 @@ import java.sql.SQLException;
  * @version 1.0.0
  * @date 2023/04/04
  */
-@RestControllerAdvice
+@ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+	/**
+	 * 处理自定义的业务异常
+	 *
+	 * @param req
+	 * @param e
+	 * @return
+	 */
+	@ExceptionHandler(value = CustomException.class)
+	@ResponseBody
+	public R customExceptionHandler(HttpServletRequest req, CustomException e) {
+		log.error("URL : " + req.getRequestURL().toString());
+		log.error("HTTP_METHOD : " + req.getMethod());
+		log.error("发生业务异常！原因是：{}", e.getMessage());
+		e.getStackTrace();
+		return R.getExceptionResult(e.getCode(), e.getMessage());
+	}
 
 	/**
 	 * 处理自定义的业务异常
@@ -41,6 +59,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生业务异常！原因是：{}", e.getErrorMsg());
+		e.getStackTrace();
 		return R.getExceptionResult(e.getErrorCode(), e.getErrorMsg());
 	}
 
@@ -57,6 +76,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生空指针异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.NULL_POINT);
 	}
 
@@ -74,6 +94,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("索引越界异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.OUT_OF_INDEX_ERROR);
 	}
 
@@ -90,6 +111,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生类未找到异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.CLASS_NOT_FOUND);
 	}
 
@@ -107,6 +129,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生SQL异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.SQL_EXCEPTION);
 	}
 
@@ -123,6 +146,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生IO异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.IO_EXCEPTION);
 	}
 
@@ -140,6 +164,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生JSON转换异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.JSON_PARSE_ERROR);
 	}
 
@@ -156,6 +181,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生String转数字异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.NUMBER_FORMAT_ERROR);
 	}
 
@@ -172,6 +198,7 @@ public class GlobalExceptionHandler {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生前端参数不匹配异常！原因是:", e);
+		e.getStackTrace();
 		return R.getExceptionResult(ResultEnum.PARAMETER_ERROR);
 	}
 
@@ -182,13 +209,14 @@ public class GlobalExceptionHandler {
 	 * @param e
 	 * @return
 	 */
-	@ExceptionHandler(value = Exception.class)
+//	@ExceptionHandler(value = Exception.class)
 	@ResponseBody
 	public R exceptionHandler(HttpServletRequest req, Exception e) {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("未知异常！原因是:", e);
-		return R.getExceptionResult(ResultEnum.FAIL);
+		e.getStackTrace();
+		return R.getExceptionResult(ResultEnum.SYSTEM_EROOR);
 	}
 
 
