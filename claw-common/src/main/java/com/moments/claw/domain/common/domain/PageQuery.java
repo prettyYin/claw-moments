@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
@@ -15,9 +16,9 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class PageQuery {
-    @ApiModelProperty("第n页")
+    @ApiModelProperty(value = "第n页",required = true)
     private Integer pageNum = 1;
-    @ApiModelProperty("每页显示数量")
+    @ApiModelProperty(value = "每页显示数量",required = true)
     private Integer pageSize = 10;
     @ApiModelProperty("排序字段")
     @Pattern(

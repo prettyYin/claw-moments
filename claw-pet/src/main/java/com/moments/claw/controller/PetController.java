@@ -2,9 +2,11 @@ package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Pet;
 import com.moments.claw.domain.common.controller.BaseController;
+import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.common.service.RedisService;
+import com.moments.claw.domain.dto.PetDto;
 import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,11 +41,11 @@ public class PetController extends BaseController {
      *
      * @return 所有数据
      */
-    @ApiOperation(value = "查询所有数据")
+    @ApiOperation(value = "宠物列表")
     @GetMapping("/list")
-    public TableDataInfo<?> selectAll(Pet pet) {
+    public TableDataInfo<?> list(PetDto petDto) {
         startPage();
-        List<Pet> list = petService.selectAll(pet);
+        List<Pet> list = petService.petList(petDto);
         return getDataTable(list);
     }
 
@@ -56,7 +58,7 @@ public class PetController extends BaseController {
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/view/{id}")
     public R<?> viewDetailById(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        Pet pet = this.petService.viewDetailById(id);
+        Pet pet = petService.viewDetailById(id);
         return R.success(pet);
     }
 
@@ -69,7 +71,7 @@ public class PetController extends BaseController {
     @ApiOperation(value = "新增数据")
     @PostMapping
     public R<?> insert(@RequestBody Pet pet) {
-        return R.success(this.petService.save(pet));
+        return R.success(petService.save(pet));
     }
 
     /**
@@ -81,7 +83,7 @@ public class PetController extends BaseController {
     @ApiOperation(value = "修改数据")
     @PutMapping
     public R<?> update(@RequestBody Pet pet) {
-        return R.success(this.petService.updateById(pet));
+        return R.success(petService.updateById(pet));
     }
 
     /**
@@ -93,7 +95,15 @@ public class PetController extends BaseController {
     @ApiOperation(value = "删除数据")
     @DeleteMapping
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
-        return R.success(this.petService.removeByIds(idList));
+        return R.success(petService.removeByIds(idList));
+    }
+
+    @ApiOperation(value = "我的宠物列表")
+    @GetMapping("/m-list")
+    public R<?> myPetList(PageQuery pageQuery) {
+        startPage();
+        List<Pet> myPetList = petService.myPetList(pageQuery);
+        return R.success(myPetList);
     }
 }
 

@@ -1,7 +1,10 @@
 package com.moments.claw.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.*;
+import com.moments.claw.domain.common.domain.PageQuery;
+import com.moments.claw.domain.dto.PetDto;
 import com.moments.claw.mapper.PetMapper;
 import com.moments.claw.service.*;
 import org.apache.commons.lang3.StringUtils;
@@ -97,6 +100,31 @@ public class PetServiceImpl extends ServiceImpl<PetMapper, Pet> implements PetSe
 		setTags(pet);
 		setRequirements(pet);
 		return pet;
+	}
+
+	@Override
+	public List<Pet> myPetList(PageQuery pageQuery) {
+
+		return null;
+	}
+
+	@Override
+	public List<Pet> petList(PetDto petDto) {
+		List<Pet> petList = list(new LambdaQueryWrapper<Pet>()
+				.eq(Objects.nonNull(petDto.getType()), Pet::getType, petDto.getType())
+				.eq(StringUtils.isNotBlank(petDto.getCityId()), Pet::getCityId, petDto.getCityId())
+				.eq(StringUtils.isNotBlank(petDto.getCityId()), Pet::getCityId, petDto.getCityId())
+				.eq(Objects.nonNull(petDto.getCate()), Pet::getCate, petDto.getCate())
+				.eq(StringUtils.isNotBlank(petDto.getGender()), Pet::getCityId, petDto.getCityId())
+				.eq(Objects.nonNull(petDto.getAge()), Pet::getAge, petDto.getAge())
+				.eq(Objects.nonNull(petDto.getStatus()), Pet::getStatus, petDto.getStatus())
+				.eq(Objects.nonNull(petDto.getVaccine()), Pet::getVaccine, petDto.getVaccine())
+				.eq(Objects.nonNull(petDto.getSterilize()), Pet::getSterilize, petDto.getSterilize())
+				.eq(Objects.nonNull(petDto.getDeworm()), Pet::getDeworm, petDto.getDeworm())
+				.eq(Objects.nonNull(petDto.getSize()), Pet::getSize, petDto.getSize())
+				.eq(Objects.nonNull(petDto.getHair()), Pet::getHair, petDto.getHair())
+		);
+		return petList;
 	}
 }
 
