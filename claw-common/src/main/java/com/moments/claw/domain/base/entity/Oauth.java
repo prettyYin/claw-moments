@@ -42,4 +42,7 @@ public class Oauth extends BaseEntity {
         
     @ApiModelProperty(name = "avatar", value = "头像url")
     private String avatar;
+
+    @ApiModelProperty(name = "status", value = "状态（-1异常，1正常，2禁用）")
+    private Integer status;
 }

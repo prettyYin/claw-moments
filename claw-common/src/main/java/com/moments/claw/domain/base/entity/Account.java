@@ -75,5 +75,7 @@ public class Account extends BaseEntity {
         
     @ApiModelProperty(name = "accumulateDrawnMoney", value = "累计提现金额")
     private Double accumulateDrawnMoney;
-        
+
+    @ApiModelProperty(name = "status", value = "状态（-1异常，1正常，2禁用）")
+    private Integer status;
 }

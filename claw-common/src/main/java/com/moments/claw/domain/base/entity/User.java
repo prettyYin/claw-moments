@@ -129,5 +129,7 @@ public class User extends BaseEntity {
         
     @ApiModelProperty(name = "promoterCode", value = "推广码（如果有推广功能）")
     private String promoterCode;
-        
+
+    @ApiModelProperty(name = "status", value = "状态（-1异常，1正常，2冻结，3注销）")
+    private Integer status;
 }
