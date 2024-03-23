@@ -79,7 +79,7 @@ public class JwtUtil {
     }
 
     public static void main(String[] args) throws Exception {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlYTA3MDQ0MzA4ODA0MTNmYmM4MGRjNDgxMmUwYTA2ZCIsInN1YiI6IjIiLCJpc3MiOiJjbGF3LW1vbWVudHMiLCJpYXQiOjE3MTExMzIwODMsImV4cCI6MTcxMTEzNTY4M30.0BprzyKfsCN1h_8eaxVqDh_Whi0AcekaUnQIU0Tdcno";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkMTkyYzQ4NzY1ZDM0OTNhYjViMWQ5ODJlODNlN2E5NiIsInN1YiI6IjIiLCJpc3MiOiJjbGF3LW1vbWVudHMiLCJpYXQiOjE3MTExNzYxODIsImV4cCI6MTcxMTE3OTc4Mn0.1flMtA8tnb8AF9Bc_xnoQvebNVkV9lEC5BLCES_ig3U";
         Claims claims = parseJWT(token);
         System.out.println(claims.getExpiration());
         System.out.println(claims);

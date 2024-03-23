@@ -15,6 +15,7 @@ import com.moments.claw.domain.entity.PetLoginDomain;
 import com.moments.claw.domain.vo.LoginUserVo;
 import com.moments.claw.service.PetLoginService;
 import com.moments.claw.service.UserService;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -86,5 +87,20 @@ public class PetLoginServiceImpl implements PetLoginService {
 	public void logout() {
 		Long userId = SecurityUtils.getUserId();
 		redisService.del(PetConstants.LOGIN_USER_PREFIX + userId);
+	}
+
+	@Override
+	public String verifyToken(String token) {
+		Claims claims;
+		try {
+			claims = JwtUtil.parseJWT(token);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "token invalid!";
+		}
+		if (Objects.isNull(claims)) {
+			return "token invalid!";
+		}
+		return token;
 	}
 }

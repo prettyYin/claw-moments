@@ -28,6 +28,15 @@ public class PetLoginController {
 	@Resource
 	private UserService userService;
 
+
+	/**
+	 * 校验token合法性
+	 */
+	@PostMapping("/site/verify-access-token")
+	public R<?> verifyToken(@RequestBody String token) {
+		return R.success(petLoginService.verifyToken(token));
+	}
+
 	@PostMapping("/site/login")
 	public R<?> login(@Validated @RequestBody LoginDto loginDto) {
 		if (StringUtils.isNotBlank(loginDto.getPassword())) {

@@ -13,4 +13,6 @@ public interface PetLoginService {
 	PetLoginDomain register(RegisterDto registerDto);
 
 	void logout();
+
+	String verifyToken(String token);
 }

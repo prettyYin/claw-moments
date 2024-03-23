@@ -1,6 +1,7 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.User;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,18 @@ public class UserController extends BaseController {
      */
     @Resource
     private UserService userService;
+
+    /**
+     * 通过主键查询单条数据
+     *
+     * @return 单条数据
+     */
+    @ApiOperation(value = "获取登陆人信息")
+    @GetMapping("/index")
+    public R<?> index() {
+        Long id = SecurityUtils.getUserId();
+        return R.success(userService.getById(id));
+    }
 
     /**
      * 查询所有数据
@@ -72,7 +85,7 @@ public class UserController extends BaseController {
      * @return 修改结果
      */
     @ApiOperation(value = "修改数据")
-    @PutMapping
+    @PutMapping("/update")
     public R<?> update(@RequestBody User user) {
         return R.success(userService.updateById(user));
     }
