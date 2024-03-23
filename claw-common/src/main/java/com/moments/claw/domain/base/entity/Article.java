@@ -42,9 +42,12 @@ public class Article extends BaseEntity {
         
     @ApiModelProperty(name = "thumbnailId", value = "缩略图id")
     private String thumbnailId;
+
+    @ApiModelProperty(name = "thumbailUrl", value = "缩略图Url")
+    private String thumbailUrl;
         
-    @ApiModelProperty(name = "isOp", value = "是否置顶（0不是，1是）")
-    private Integer isOp;
+    @ApiModelProperty(name = "isTop", value = "是否置顶（0不是，1是）")
+    private Integer isTop;
         
     @ApiModelProperty(name = "viewCount", value = "访问量")
     private Long viewCount;

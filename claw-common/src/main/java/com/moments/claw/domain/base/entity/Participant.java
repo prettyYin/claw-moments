@@ -23,9 +23,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("claw_participants")
-@ApiModel(value = "claw_participants实体类",description = "用于存储传输claw_participants信息")
-public class Participants extends BaseEntity {
+@TableName("claw_participant")
+@ApiModel(value = "claw_participant实体类",description = "用于存储传输claw_participant信息")
+public class Participant extends BaseEntity {
     
     @TableId
     @ApiModelProperty(name = "id", value = "主键", hidden = true)

@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
+
+import java.util.Date;
 
 /**
  * 广告表(Advertise)表实体类

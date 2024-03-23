@@ -1,9 +1,9 @@
 package com.moments.claw.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.moments.claw.domain.base.entity.Activities;
-import com.moments.claw.mapper.ActivitiesMapper;
-import com.moments.claw.service.ActivitiesService;
+import com.moments.claw.domain.base.entity.Activity;
+import com.moments.claw.mapper.ActivityMapper;
+import com.moments.claw.service.ActivityService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @since 2024-03-23 21:48:54
  */
 @Service("activitiesService")
-public class ActivitiesServiceImpl extends ServiceImpl<ActivitiesMapper, Activities> implements ActivitiesService {
+public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
 
 }
 

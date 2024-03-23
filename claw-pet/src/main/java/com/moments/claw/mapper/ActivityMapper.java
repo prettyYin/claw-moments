@@ -1,7 +1,7 @@
 package com.moments.claw.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.moments.claw.domain.base.entity.Activities;
+import com.moments.claw.domain.base.entity.Activity;
 
 
 /**
@@ -10,7 +10,7 @@ import com.moments.claw.domain.base.entity.Activities;
  * @author chandler
  * @since 2024-03-23 21:48:54
  */
-public interface ActivitiesMapper extends BaseMapper<Activities> {
+public interface ActivityMapper extends BaseMapper<Activity> {
 
 }
 

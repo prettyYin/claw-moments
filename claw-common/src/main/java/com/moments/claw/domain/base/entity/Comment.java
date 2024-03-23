@@ -20,9 +20,9 @@ import com.moments.claw.domain.BaseEntity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("claw_comments")
-@ApiModel(value = "claw_comments实体类", description = "用于存储传输claw_comments信息")
-public class Comments extends BaseEntity {
+@TableName("claw_comment")
+@ApiModel(value = "claw_comment实体类", description = "用于存储传输claw_comment信息")
+public class Comment extends BaseEntity {
 
 	@TableId
 	@ApiModelProperty(name = "id", value = "主键", hidden = true)

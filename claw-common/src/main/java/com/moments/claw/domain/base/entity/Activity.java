@@ -22,9 +22,9 @@ import com.moments.claw.domain.BaseEntity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("claw_activities")
-@ApiModel(value = "claw_activities实体类",description = "用于存储传输claw_activities信息")
-public class Activities extends BaseEntity {
+@TableName("claw_activity")
+@ApiModel(value = "claw_activity实体类",description = "用于存储传输claw_activity信息")
+public class Activity extends BaseEntity {
     
     @TableId
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
@@ -42,14 +42,6 @@ public class Activities extends BaseEntity {
     @ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
     private String coverImageUrl;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty(name = "startDate", value = "活动开始日期和时间")
-    private Date startDate;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")    
-    @ApiModelProperty(name = "endDate", value = "活动结束日期和时间")
-    private Date endDate;
-        
     @ApiModelProperty(name = "capacity", value = "活动最大参与人数(0表示不限制人数)")
     private Integer capacity;
 

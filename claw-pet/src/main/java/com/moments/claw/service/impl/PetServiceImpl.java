@@ -33,7 +33,7 @@ public class PetServiceImpl extends ServiceImpl<PetMapper, Pet> implements PetSe
 	@Resource
 	private MemberService memberService;
 	@Resource
-	private CommentsService commentsService;
+	private CommentService commentService;
 	@Resource
 	private TagsService tagsService;
 	@Resource
@@ -64,8 +64,8 @@ public class PetServiceImpl extends ServiceImpl<PetMapper, Pet> implements PetSe
 	}
 
 	private void setComments(Pet pet) {
-		List<Comments> rootComments = commentsService.getRootComments();
-		List<String> res = rootComments.stream().map(Comments::getContent).collect(Collectors.toList());
+		List<Comment> rootComments = commentService.getRootComments();
+		List<String> res = rootComments.stream().map(Comment::getContent).collect(Collectors.toList());
 		pet.setComments(res);
 	}
 

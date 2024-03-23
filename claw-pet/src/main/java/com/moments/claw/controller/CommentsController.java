@@ -1,12 +1,10 @@
 package com.moments.claw.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.moments.claw.domain.base.entity.Comments;
-import com.moments.claw.domain.common.constant.GlobalConstants;
+import com.moments.claw.domain.base.entity.Comment;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import com.moments.claw.service.CommentsService;
+import com.moments.claw.service.CommentService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +26,7 @@ public class CommentsController extends BaseController {
      * 服务对象
      */
     @Resource
-    private CommentsService commentsService;
+    private CommentService commentService;
 
     /**
      * 分页查询所有数据
@@ -37,7 +35,7 @@ public class CommentsController extends BaseController {
      */
     @GetMapping("/list")
     public TableDataInfo<?> selectAll() {
-        return getDataTable(commentsService.list());
+        return getDataTable(commentService.list());
     }
 
     /**
@@ -48,29 +46,29 @@ public class CommentsController extends BaseController {
      */
     @GetMapping("{id}")
     public R<?> selectOne(@PathVariable Serializable id) {
-        return R.success(commentsService.getById(id));
+        return R.success(commentService.getById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param comments 实体对象
+     * @param comment 实体对象
      * @return 新增结果
      */
     @PostMapping
-    public R<?> insert(@RequestBody Comments comments) {
-        return R.success(commentsService.save(comments));
+    public R<?> insert(@RequestBody Comment comment) {
+        return R.success(commentService.save(comment));
     }
 
     /**
      * 修改数据
      *
-     * @param comments 实体对象
+     * @param comment 实体对象
      * @return 修改结果
      */
     @PutMapping
-    public R<?> update(@RequestBody Comments comments) {
-        return R.success(commentsService.updateById(comments));
+    public R<?> update(@RequestBody Comment comment) {
+        return R.success(commentService.updateById(comment));
     }
 
     /**
@@ -81,7 +79,7 @@ public class CommentsController extends BaseController {
      */
     @DeleteMapping
     public R<?> delete(@RequestParam("idList") List<Long> idList) {
-        return R.success(commentsService.removeByIds(idList));
+        return R.success(commentService.removeByIds(idList));
     }
 
     /**
@@ -90,7 +88,7 @@ public class CommentsController extends BaseController {
      */
     @GetMapping("/rootComments")
     public R<?> rootComments() {
-        List<Comments> rootComments = commentsService.getRootComments();
+        List<Comment> rootComments = commentService.getRootComments();
         return R.success(rootComments);
     }
 }

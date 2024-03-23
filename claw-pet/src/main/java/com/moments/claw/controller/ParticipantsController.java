@@ -1,8 +1,8 @@
 package com.moments.claw.controller;
 
 
-import com.moments.claw.domain.base.entity.Participants;
-import com.moments.claw.service.ParticipantsService;
+import com.moments.claw.domain.base.entity.Participant;
+import com.moments.claw.service.ParticipantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,7 +28,7 @@ public class ParticipantsController extends BaseController {
      * 服务对象
      */
     @Resource
-    private ParticipantsService participantsService;
+    private ParticipantService participantService;
 
     /**
      * 查询所有数据
@@ -39,7 +39,7 @@ public class ParticipantsController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo<?> selectAll() {
         startPage();
-        return getDataTable(participantsService.list());
+        return getDataTable(participantService.list());
     }
 
     /**
@@ -51,31 +51,31 @@ public class ParticipantsController extends BaseController {
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/{id}")
     public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        return R.success(participantsService.getById(id));
+        return R.success(participantService.getById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param participants 实体对象
+     * @param participant 实体对象
      * @return 新增结果
      */
     @ApiOperation(value = "新增数据")
     @PostMapping
-    public R<?> insert(@RequestBody Participants participants) {
-        return R.success(participantsService.save(participants));
+    public R<?> insert(@RequestBody Participant participant) {
+        return R.success(participantService.save(participant));
     }
 
     /**
      * 修改数据
      *
-     * @param participants 实体对象
+     * @param participant 实体对象
      * @return 修改结果
      */
     @ApiOperation(value = "修改数据")
     @PutMapping
-    public R<?> update(@RequestBody Participants participants) {
-        return R.success(participantsService.updateById(participants));
+    public R<?> update(@RequestBody Participant participant) {
+        return R.success(participantService.updateById(participant));
     }
 
     /**
@@ -87,7 +87,7 @@ public class ParticipantsController extends BaseController {
     @ApiOperation(value = "删除数据")
     @DeleteMapping
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
-        return R.success(participantsService.removeByIds(idList));
+        return R.success(participantService.removeByIds(idList));
     }
 }
 

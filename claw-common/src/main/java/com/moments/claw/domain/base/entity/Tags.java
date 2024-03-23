@@ -36,7 +36,10 @@ public class Tags extends BaseEntity {
         
     @ApiModelProperty(name = "petId", value = "宠物id")
     private Long petId;
-        
+
+    @ApiModelProperty(name = "tagKey", value = "标签标识符")
+    private String tagKey;
+
     @ApiModelProperty(name = "tagName", value = "标签名")
     private String tagName;
         
