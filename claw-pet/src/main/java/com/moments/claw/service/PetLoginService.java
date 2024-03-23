@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.moments.claw.domain.dto.LoginDto;
 import com.moments.claw.domain.dto.RegisterDto;
+import com.moments.claw.domain.dto.VerifyTokenDto;
 import com.moments.claw.domain.entity.PetLoginDomain;
 
 public interface PetLoginService {
@@ -14,5 +15,5 @@ public interface PetLoginService {
 
 	void logout();
 
-	String verifyToken(String token);
+	String verifyToken(VerifyTokenDto dto);
 }

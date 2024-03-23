@@ -7,6 +7,7 @@ import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.domain.dto.LoginDto;
 import com.moments.claw.domain.dto.MobileDto;
 import com.moments.claw.domain.dto.RegisterDto;
+import com.moments.claw.domain.dto.VerifyTokenDto;
 import com.moments.claw.service.PetLoginService;
 import com.moments.claw.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -33,8 +34,8 @@ public class PetLoginController {
 	 * 校验token合法性
 	 */
 	@PostMapping("/site/verify-access-token")
-	public R<?> verifyToken(@RequestBody String token) {
-		return R.success(petLoginService.verifyToken(token));
+	public R<?> verifyToken(@RequestBody VerifyTokenDto dto) {
+		return R.success(petLoginService.verifyToken(dto));
 	}
 
 	@PostMapping("/site/login")

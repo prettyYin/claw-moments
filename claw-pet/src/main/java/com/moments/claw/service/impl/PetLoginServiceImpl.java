@@ -11,6 +11,7 @@ import com.moments.claw.domain.common.utils.JwtUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.LoginDto;
 import com.moments.claw.domain.dto.RegisterDto;
+import com.moments.claw.domain.dto.VerifyTokenDto;
 import com.moments.claw.domain.entity.PetLoginDomain;
 import com.moments.claw.domain.vo.LoginUserVo;
 import com.moments.claw.service.PetLoginService;
@@ -90,10 +91,10 @@ public class PetLoginServiceImpl implements PetLoginService {
 	}
 
 	@Override
-	public String verifyToken(String token) {
+	public String verifyToken(VerifyTokenDto dto) {
 		Claims claims;
 		try {
-			claims = JwtUtil.parseJWT(token);
+			claims = JwtUtil.parseJWT(dto.getToken());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "token invalid!";
@@ -101,6 +102,6 @@ public class PetLoginServiceImpl implements PetLoginService {
 		if (Objects.isNull(claims)) {
 			return "token invalid!";
 		}
-		return token;
+		return dto.getToken();
 	}
 }
