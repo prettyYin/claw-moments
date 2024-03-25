@@ -1,6 +1,8 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Activity;
+import com.moments.claw.domain.common.domain.PageQuery;
+import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,10 +21,10 @@ import java.util.List;
  * @author chandler
  * @since 2024-03-23 21:48:54
  */
-@Api(tags = "ActivitiesController控制层", value = "/activities")
+@Api(tags = "ActivityController控制层", value = "/activity")
 @RestController
-@RequestMapping("/activities")
-public class ActivitiesController extends BaseController {
+@RequestMapping("/activity")
+public class ActivityController extends BaseController {
     /**
      * 服务对象
      */
@@ -30,15 +32,14 @@ public class ActivitiesController extends BaseController {
     private ActivityService activityService;
 
     /**
-     * 查询所有数据
+     * 活动推荐列表
      *
      * @return 所有数据
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public TableDataInfo<?> selectAll() {
-        startPage();
-        return getDataTable(activityService.list());
+    public TableDataInfo<?> list(PageQuery pageQuery) {
+        return activityService.recommendList(pageQuery);
     }
 
     /**

@@ -17,11 +17,11 @@ import java.util.Date;
 @EqualsAndHashCode
 public class BaseEntity {
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	@ApiModelProperty(value = "创建时间")
 	private Date createdAt;
 
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	@ApiModelProperty(value = "修改时间")
 	private Date updatedAt;
 

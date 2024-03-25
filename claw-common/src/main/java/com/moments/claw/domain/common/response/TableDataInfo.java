@@ -22,6 +22,7 @@ public class TableDataInfo<T> extends BaseR {
     private int currPage;
 
     public TableDataInfo() {
+        this.setCode(ResultEnum.SUCCESS.getCode());
     }
 
     public TableDataInfo(PageQuery page) {

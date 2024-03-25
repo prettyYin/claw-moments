@@ -1,5 +1,6 @@
 package com.moments.claw.domain.common.response;
 
+import com.moments.claw.domain.common.enums.ResultEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
