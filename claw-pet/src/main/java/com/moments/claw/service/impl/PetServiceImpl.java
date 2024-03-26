@@ -110,7 +110,7 @@ public class PetServiceImpl extends ServiceImpl<PetMapper, Pet> implements PetSe
 
 	@Override
 	public List<Pet> petList(PetDto petDto) {
-		List<Pet> petList = list(new LambdaQueryWrapper<Pet>()
+		return list(new LambdaQueryWrapper<Pet>()
 				.eq(Objects.nonNull(petDto.getType()), Pet::getType, petDto.getType())
 				.eq(StringUtils.isNotBlank(petDto.getCityId()), Pet::getCityId, petDto.getCityId())
 				.eq(StringUtils.isNotBlank(petDto.getCityId()), Pet::getCityId, petDto.getCityId())
@@ -124,7 +124,6 @@ public class PetServiceImpl extends ServiceImpl<PetMapper, Pet> implements PetSe
 				.eq(Objects.nonNull(petDto.getSize()), Pet::getSize, petDto.getSize())
 				.eq(Objects.nonNull(petDto.getHair()), Pet::getHair, petDto.getHair())
 		);
-		return petList;
 	}
 }
 

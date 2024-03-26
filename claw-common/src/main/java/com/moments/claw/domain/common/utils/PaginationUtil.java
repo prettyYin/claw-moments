@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.domain.Query;
 import com.moments.claw.domain.common.response.TableDataInfo;
@@ -61,5 +60,23 @@ public class PaginationUtil {
     public static <V, T, S extends IService<T>, Q extends PageQuery> TableDataInfo<V> paged(S service, Q pagedParam, Wrapper<T> lqw, Function<? super T, ? extends V> map) {
         IPage<T> page = service.page(Query.getPage(pagedParam), lqw);
         return from(page, map);
+    }
+
+    /**
+     * 手动分页
+     * @param list 被分页集合
+     * @param pageSize 页大小
+     * @param pageNum 页码
+     * @return 分页列表
+     */
+    public static <V> TableDataInfo<V> handPaged(List<V> list,Integer pageSize,Integer pageNum) {
+        List<V> collect = list.stream().skip((long) pageSize * (pageNum - 1)).limit(pageSize).collect(Collectors.toList());
+        TableDataInfo<V> result = new TableDataInfo<>();
+        result.setPageSize(pageSize);
+        result.setCurrPage(pageNum);
+        result.setPageNum((list.size() + pageSize - 1) / pageSize);
+        result.setTotal(list.size());
+        result.setRows(collect);
+        return result;
     }
 }

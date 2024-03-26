@@ -1,12 +1,12 @@
 package com.moments.claw.service;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
-
-import java.util.List;
-
+import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 
 /**
  * 活动表(Activity)表服务接口
@@ -16,5 +16,11 @@ import java.util.List;
  */
 public interface ActivityService extends IService<Activity> {
 
+	default LambdaQueryChainWrapper<Activity> select(SFunction<Activity, ?>... columns) {
+		return lambdaQuery().select(columns);
+	}
+
 	TableDataInfo<?> recommendList(PageQuery pageQuery);
+
+	TableDataInfo<?> articleList(ActivityArticleDtoPageQuery pageQuery);
 }

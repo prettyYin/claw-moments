@@ -2,11 +2,12 @@ package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.common.domain.PageQuery;
-import com.moments.claw.domain.common.utils.PaginationUtil;
+import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
@@ -38,7 +39,7 @@ public class ActivityController extends BaseController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public TableDataInfo<?> list(PageQuery pageQuery) {
+    public TableDataInfo<?> list(@Validated PageQuery pageQuery) {
         return activityService.recommendList(pageQuery);
     }
 
@@ -88,6 +89,14 @@ public class ActivityController extends BaseController {
     @DeleteMapping
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(activityService.removeByIds(idList));
+    }
+
+    /**
+     * 根据活动id获取参与活动的文章id
+     */
+    @GetMapping("/articleList")
+    public TableDataInfo<?> articleList(@Validated ActivityArticleDtoPageQuery pageQuery) {
+        return activityService.articleList(pageQuery);
     }
 }
 
