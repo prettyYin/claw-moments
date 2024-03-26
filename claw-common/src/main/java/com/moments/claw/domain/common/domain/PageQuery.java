@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Valid
@@ -16,8 +17,10 @@ import javax.validation.constraints.Pattern;
 @EqualsAndHashCode
 public class PageQuery {
     @ApiModelProperty(value = "第n页",required = true)
+    @NotBlank(message = "页码不能为空")
     private Integer pageNum = 1;
-    @ApiModelProperty(value = "每页显示数量",required = true)
+    @ApiModelProperty(value = "每页显示数量", required = true)
+    @NotBlank(message = "页码不能为空")
     private Integer pageSize = 10;
     @ApiModelProperty("排序字段")
     @Pattern(

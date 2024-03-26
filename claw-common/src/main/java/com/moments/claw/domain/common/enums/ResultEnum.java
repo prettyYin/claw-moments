@@ -14,6 +14,10 @@ public enum ResultEnum {
      * 成功
      */
     SUCCESS(200, "操作成功"),
+    /**
+     * 参数校验失败
+     */
+    PARAMETER_INVALID(400, "参数校验失败"),
     /**会话已过期*/
     SESSION_DUED(401, "需要登录后操作"),
     /**

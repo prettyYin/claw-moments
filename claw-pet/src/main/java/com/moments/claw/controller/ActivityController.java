@@ -13,6 +13,8 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class ActivityController extends BaseController {
      */
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/{id}")
-    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
+    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @NotBlank(message = "活动id不能为空") @PathVariable Serializable id) {
         return R.success(activityService.getById(id));
     }
 
@@ -95,7 +97,7 @@ public class ActivityController extends BaseController {
      * 根据活动id获取参与活动的文章id
      */
     @GetMapping("/articleList")
-    public TableDataInfo<?> articleList(@Validated ActivityArticleDtoPageQuery pageQuery) {
+    public TableDataInfo<?> articleList(@Valid ActivityArticleDtoPageQuery pageQuery) {
         return activityService.articleList(pageQuery);
     }
 }
