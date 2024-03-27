@@ -110,5 +110,12 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 			decrThumbUp(params.getActivityId());
 		}
 	}
+
+	@Override
+	public void incrViewCount(Long id) {
+		Activity activity = getById(id);
+		activity.setViewCount(activity.getViewCount() + 1);
+		updateById(activity);
+	}
 }
 

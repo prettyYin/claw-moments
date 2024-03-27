@@ -36,4 +36,6 @@ public interface ActivityService extends IService<Activity> {
 	void decrThumbUp(Long activityId);
 
 	void toggleLike(ActivityUser params);
+
+	void incrViewCount(Long id);
 }

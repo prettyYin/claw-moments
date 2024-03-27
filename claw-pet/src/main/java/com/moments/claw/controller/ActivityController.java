@@ -110,5 +110,14 @@ public class ActivityController extends BaseController {
         activityService.toggleLike(params);
         return R.success();
     }
+
+    /**
+     * 浏览量+1
+     */
+    @GetMapping("/incrViewCount")
+    public R<?> incrViewCount(@RequestParam("id") Long id) {
+        activityService.incrViewCount(id);
+        return R.success();
+    }
 }
 
