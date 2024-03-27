@@ -21,8 +21,8 @@ public class ActivityVo {
 	@ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
 	private String coverImageUrl;
 
-	@ApiModelProperty(name = "viewCount", value = "查看数")
-	private String viewCount;
+	@ApiModelProperty(name = "viewCount", value = "浏览数")
+	private Long viewCount;
 
 	@ApiModelProperty(name = "capacity", value = "活动最大参与人数(0表示不限制人数)")
 	private Integer capacity;
