@@ -1,6 +1,7 @@
 package com.moments.claw.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.jeffreyning.mybatisplus.base.MppBaseMapper;
 import com.moments.claw.domain.base.entity.ActivityUser;
 
 
@@ -10,7 +11,7 @@ import com.moments.claw.domain.base.entity.ActivityUser;
  * @author chandler
  * @since 2024-03-24 20:55:37
  */
-public interface ActivityUserMapper extends BaseMapper<ActivityUser> {
+public interface ActivityUserMapper extends MppBaseMapper<ActivityUser> {
 
 }
 

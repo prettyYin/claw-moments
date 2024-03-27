@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Activity;
+import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
@@ -23,4 +24,16 @@ public interface ActivityService extends IService<Activity> {
 	TableDataInfo<?> recommendList(PageQuery pageQuery);
 
 	TableDataInfo<?> articleList(ActivityArticleDtoPageQuery pageQuery);
+
+	/**
+	 * 点赞数+1
+	 */
+	void incrThumbUp(Long activityId);
+
+	/**
+	 * 点赞数-1
+	 */
+	void decrThumbUp(Long activityId);
+
+	void toggleLike(ActivityUser params);
 }

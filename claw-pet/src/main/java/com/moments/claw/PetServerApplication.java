@@ -1,10 +1,12 @@
 package com.moments.claw;
 
+import com.github.jeffreyning.mybatisplus.conf.EnableMPP;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@EnableMPP
 @SpringBootApplication
 @MapperScan("com.moments.claw.**.mapper")
 @Slf4j

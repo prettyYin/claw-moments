@@ -27,7 +27,7 @@
         <spring-boot.version>2.6.6</spring-boot.version>
         <spring-cloud.version>2021.0.8</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
-        <mybatis-plus.version>3.4.3</mybatis-plus.version>
+        <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <swagger2.version>2.9.2</swagger2.version>
         <hutool.version>5.7.17</hutool.version>
         <spring-druid.version>1.2.6</spring-druid.version>
@@ -36,6 +36,7 @@
         <apache-commons.version>2.11.1</apache-commons.version>
         <jwt.version>0.9.1</jwt.version>
         <fastjson.version>1.2.33</fastjson.version>
+        <jeffreyning-mybatisplus.version>1.5.1-RELEASE</jeffreyning-mybatisplus.version>
     </properties>
 
     <dependencyManagement>
@@ -145,6 +146,14 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.jeffreyning/mybatisplus-plus -->
+            <dependency>
+                <groupId>com.github.jeffreyning</groupId>
+                <artifactId>mybatisplus-plus</artifactId>
+                <version>${jeffreyning-mybatisplus.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

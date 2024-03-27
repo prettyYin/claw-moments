@@ -1,18 +1,19 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Activity;
+import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -27,12 +28,12 @@ import java.util.List;
 @Api(tags = "ActivityController控制层", value = "/activity")
 @RestController
 @RequestMapping("/activity")
+@RequiredArgsConstructor
 public class ActivityController extends BaseController {
     /**
      * 服务对象
      */
-    @Resource
-    private ActivityService activityService;
+    private final ActivityService activityService;
 
     /**
      * 活动推荐列表
@@ -99,6 +100,15 @@ public class ActivityController extends BaseController {
     @GetMapping("/articleList")
     public TableDataInfo<?> articleList(@Valid ActivityArticleDtoPageQuery pageQuery) {
         return activityService.articleList(pageQuery);
+    }
+
+    /**
+     * 切换点赞状态
+     */
+    @PutMapping("/toggleLike")
+    public R<?> toggleLike(@RequestBody ActivityUser params) {
+        activityService.toggleLike(params);
+        return R.success();
     }
 }
 

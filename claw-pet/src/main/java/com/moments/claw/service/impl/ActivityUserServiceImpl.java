@@ -1,6 +1,7 @@
 package com.moments.claw.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
@@ -16,8 +17,8 @@ import java.util.Objects;
  * @author chandler
  * @since 2024-03-24 20:55:38
  */
-@Service("activityUserService")
-public class ActivityUserServiceImpl extends ServiceImpl<ActivityUserMapper, ActivityUser> implements ActivityUserService {
+@Service
+public class ActivityUserServiceImpl extends MppServiceImpl<ActivityUserMapper, ActivityUser> implements ActivityUserService {
 
 	@Override
 	public ActivityTypeStatusVo getActivityTypeAndThumbStatus(Long activityId, Long userId) {
@@ -28,6 +29,16 @@ public class ActivityUserServiceImpl extends ServiceImpl<ActivityUserMapper, Act
 				.eq(ActivityUser::getUserId, userId)
 				.one();
 		return Objects.isNull(activityUser) ? null : CopyBeanUtils.copyBean(activityUser, ActivityTypeStatusVo.class);
+	}
+
+	@Override
+	public ActivityUser getActivityUser(Long activityId, Long userId) {
+		ActivityUser activityUser = getOne(
+				new LambdaQueryWrapper<ActivityUser>()
+						.eq(ActivityUser::getActivityId, activityId)
+						.eq(ActivityUser::getUserId, userId)
+		);
+		return activityUser;
 	}
 }
 

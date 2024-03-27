@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.ActivityArticle;
+import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.constant.GlobalConstants;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
@@ -19,10 +20,9 @@ import com.moments.claw.service.ActivityService;
 import com.moments.claw.service.ActivityUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @author chandler
  * @since 2024-03-23 21:48:54
  */
-@Service("activityService")
+@Service
 @RequiredArgsConstructor
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
 
@@ -71,6 +71,44 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.collect(Collectors.toList());
 		List<Activity> articleList = list(new LambdaQueryWrapper<Activity>().in(articleIds.size() > 0, Activity::getId, articleIds).orderByAsc(Activity::getCreatedAt));
 		return PaginationUtil.handPaged(articleList, pageQuery.getPageSize(), pageQuery.getPageNum());
+	}
+
+	@Override
+	public void incrThumbUp(Long activityId) {
+		Activity activity = getById(activityId);
+		activity.setThumbCount(activity.getThumbCount() + 1);
+		updateById(activity);
+	}
+
+	@Override
+	public void decrThumbUp(Long activityId) {
+		Activity activity = getById(activityId);
+		activity.setThumbCount(activity.getThumbCount() - 1);
+		updateById(activity);
+	}
+
+	@Override
+	public void toggleLike(ActivityUser params) {
+		ActivityUser activityUser = activityUserService.getActivityUser(params.getActivityId(), SecurityUtils.getUserId());
+		// 如果关联表已经有用户与该活动的记录，则只修改点赞类型；否则插入一条新的关联数据到该表
+		if (Objects.nonNull(activityUser)) {
+			activityUser.setThumbStatus(params.getThumbStatus());
+		} else {
+			activityUser = ActivityUser
+					.builder()
+					.activityId(params.getActivityId())
+					.userId(SecurityUtils.getUserId())
+					.type(params.getType())
+					.thumbStatus(params.getThumbStatus())
+					.build();
+		}
+		activityUserService.saveOrUpdateByMultiId(activityUser);
+		// 活动点赞数+1或-1
+		if (GlobalConstants.THUMB_UP_TYPE.equals(params.getThumbStatus())) {
+			incrThumbUp(params.getActivityId());
+		} else {
+			decrThumbUp(params.getActivityId());
+		}
 	}
 }
 
