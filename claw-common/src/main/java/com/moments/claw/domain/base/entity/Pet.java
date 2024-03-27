@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
@@ -30,7 +31,7 @@ import java.util.List;
 @ApiModel(value = "claw_pet实体类",description = "用于存储传输claw_pet信息")
 public class Pet extends BaseEntity {
     //主键    
-    @TableId
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
         

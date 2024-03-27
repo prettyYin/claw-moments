@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 
@@ -24,16 +23,16 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_activity_user实体类",description = "用于存储传输claw_activity_user信息")
 public class ActivityUser extends BaseEntity {
     
-    @TableId
     @ApiModelProperty(name = "activityId", value = "活动id（活动表id）", hidden = true)
     private Long activityId;
         
     @ApiModelProperty(name = "userId", value = "用户id（用户表id）")
     private Long userId;
-        
+
     @ApiModelProperty(name = "type", value = "活动类型（1已报名，2审核中，3已取消）")
     private Integer type;
-        
-    @ApiModelProperty(name = "remark", value = "备注")
-    private String remark;
+
+    @ApiModelProperty(name = "thumbStatus", value = "点赞状态（1已经赞，2未点赞）")
+    private Integer thumbStatus;
+
 }

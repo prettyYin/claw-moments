@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -23,8 +24,8 @@ import com.moments.claw.domain.BaseEntity;
 @TableName("claw_article")
 @ApiModel(value = "claw_article实体类",description = "用于存储传输claw_article信息")
 public class Article extends BaseEntity {
-    
-    @TableId
+
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
         
@@ -48,6 +49,9 @@ public class Article extends BaseEntity {
         
     @ApiModelProperty(name = "isTop", value = "是否置顶（0不是，1是）")
     private Integer isTop;
+
+    @ApiModelProperty(name = "thumbCount", value = "点赞数")
+    private Long thumbCount;
         
     @ApiModelProperty(name = "viewCount", value = "访问量")
     private Long viewCount;

@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,8 @@ import com.moments.claw.domain.BaseEntity;
 @TableName("claw_require")
 @ApiModel(value = "claw_require实体类",description = "用于存储传输claw_require信息")
 public class Require extends BaseEntity {
-    @TableId
+
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
 

@@ -1,6 +1,8 @@
 package com.moments.claw.domain.base.entity;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +28,7 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_activity实体类",description = "用于存储传输claw_activity信息")
 public class Activity extends BaseEntity {
     
-    @TableId
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
         
@@ -42,8 +44,11 @@ public class Activity extends BaseEntity {
     @ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
     private String coverImageUrl;
 
-    @ApiModelProperty(name = "viewCount", value = "查看数")
-    private String viewCount;
+    @ApiModelProperty(name = "thumbCount", value = "点赞数")
+    private Long thumbCount;
+
+    @ApiModelProperty(name = "viewCount", value = "浏览数")
+    private Long viewCount;
 
     @ApiModelProperty(name = "capacity", value = "活动最大参与人数(0表示不限制人数)")
     private Integer capacity;

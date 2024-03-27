@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 
@@ -24,7 +23,6 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_activity_article实体类",description = "用于存储传输claw_activity_article信息")
 public class ActivityArticle extends BaseEntity {
     
-    @TableId
     @ApiModelProperty(name = "activityId", value = "活动id（活动表id）", hidden = true)
     private Long activityId;
         

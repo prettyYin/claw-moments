@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "claw_tags实体类",description = "用于存储传输claw_tags信息")
 public class Tags extends BaseEntity {
     
-    @TableId
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
         

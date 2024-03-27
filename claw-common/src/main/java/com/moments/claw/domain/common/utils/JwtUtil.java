@@ -13,23 +13,22 @@ import java.util.UUID;
 /**
  * JWT工具类
  */
+@SuppressWarnings({"unused"})
 public class JwtUtil {
 
     //有效期为
-//    public static final Long JWT_TTL = 60*60*24*7L;// 7天
-    public static final Long JWT_TTL = 60 * 60 * 1000L;// 1小时
+//    public static final Long JWT_TTL = 60*60*1000*24*7L;// 7天
+    public static final Long JWT_TTL = 60 * 60 * 1000 * 5L;// 5小时
     //设置秘钥明文
     public static final String JWT_KEY = "clawmoments";
 
     public static String getUUID(){
-        String token = UUID.randomUUID().toString().replaceAll("-", "");
-        return token;
+        return UUID.randomUUID().toString().replaceAll("-", "");
     }
     
     /**
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
-     * @return
      */
     public static String createJWT(String subject) {
         JwtBuilder builder = getJwtBuilder(subject, JWT_TTL, getUUID());// 设置过期时间
@@ -40,7 +39,6 @@ public class JwtUtil {
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
      * @param ttlMillis token超时时间
-     * @return
      */
     public static String createJWT(String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
@@ -68,17 +66,16 @@ public class JwtUtil {
 
     /**
      * 创建token
-     * @param id
-     * @param subject
-     * @param ttlMillis
-     * @return
+     * @param id id
+     * @param subject subject
+     * @param ttlMillis 过期时间 unit:ms
      */
     public static String createJWT(String id, String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id);// 设置过期时间
         return builder.compact();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkMTkyYzQ4NzY1ZDM0OTNhYjViMWQ5ODJlODNlN2E5NiIsInN1YiI6IjIiLCJpc3MiOiJjbGF3LW1vbWVudHMiLCJpYXQiOjE3MTExNzYxODIsImV4cCI6MTcxMTE3OTc4Mn0.1flMtA8tnb8AF9Bc_xnoQvebNVkV9lEC5BLCES_ig3U";
         Claims claims = parseJWT(token);
         System.out.println(claims.getExpiration());
@@ -87,26 +84,21 @@ public class JwtUtil {
 
     /**
      * 生成加密后的秘钥 secretKey
-     * @return
      */
     public static SecretKey generalKey() {
         byte[] encodedKey = Base64.getUrlDecoder().decode(JwtUtil.JWT_KEY);
-        SecretKey key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
-        return key;
+        return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
     }
     
     /**
      * 解析
      *
-     * @param jwt
-     * @return
-     * @throws Exception
+     * @param jwt jwt
      */
-    public static Claims parseJWT(String jwt) throws Exception {
+    public static Claims parseJWT(String jwt) {
         SecretKey secretKey = generalKey();
         return Jwts.parser()
                 .setSigningKey(secretKey)
-//                .parseClaimsJwt(jwt)
                 .parseClaimsJws(jwt)
                 .getBody();
     }

@@ -3,6 +3,7 @@ package com.moments.claw.domain.base.entity;
 import java.util.Date;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,7 +31,7 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_user实体类",description = "用于存储传输claw_user信息")
 public class User extends BaseEntity {
     
-    @TableId
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
         

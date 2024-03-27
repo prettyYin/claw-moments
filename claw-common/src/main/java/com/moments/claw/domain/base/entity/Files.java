@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_files实体类", description = "用于存储传输claw_files信息")
 public class Files extends BaseEntity {
 
-	@TableId
+	@TableId(type = IdType.AUTO)
 	@ApiModelProperty(name = "id", value = "主键", hidden = true)
 	private Long id;
 
