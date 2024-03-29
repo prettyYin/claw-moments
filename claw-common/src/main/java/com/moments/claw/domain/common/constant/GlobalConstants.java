@@ -53,4 +53,9 @@ public class GlobalConstants {
 	 * 点赞类型（1已点赞，2未点赞）
 	 */
 	public static final Integer UN_THUMB_UP_TYPE = 2;
+	/**
+	 * 文件id最大长度
+	 */
+	public static final Integer FILE_ID_MAX_LENGTH = 16;
+
 }

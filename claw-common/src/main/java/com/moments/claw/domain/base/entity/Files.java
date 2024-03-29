@@ -3,10 +3,7 @@ package com.moments.claw.domain.base.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
@@ -18,6 +15,7 @@ import com.moments.claw.domain.BaseEntity;
  * @since 2024-03-17 17:29:44
  */
 @EqualsAndHashCode(callSuper = true)
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +37,7 @@ public class Files extends BaseEntity {
 	private String fileName;
 
 	@ApiModelProperty(name = "fileSize", value = "文件大小（单位为byte）")
-	private Integer fileSize;
+	private Long fileSize;
 
 	@ApiModelProperty(name = "fileType", value = "文件类型")
 	private String fileType;

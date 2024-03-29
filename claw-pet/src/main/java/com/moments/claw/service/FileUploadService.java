@@ -1,11 +1,22 @@
 package com.moments.claw.service;
-
-import com.moments.claw.domain.common.response.R;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface FileUploadService {
 
-	R<?> uploadAvatar(MultipartFile img);
+	/**
+	 * 上传头像
+	 */
+	String uploadAvatar(MultipartFile img);
 
-	R<?> uploadImg(MultipartFile img);
+	/**
+	 * 上传文件
+	 */
+	String uploadImg(MultipartFile img);
+
+	/**
+	 * 批量上传文件
+	 */
+	List<String> uploadImgBatch(MultipartFile[] imgs);
 }
