@@ -42,6 +42,10 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 	private String fileUrl;
 
+	private String avatarsPathName;
+
+	private String imagesPathName;
+
 	private final FilesService filesService;
 
 	/**
@@ -53,7 +57,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 	public String uploadAvatar(MultipartFile img) {
 		String originalFilename = img.getOriginalFilename();
 		FileUtils.checkFileEndWith(originalFilename);
-		String filePath = PathUtils.generateFilePath(originalFilename,"avatars");
+		String filePath = PathUtils.generateFilePath(originalFilename,avatarsPathName);
 		String fileId = NanoId.randomNanoId(GlobalConstants.FILE_ID_MAX_LENGTH);
 		String furl = uploadToOSS(img, filePath);
 		filesService.save(
@@ -80,14 +84,14 @@ public class FileUploadServiceImpl implements FileUploadService {
 	public String uploadImg(MultipartFile img) {
 		String originalFilename = img.getOriginalFilename();
 		FileUtils.checkFileEndWith(originalFilename);
-		String filePath = PathUtils.generateFilePath(originalFilename,"images");
+		String filePath = PathUtils.generateFilePath(originalFilename,imagesPathName);
 		String fileId = NanoId.randomNanoId(GlobalConstants.FILE_ID_MAX_LENGTH);
 		String furl = uploadToOSS(img, filePath);
 		filesService.save(
 				Files
 						.builder()
 						.fileId(fileId)
-						.fileUrl(fileUrl + furl)
+						.fileUrl(furl)
 						.fileName(originalFilename)
 						.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
 						.fileSize(img.getSize())

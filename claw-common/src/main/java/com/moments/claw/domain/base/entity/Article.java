@@ -44,7 +44,7 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "nickname", value = "宠物姓名")
     private String nickname;
 
-    @ApiModelProperty(name = "mode", value = "$column.comment")
+    @ApiModelProperty(name = "mode", value = "")
     private Integer mode;
         
     @ApiModelProperty(name = "money", value = "价格")
@@ -110,10 +110,6 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "otherRequirement", value = "其他需求")
     private String otherRequirement;
         
-    @ApiModelProperty(name = "poster", value = "海报照片地址")
-    private String poster;
-
-    @JsonIgnore
     @ApiModelProperty(name = "imageIds", value = "照片地址ids")
     private String imageIds;
 

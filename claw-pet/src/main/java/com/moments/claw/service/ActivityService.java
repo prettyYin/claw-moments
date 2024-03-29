@@ -9,6 +9,8 @@ import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
 
+import java.io.Serializable;
+
 /**
  * 活动表(Activity)表服务接口
  *
@@ -40,4 +42,6 @@ public interface ActivityService extends IService<Activity> {
 	void incrViewCount(Long id);
 
 	void apply(Long userId, Long activityId);
+
+	Activity getActivityById(Serializable id);
 }

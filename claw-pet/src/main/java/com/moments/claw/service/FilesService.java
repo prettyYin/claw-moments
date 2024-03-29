@@ -24,5 +24,13 @@ public interface FilesService extends IService<Files> {
 
 	List<Files> listByFileIds(List<String> imageIds);
 
+	/**
+	 * 获取图片url
+	 */
 	String getFurl(Serializable id);
+
+	/**
+	 * 批量获取图片url
+	 */
+	List<String> getFurlBatch(String[] ids);
 }

@@ -13,15 +13,15 @@ import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.vo.ActivityReplyVo;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
 import com.moments.claw.domain.vo.ActivityVo;
 import com.moments.claw.mapper.ActivityMapper;
-import com.moments.claw.service.ActivityArticleService;
-import com.moments.claw.service.ActivityService;
-import com.moments.claw.service.ActivityUserService;
-import com.moments.claw.service.ArticleService;
+import com.moments.claw.service.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -41,6 +41,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	private final ArticleService articleService;
 	private final ActivityArticleService activityArticleService;
 	private final ActivityUserService activityUserService;
+	private final FilesService filesService;
 
 	@Override
 	public TableDataInfo<?> recommendList(ActivityDtoPageQuery pageQuery) {
@@ -83,8 +84,24 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.map(ActivityArticle::getArticleId)
 				.collect(Collectors.toList());
 		List<Article> articleList = null;
-		if (articleIds != null && articleIds.size() > 0) {
+		if (articleIds.size() > 0) {
 			articleList = articleService.list(new LambdaQueryWrapper<Article>().in(Article::getId, articleIds).orderByAsc(Article::getCreatedAt));
+			List<ActivityReplyVo> ret = CopyBeanUtils.copyBeanList(articleList, ActivityReplyVo.class);
+			// 赋值封面图url和图片url列表
+			ret.forEach(r -> {
+				if (StringUtils.isNotBlank(r.getImageIds())) {
+					String[] imgIds = r.getImageIds().split(",");
+					String coverImgId = imgIds[0];
+					String coverUrl = filesService.getFurl(coverImgId);
+					List<String> furls = filesService.getFurlBatch(imgIds);
+					r.setCoverImageUrl(coverUrl);
+					r.setImageList(furls);
+				}
+				if (StringUtils.isNotBlank(r.getVideoId())) {
+					String furl = filesService.getFurl(r.getVideoId());
+					r.setVideoUrl(furl);
+				}
+			});
 		}
 		return PaginationUtil.handPaged(articleList, pageQuery.getPageSize(), pageQuery.getPageNum());
 	}
@@ -146,6 +163,16 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 		);
 		activityUser.setType(GlobalConstants.AUDIT_TYPE);
 		activityUserService.saveOrUpdateByMultiId(activityUser);
+	}
+
+	@Override
+	public Activity getActivityById(Serializable id) {
+		Activity activity = getById(id);
+		if (activity.getCoverImageId() != null) {
+			String furl = filesService.getFurl(activity.getCoverImageId());
+			activity.setCoverImageUrl(furl);
+		}
+		return activity;
 	}
 }
 

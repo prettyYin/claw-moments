@@ -6,9 +6,11 @@ import com.moments.claw.domain.base.entity.Files;
 import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.mapper.FilesMapper;
 import com.moments.claw.service.FilesService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +23,7 @@ import java.util.Objects;
 @Service("filesService")
 public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements FilesService {
 
+
 	@Override
 	public List<Files> listByFileIds(List<String> imageIds) {
 		List<Files> files = null;
@@ -32,11 +35,24 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 
 	@Override
 	public String getFurl(Serializable id) {
-		Files file = select(Files::getFileUrl).eq(Files::getFileId, id).getEntity();
+		if (id == null) {
+			return null;
+		}
+		Files file = getById(id);
 		if (Objects.isNull(file)) {
-			throw new BizException("文件不存在！");
+			return null;
 		}
 		return file.getFileUrl();
+	}
+
+	@Override
+	public List<String> getFurlBatch(String[] ids) {
+		ArrayList<String> furls = new ArrayList<>();
+		for (String id : ids) {
+			String furl = getFurl(id);
+			furls.add(furl);
+		}
+		return furls;
 	}
 }
 

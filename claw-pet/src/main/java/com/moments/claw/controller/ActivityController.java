@@ -55,8 +55,8 @@ public class ActivityController extends BaseController {
      */
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/{id}")
-    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @NotBlank(message = "活动id不能为空") @PathVariable Serializable id) {
-        return R.success(activityService.getById(id));
+    public R<?> getActivityById(@ApiParam(name = "id", value = "id", required = true) @NotBlank(message = "活动id不能为空") @PathVariable Serializable id) {
+        return R.success(activityService.getActivityById(id));
     }
 
     /**

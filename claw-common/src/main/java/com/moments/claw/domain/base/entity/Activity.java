@@ -1,9 +1,8 @@
 package com.moments.claw.domain.base.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -40,10 +39,7 @@ public class Activity extends BaseEntity {
     private String content;
         
     @ApiModelProperty(name = "coverImageId", value = "活动封面图片id")
-    private Long coverImageId;
-
-    @ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
-    private String coverImageUrl;
+    private String coverImageId;
 
     @ApiModelProperty(name = "thumbCount", value = "点赞数")
     private Long thumbCount;
@@ -70,4 +66,8 @@ public class Activity extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
     @ApiModelProperty(name = "endTime", value = "活动结束时间")
     private LocalDateTime endTime;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
+    private String coverImageUrl;
 }
