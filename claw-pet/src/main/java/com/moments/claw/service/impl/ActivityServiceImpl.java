@@ -20,7 +20,6 @@ import com.moments.claw.service.ActivityService;
 import com.moments.claw.service.ActivityUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -123,6 +122,20 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 		Activity activity = getById(id);
 		activity.setViewCount(activity.getViewCount() + 1);
 		updateById(activity);
+	}
+
+	@Override
+	public void apply(Long userId, Long activityId) {
+		ActivityUser activityUser = activityUserService.getActivityUser(activityId, userId);
+		activityUser = Optional.ofNullable(activityUser).orElseGet(
+				() -> ActivityUser
+						.builder()
+						.activityId(activityId)
+						.thumbStatus(GlobalConstants.UN_THUMB_UP_TYPE)
+						.build()
+		);
+		activityUser.setType(GlobalConstants.AUDIT_TYPE);
+		activityUserService.saveOrUpdateByMultiId(activityUser);
 	}
 }
 

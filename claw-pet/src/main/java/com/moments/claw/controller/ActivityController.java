@@ -3,6 +3,7 @@ package com.moments.claw.controller;
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.domain.PageQuery;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
@@ -119,5 +120,16 @@ public class ActivityController extends BaseController {
         activityService.incrViewCount(id);
         return R.success();
     }
+
+    /**
+     * 报名活动
+     */
+    @GetMapping("/apply")
+    public R<?> apply(@RequestParam("activityId") Long activityId) {
+        Long userId = SecurityUtils.getUserId();
+        activityService.apply(userId, activityId);
+        return R.success();
+    }
+
 }
 

@@ -36,7 +36,7 @@ public class ActivityUser extends BaseEntity {
     @NotNull(message = "用户id不能为空")
     private Long userId;
 
-    @ApiModelProperty(name = "type", value = "活动类型（1已报名，2审核中，3已取消）")
+    @ApiModelProperty(name = "type", value = "活动类型（1已报名，2审核中，3已通过，4未报名）")
     private Integer type;
 
     @ApiModelProperty(name = "thumbStatus", value = "点赞状态（1已经赞，2未点赞）")

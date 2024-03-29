@@ -38,4 +38,6 @@ public interface ActivityService extends IService<Activity> {
 	void toggleLike(ActivityUser params);
 
 	void incrViewCount(Long id);
+
+	void apply(Long userId, Long activityId);
 }
