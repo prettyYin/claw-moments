@@ -2,46 +2,48 @@ package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.controller.BaseController;
-import com.moments.claw.domain.dto.SendAritcleDto;
-import com.moments.claw.service.ArticleService;
+import com.moments.claw.domain.common.domain.PageQuery;
+import com.moments.claw.domain.common.response.R;
+import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import com.moments.claw.domain.common.response.R;
-import com.moments.claw.domain.common.response.TableDataInfo;
-import javax.annotation.Resource;
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * (Article)表控制层
+ * 宠物表(Pet)表控制层
  *
  * @author chandler
- * @since 2024-03-17 19:44:32
+ * @since 2024-03-11 22:40:59
  */
 @Api(tags = "ArticleController控制层", value = "/article")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/article")
+@Slf4j
 public class ArticleController extends BaseController {
     /**
      * 服务对象
      */
-    @Resource
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     /**
      * 查询所有数据
      *
      * @return 所有数据
      */
-    @ApiOperation(value = "查询所有数据")
+    @ApiOperation(value = "宠物列表")
     @GetMapping("/list")
-    public TableDataInfo<?> selectAll() {
+    public TableDataInfo<?> list(ArticleDto dto) {
         startPage();
-        return getDataTable(articleService.list());
+        List<Article> list = articleService.petList(dto);
+        return getDataTable(list);
     }
 
     /**
@@ -51,33 +53,34 @@ public class ArticleController extends BaseController {
      * @return 单条数据
      */
     @ApiOperation(value = "通过主键查询单条数据")
-    @GetMapping("/{id}")
-    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        return R.success(articleService.getById(id));
+    @GetMapping("/view/{id}")
+    public R<?> viewDetailById(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
+        Article article = articleService.viewDetailById(id);
+        return R.success(article);
     }
 
     /**
      * 新增数据
      *
-     * @param article 实体对象
+     * @param pet 实体对象
      * @return 新增结果
      */
     @ApiOperation(value = "新增数据")
     @PostMapping
-    public R<?> insert(@RequestBody Article article) {
-        return R.success(articleService.save(article));
+    public R<?> insert(@RequestBody Article pet) {
+        return R.success(articleService.save(pet));
     }
 
     /**
      * 修改数据
      *
-     * @param article 实体对象
+     * @param pet 实体对象
      * @return 修改结果
      */
     @ApiOperation(value = "修改数据")
     @PutMapping
-    public R<?> update(@RequestBody Article article) {
-        return R.success(articleService.updateById(article));
+    public R<?> update(@RequestBody Article pet) {
+        return R.success(articleService.updateById(pet));
     }
 
     /**
@@ -92,14 +95,12 @@ public class ArticleController extends BaseController {
         return R.success(articleService.removeByIds(idList));
     }
 
-    /**
-     * 活动跟帖
-     */
-    @ApiOperation(value = "活动跟帖")
-    @PostMapping("/form")
-    public R<?> form(@RequestBody @Validated SendAritcleDto dto) {
-        articleService.form(dto);
-        return R.success();
+    @ApiOperation(value = "我的宠物列表")
+    @GetMapping("/m-list")
+    public R<?> myPetList(PageQuery pageQuery) {
+        startPage();
+        List<Article> myPetList = articleService.myPetList(pageQuery);
+        return R.success(myPetList);
     }
 }
 

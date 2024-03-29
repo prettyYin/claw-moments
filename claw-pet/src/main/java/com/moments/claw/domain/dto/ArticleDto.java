@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class PetDto extends PageDomain {
+public class ArticleDto extends PageDomain {
 	@ApiModelProperty(name = "type", value = "类型（1：领养；2：寻宠；3：寻主）")
 	private Integer type;
 	@ApiModelProperty(name = "cityId", value = "市行政编码")
