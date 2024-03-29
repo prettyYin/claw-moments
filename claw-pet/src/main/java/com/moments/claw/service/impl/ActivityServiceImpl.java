@@ -6,12 +6,12 @@ import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.ActivityArticle;
 import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.constant.GlobalConstants;
-import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
+import com.moments.claw.domain.dto.ActivityDtoPageQuery;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
 import com.moments.claw.domain.vo.ActivityVo;
 import com.moments.claw.mapper.ActivityMapper;
@@ -40,7 +40,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	private final ActivityUserService activityUserService;
 
 	@Override
-	public TableDataInfo<?> recommendList(PageQuery pageQuery) {
+	public TableDataInfo<?> recommendList(ActivityDtoPageQuery pageQuery) {
 		// 查询有效活动时间内的活动
 		LocalDateTime now = LocalDateTime.now();
 		List<Activity> list = list(
@@ -63,6 +63,10 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 			v.setType(vo.getType());
 			v.setThumbStatus(vo.getThumbStatus());
 		});
+		// 过滤已报名或未审核的列表
+		if (Objects.nonNull(pageQuery.getType())) {
+			ret = ret.stream().filter(r -> r.getType().equals(pageQuery.getType())).collect(Collectors.toList());
+		}
 		return PaginationUtil.handPaged(ret, pageQuery.getPageSize(), pageQuery.getPageNum());
 	}
 

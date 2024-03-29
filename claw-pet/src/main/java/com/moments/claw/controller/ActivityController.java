@@ -2,9 +2,9 @@ package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.ActivityUser;
-import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
+import com.moments.claw.domain.dto.ActivityDtoPageQuery;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,7 +43,7 @@ public class ActivityController extends BaseController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public TableDataInfo<?> list(@Validated PageQuery pageQuery) {
+    public TableDataInfo<?> list(@Validated ActivityDtoPageQuery pageQuery) {
         return activityService.recommendList(pageQuery);
     }
 

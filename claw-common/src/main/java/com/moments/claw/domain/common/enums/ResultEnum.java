@@ -38,14 +38,14 @@ public enum ResultEnum {
     /**
      * 登陆失败
      */
-    LOGIN_ERROR(501, "用户名或密码错误"),
+    LOGIN_ERROR(403, "用户名或密码错误"),
 
     /**
      * 失败
      */
-    FAIL(501, "后端代码异常"),
+    FAIL(500, "后端代码异常"),
     /**系统异常*/
-    SYSTEM_EROOR(501, "系统异常"),
+    SYSTEM_EROOR(500, "系统异常"),
     /**
      * 空点
      */

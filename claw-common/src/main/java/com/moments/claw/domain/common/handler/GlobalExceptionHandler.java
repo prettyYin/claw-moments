@@ -178,7 +178,7 @@ public class GlobalExceptionHandler {
 	/**
 	 * 处理其他异常
 	 */
-	@ExceptionHandler(value = Exception.class)
+//	@ExceptionHandler(value = Exception.class)
 	@ResponseBody
 	public R exceptionHandler(HttpServletRequest req, Exception e) {
 		log.error("URL : " + req.getRequestURL().toString());

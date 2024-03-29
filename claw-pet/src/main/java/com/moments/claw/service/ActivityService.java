@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.ActivityUser;
-import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
+import com.moments.claw.domain.dto.ActivityDtoPageQuery;
 
 /**
  * 活动表(Activity)表服务接口
@@ -21,7 +21,7 @@ public interface ActivityService extends IService<Activity> {
 		return lambdaQuery().select(columns);
 	}
 
-	TableDataInfo<?> recommendList(PageQuery pageQuery);
+	TableDataInfo<?> recommendList(ActivityDtoPageQuery pageQuery);
 
 	TableDataInfo<?> articleList(ActivityArticleDtoPageQuery pageQuery);
 
