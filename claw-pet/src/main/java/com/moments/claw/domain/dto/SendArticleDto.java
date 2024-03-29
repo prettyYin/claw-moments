@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-public class SendAritcleDto {
+public class SendArticleDto {
 
 	@NotNull(message = "文章id不能为空")
 	@ApiModelProperty(name = "activityId", value = "文章id")

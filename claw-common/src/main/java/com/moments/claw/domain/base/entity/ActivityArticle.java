@@ -2,10 +2,7 @@ package com.moments.claw.domain.base.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 
@@ -17,6 +14,7 @@ import com.moments.claw.domain.BaseEntity;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("claw_activity_article")

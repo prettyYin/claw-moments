@@ -6,12 +6,14 @@ import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.domain.dto.SendArticleDto;
 import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 import java.util.List;
@@ -101,6 +103,16 @@ public class ArticleController extends BaseController {
         startPage();
         List<Article> myPetList = articleService.myPetList(pageQuery);
         return R.success(myPetList);
+    }
+
+    /**
+     * 活动跟帖
+     */
+    @ApiOperation(value = "活动跟帖")
+    @PostMapping("/form")
+    public R<?> form(@RequestBody @Validated SendArticleDto dto) {
+        articleService.form(dto);
+        return R.success();
     }
 }
 

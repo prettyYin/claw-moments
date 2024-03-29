@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.domain.dto.SendArticleDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ArticleService extends IService<Article> {
 	List<Article> myPetList(PageQuery pageQuery);
 
 	List<Article> petList(ArticleDto articleDto);
+
+	void form(SendArticleDto dto);
 }

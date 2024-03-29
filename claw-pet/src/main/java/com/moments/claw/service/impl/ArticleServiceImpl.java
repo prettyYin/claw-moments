@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.*;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.domain.dto.SendArticleDto;
 import com.moments.claw.mapper.ArticleMapper;
 import com.moments.claw.service.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +30,11 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
 	private final FilesService filesService;
-	private final  MemberService memberService;
-	private final  CommentService commentService;
-	private final  TagsService tagsService;
-	private final  RequireService requireService;
+	private final MemberService memberService;
+	private final CommentService commentService;
+	private final TagsService tagsService;
+	private final RequireService requireService;
+	private final ActivityArticleService activityArticleService;
 
 	/**
 	 * 赋值图片url
@@ -110,6 +114,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 				.eq(Objects.nonNull(articleDto.getSize()), Article::getSize, articleDto.getSize())
 				.eq(Objects.nonNull(articleDto.getHair()), Article::getHair, articleDto.getHair())
 		);
+	}
+
+	@Transactional
+	@Override
+	public void form(SendArticleDto dto) {
+		// 保存文章信息
+		Article article = Article.builder()
+				.title(dto.getTitle())
+				.content(dto.getContent())
+				.breed(dto.getBreed())
+				.age(dto.getAge())
+				.gender(dto.getGender())
+				.imageIds(String.join(",", dto.getImages()))
+				.videoId(dto.getVideo())
+				.build();
+		save(article);
+		// 保存活动文章关联表
+		ActivityArticle activityArticle = ActivityArticle.builder().articleId(article.getId()).activityId(dto.getActivityId()).build();
+		activityArticleService.save(activityArticle);
 	}
 }
 

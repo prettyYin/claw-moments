@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
@@ -24,7 +21,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("claw_article")
@@ -34,16 +31,19 @@ public class Article extends BaseEntity {
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
-        
+
+    @ApiModelProperty(name = "title", value = "标题")
+    private String title;
+
+    @ApiModelProperty(name = "content", value = "内容")
+    private String content;
+
     @ApiModelProperty(name = "memberId", value = "会员id")
     private Long memberId;
 
     @ApiModelProperty(name = "nickname", value = "宠物姓名")
     private String nickname;
 
-    @ApiModelProperty(name = "articleId", value = "文章id")
-    private Long articleId;
-        
     @ApiModelProperty(name = "mode", value = "$column.comment")
     private Integer mode;
         
@@ -63,9 +63,9 @@ public class Article extends BaseEntity {
     private String breed;
         
     @ApiModelProperty(name = "gender", value = "性别（1：雄；2：雌；3：不详）")
-    private String gender;
+    private Integer gender;
         
-    @ApiModelProperty(name = "age", value = "年龄（如2.5：即2年零6个月）")
+    @ApiModelProperty(name = "age", value = "年龄（1幼年，2成年，3老年）")
     private Integer age;
         
     @ApiModelProperty(name = "weight", value = "年龄（1幼年，2成年，3老年）")
@@ -117,8 +117,8 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "imageIds", value = "照片地址ids")
     private String imageIds;
 
-    @ApiModelProperty(name = "video", value = "视频地址")
-    private String video;
+    @ApiModelProperty(name = "videoId", value = "视频地址id")
+    private String videoId;
         
     @ApiModelProperty(name = "provinceId", value = "省行政编码")
     private String provinceId;
