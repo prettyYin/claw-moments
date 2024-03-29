@@ -60,3 +60,10 @@ pagehelper:
   resonable: true
   support-methods-arguments: true
   params: count=countSql
+# 七牛云
+oss:
+  qiniuyun:
+    accessKey: OSElehf53cj6E7VG0eObBuGHK42VRNnYiumv_POy
+    secretKey: ateu3UUtYXG6I18WZ6plBq9k6zwZH_TX2DK8R6-S
+    bucket: claw-moments
+    fileUrl: http://sb41ue17x.hn-bkt.clouddn.com

@@ -124,6 +124,13 @@
             <artifactId>mybatisplus-plus</artifactId>
         </dependency>
 
+        <!--七牛云-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>${cloud.qiniuyun.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
