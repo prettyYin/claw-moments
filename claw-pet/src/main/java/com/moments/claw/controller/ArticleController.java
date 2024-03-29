@@ -2,14 +2,17 @@ package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.controller.BaseController;
+import com.moments.claw.domain.dto.SendAritcleDto;
 import com.moments.claw.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 
@@ -50,7 +53,7 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/{id}")
     public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        return R.success(this.articleService.getById(id));
+        return R.success(articleService.getById(id));
     }
 
     /**
@@ -62,7 +65,7 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "新增数据")
     @PostMapping
     public R<?> insert(@RequestBody Article article) {
-        return R.success(this.articleService.save(article));
+        return R.success(articleService.save(article));
     }
 
     /**
@@ -74,7 +77,7 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "修改数据")
     @PutMapping
     public R<?> update(@RequestBody Article article) {
-        return R.success(this.articleService.updateById(article));
+        return R.success(articleService.updateById(article));
     }
 
     /**
@@ -86,7 +89,17 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "删除数据")
     @DeleteMapping
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
-        return R.success(this.articleService.removeByIds(idList));
+        return R.success(articleService.removeByIds(idList));
+    }
+
+    /**
+     * 活动跟帖
+     */
+    @ApiOperation(value = "活动跟帖")
+    @PostMapping("/form")
+    public R<?> form(@RequestBody @Validated SendAritcleDto dto) {
+        articleService.form(dto);
+        return R.success();
     }
 }
 

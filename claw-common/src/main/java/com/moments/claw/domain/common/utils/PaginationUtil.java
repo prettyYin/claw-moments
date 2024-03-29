@@ -70,6 +70,9 @@ public class PaginationUtil {
      * @return 分页列表
      */
     public static <V> TableDataInfo<V> handPaged(List<V> list,Integer pageSize,Integer pageNum) {
+        if (list.size() == 0) {
+            return new TableDataInfo<>();
+        }
         List<V> collect = list.stream().skip((long) pageSize * (pageNum - 1)).limit(pageSize).collect(Collectors.toList());
         TableDataInfo<V> result = new TableDataInfo<>();
         result.setPageSize(pageSize);

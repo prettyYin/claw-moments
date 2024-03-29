@@ -79,7 +79,10 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.stream()
 				.map(ActivityArticle::getArticleId)
 				.collect(Collectors.toList());
-		List<Activity> articleList = list(new LambdaQueryWrapper<Activity>().in(articleIds.size() > 0, Activity::getId, articleIds).orderByAsc(Activity::getCreatedAt));
+		List<Activity> articleList = null;
+		if (articleIds.size() > 0) {
+			articleList = list(new LambdaQueryWrapper<Activity>().in(Activity::getId, articleIds).orderByAsc(Activity::getCreatedAt));
+		}
 		return PaginationUtil.handPaged(articleList, pageQuery.getPageSize(), pageQuery.getPageNum());
 	}
 

@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Article;
+import com.moments.claw.domain.dto.SendAritcleDto;
 
 
 /**
@@ -12,4 +13,5 @@ import com.moments.claw.domain.base.entity.Article;
  */
 public interface ArticleService extends IService<Article> {
 
+	void form(SendAritcleDto dto);
 }
