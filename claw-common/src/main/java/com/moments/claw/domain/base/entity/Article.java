@@ -41,12 +41,9 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "categoryId", value = "分类id")
     private Integer categoryId;
         
-    @ApiModelProperty(name = "thumbnailId", value = "缩略图id")
-    private String thumbnailId;
+    @ApiModelProperty(name = "imageIds", value = "图片ids（以”,“分隔，与files表的file_id关联）")
+    private String imageIds;
 
-    @ApiModelProperty(name = "thumbailUrl", value = "缩略图Url")
-    private String thumbailUrl;
-        
     @ApiModelProperty(name = "isTop", value = "是否置顶（0不是，1是）")
     private Integer isTop;
 

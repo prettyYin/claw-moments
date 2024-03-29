@@ -4,7 +4,6 @@ import cn.hutool.core.lang.id.NanoId;
 import com.google.gson.Gson;
 import com.moments.claw.domain.base.entity.Files;
 import com.moments.claw.domain.common.constant.GlobalConstants;
-import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.utils.PathUtils;
 import com.moments.claw.service.FileUploadService;
 import com.moments.claw.service.FilesService;
@@ -89,6 +88,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 						.builder()
 						.fileId(fileId)
 						.fileUrl(fileUrl + furl)
+						.fileName(originalFilename)
 						.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
 						.fileSize(img.getSize())
 						.status(GlobalConstants.NORMAL_STATUS)

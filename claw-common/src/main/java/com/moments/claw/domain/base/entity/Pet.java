@@ -66,10 +66,10 @@ public class Pet extends BaseEntity {
     private String gender;
         
     @ApiModelProperty(name = "age", value = "年龄（如2.5：即2年零6个月）")
-    private Object age;
+    private Integer age;
         
-    @ApiModelProperty(name = "weight", value = "体重")
-    private Object weight;
+    @ApiModelProperty(name = "weight", value = "年龄（1幼年，2成年，3老年）")
+    private Double weight;
         
     @ApiModelProperty(name = "vaccine", value = "是否已接种疫苗（0：不详；1：已接种；2：未接种；3：接种中）")
     private Integer vaccine;

@@ -23,7 +23,7 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_files实体类", description = "用于存储传输claw_files信息")
 public class Files extends BaseEntity {
 
-	@TableId
+	@TableId(type = IdType.INPUT)
 	@ApiModelProperty(name = "fileId", value = "文件id")
 	private String fileId;
 
