@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -155,11 +156,10 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = HttpMessageNotReadableException.class)
 	@ResponseBody
-	public R exceptionsHandler(HttpServletRequest req, HttpMessageNotReadableException e) {
+	public R exceptionsHandler(HttpServletRequest req, HttpServletResponse resp, HttpMessageNotReadableException e) {
 		log.error("URL : " + req.getRequestURL().toString());
 		log.error("HTTP_METHOD : " + req.getMethod());
 		log.error("发生前端参数不匹配异常！原因是:", e);
-		
 		return R.getExceptionResult(ResultEnum.PARAMETER_ERROR);
 	}
 

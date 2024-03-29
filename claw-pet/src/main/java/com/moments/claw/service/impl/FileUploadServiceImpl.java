@@ -61,7 +61,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 				Files
 						.builder()
 						.fileId(fileId)
-						.fileUrl(furl)
+						.fileUrl(fileUrl + furl)
 						.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
 						.fileSize(img.getSize())
 						.status(GlobalConstants.NORMAL_STATUS)
@@ -88,7 +88,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 				Files
 						.builder()
 						.fileId(fileId)
-						.fileUrl(furl)
+						.fileUrl(fileUrl + furl)
 						.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
 						.fileSize(img.getSize())
 						.status(GlobalConstants.NORMAL_STATUS)

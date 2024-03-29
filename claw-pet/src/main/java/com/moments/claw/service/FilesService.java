@@ -1,8 +1,11 @@
 package com.moments.claw.service;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Files;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -14,5 +17,12 @@ import java.util.List;
  */
 public interface FilesService extends IService<Files> {
 
+
+	default LambdaQueryChainWrapper<Files> select(SFunction<Files, ?>... columns) {
+		return lambdaQuery().select(columns);
+	}
+
 	List<Files> listByFileIds(List<String> imageIds);
+
+	String getFurl(Serializable id);
 }

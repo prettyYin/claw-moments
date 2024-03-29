@@ -4,11 +4,13 @@ import com.moments.claw.domain.base.entity.Files;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.service.FileUploadService;
 import com.moments.claw.service.FilesService;
 import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,13 +22,13 @@ import java.util.List;
  */
 @Api(tags = "")
 @RestController
-@RequestMapping("clawFiles")
+@RequiredArgsConstructor
+@RequestMapping("/file")
 public class FilesController extends BaseController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private FilesService filesService;
+
+    private final FilesService filesService;
+
+    private final FileUploadService fileUploadService;
 
     /**
      * 分页查询所有数据
@@ -46,7 +48,7 @@ public class FilesController extends BaseController {
      */
     @GetMapping("{id}")
     public R<?> selectOne(@PathVariable Serializable id) {
-        return R.success(this.filesService.getById(id));
+        return R.success(filesService.getById(id));
     }
 
     /**
@@ -57,7 +59,7 @@ public class FilesController extends BaseController {
      */
     @PostMapping
     public R<?> insert(@RequestBody Files files) {
-        return R.success(this.filesService.save(files));
+        return R.success(filesService.save(files));
     }
 
     /**
@@ -68,7 +70,7 @@ public class FilesController extends BaseController {
      */
     @PutMapping
     public R<?> update(@RequestBody Files files) {
-        return R.success(this.filesService.updateById(files));
+        return R.success(filesService.updateById(files));
     }
 
     /**
@@ -79,7 +81,24 @@ public class FilesController extends BaseController {
      */
     @DeleteMapping
     public R<?> delete(@RequestParam("idList") List<Long> idList) {
-        return R.success(this.filesService.removeByIds(idList));
+        return R.success(filesService.removeByIds(idList));
+    }
+
+    /**
+     * 上传文件
+     */
+    @PostMapping("/images")
+    public R<?> uploadImages(@RequestPart MultipartFile file) {
+        String fileId = fileUploadService.uploadImg(file);
+        return R.success(fileId);
+    }
+
+    /**
+     * 获取文件url
+     */
+    @GetMapping("/getUrl")
+    public R<?> getFurl(@PathVariable Serializable id) {
+        return R.success(filesService.getFurl(id));
     }
 }
 

@@ -3,10 +3,12 @@ package com.moments.claw.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Files;
+import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.mapper.FilesMapper;
 import com.moments.claw.service.FilesService;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +28,15 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 			files = list(new LambdaUpdateWrapper<Files>().in(Files::getFileId, imageIds));
 		}
 		return files;
+	}
+
+	@Override
+	public String getFurl(Serializable id) {
+		Files file = select(Files::getFileUrl).eq(Files::getFileId, id).getEntity();
+		if (Objects.isNull(file)) {
+			throw new BizException("文件不存在！");
+		}
+		return file.getFileUrl();
 	}
 }
 
