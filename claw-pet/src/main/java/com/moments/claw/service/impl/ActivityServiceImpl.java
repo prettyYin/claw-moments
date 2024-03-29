@@ -20,6 +20,8 @@ import com.moments.claw.service.ActivityService;
 import com.moments.claw.service.ActivityUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -40,7 +42,12 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 
 	@Override
 	public TableDataInfo<?> recommendList(PageQuery pageQuery) {
-		List<Activity> list = list(new LambdaQueryWrapper<Activity>()
+		// 查询有效活动时间内的活动
+		LocalDateTime now = LocalDateTime.now();
+		List<Activity> list = list(
+				new LambdaQueryWrapper<Activity>()
+				.lt(Activity::getStartTime, now)
+				.gt(Activity::getEndTime, now)
 				.orderByDesc(Activity::getCreatedAt)
 		);
 		List<ActivityVo> ret = CopyBeanUtils.copyBeanList(list, ActivityVo.class);

@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -50,9 +51,23 @@ public class Activity extends BaseEntity {
     @ApiModelProperty(name = "viewCount", value = "浏览数")
     private Long viewCount;
 
+    @ApiModelProperty(name = "participantCount", value = "活动参与人数")
+    private Long participantCount;
+
+    @ApiModelProperty(name = "surplusCount", value = "活动剩余人数")
+    private Long surplusCount;
+
     @ApiModelProperty(name = "capacity", value = "活动最大参与人数(0表示不限制人数)")
-    private Integer capacity;
+    private Long capacity;
 
     @ApiModelProperty(name = "status", value = "状态（-1异常，1发布，2草稿）")
     private Integer status;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+    @ApiModelProperty(name = "startTime", value = "活动开始时间")
+    private LocalDateTime startTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+    @ApiModelProperty(name = "endTime", value = "活动结束时间")
+    private LocalDateTime endTime;
 }
