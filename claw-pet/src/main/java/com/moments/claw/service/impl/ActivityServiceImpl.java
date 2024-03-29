@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.ActivityArticle;
 import com.moments.claw.domain.base.entity.ActivityUser;
+import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.constant.GlobalConstants;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
@@ -18,6 +19,7 @@ import com.moments.claw.mapper.ActivityMapper;
 import com.moments.claw.service.ActivityArticleService;
 import com.moments.claw.service.ActivityService;
 import com.moments.claw.service.ActivityUserService;
+import com.moments.claw.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -36,6 +38,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
 
+	private final ArticleService articleService;
 	private final ActivityArticleService activityArticleService;
 	private final ActivityUserService activityUserService;
 
@@ -79,9 +82,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.stream()
 				.map(ActivityArticle::getArticleId)
 				.collect(Collectors.toList());
-		List<Activity> articleList = null;
-		if (articleIds.size() > 0) {
-			articleList = list(new LambdaQueryWrapper<Activity>().in(Activity::getId, articleIds).orderByAsc(Activity::getCreatedAt));
+		List<Article> articleList = null;
+		if (articleIds != null && articleIds.size() > 0) {
+			articleList = articleService.list(new LambdaQueryWrapper<Article>().in(Article::getId, articleIds).orderByAsc(Article::getCreatedAt));
 		}
 		return PaginationUtil.handPaged(articleList, pageQuery.getPageSize(), pageQuery.getPageNum());
 	}
