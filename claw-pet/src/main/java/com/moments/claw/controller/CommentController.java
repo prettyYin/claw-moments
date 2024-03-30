@@ -4,11 +4,13 @@ import com.moments.claw.domain.base.entity.Comment;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.domain.dto.CommentSendDto;
 import com.moments.claw.service.CommentService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,8 +22,8 @@ import java.util.List;
  */
 @Api(tags = "")
 @RestController
-@RequestMapping("comments")
-public class CommentsController extends BaseController {
+@RequestMapping("comment")
+public class CommentController extends BaseController {
     /**
      * 服务对象
      */
@@ -84,12 +86,20 @@ public class CommentsController extends BaseController {
 
     /**
      * 根评论
-     * @return
      */
     @GetMapping("/rootComments")
     public R<?> rootComments() {
         List<Comment> rootComments = commentService.getRootComments();
         return R.success(rootComments);
+    }
+
+    /**
+     * 留言
+     */
+    @PostMapping("/form")
+    public R<?> form(@RequestBody @Valid CommentSendDto dto) {
+        commentService.form(dto);
+        return R.success();
     }
 }
 

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Comment;
 import com.moments.claw.domain.common.constant.GlobalConstants;
+import com.moments.claw.domain.common.utils.CopyBeanUtils;
+import com.moments.claw.domain.dto.CommentSendDto;
 import com.moments.claw.mapper.CommentMapper;
 import com.moments.claw.service.CommentService;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 				.eq(Comment::getStatus, GlobalConstants.NORMAL_STATUS)
 		);
 		return rootComments;
+	}
+
+	@Override
+	public void form(CommentSendDto dto) {
+		Comment comment = CopyBeanUtils.copyBean(dto, Comment.class);
+		save(comment);
 	}
 }
 

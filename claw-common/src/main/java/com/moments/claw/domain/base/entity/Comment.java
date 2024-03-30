@@ -1,14 +1,12 @@
 package com.moments.claw.domain.base.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 
 /**
@@ -32,6 +30,7 @@ public class Comment extends BaseEntity {
 	@ApiModelProperty(name = "articleId", value = "文章id")
 	private Long articleId;
 
+	@TableField(fill = FieldFill.INSERT)
 	@ApiModelProperty(name = "parentId", value = "父评论id")
 	private Long parentId;
 

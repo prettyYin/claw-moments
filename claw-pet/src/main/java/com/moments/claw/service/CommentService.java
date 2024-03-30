@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Comment;
+import com.moments.claw.domain.dto.CommentSendDto;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ import java.util.List;
 public interface CommentService extends IService<Comment> {
 
 	List<Comment> getRootComments();
+
+	void form(CommentSendDto dto);
 }
