@@ -1,7 +1,7 @@
 package com.moments.claw.domain.base.entity;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.moments.claw.domain.BaseEntity;
 import lombok.*;
@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@TableName("claw_chat_message")
 public class ChatMessage extends BaseEntity {
 
+	@TableId(type = IdType.AUTO)
 	private Integer id;
 
 	private Long sendUserId;
@@ -33,6 +35,7 @@ public class ChatMessage extends BaseEntity {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private LocalDateTime soundTIme;
 
+	@TableField(fill = FieldFill.INSERT)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private LocalDateTime sendTime;
 

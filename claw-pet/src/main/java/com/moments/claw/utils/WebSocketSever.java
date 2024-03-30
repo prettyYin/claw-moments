@@ -3,12 +3,18 @@ package com.moments.claw.utils;
 import cn.hutool.core.collection.ListUtil;
 import com.alibaba.fastjson.JSON;
 import com.moments.claw.domain.base.entity.ChatMessage;
+import com.moments.claw.domain.common.constant.GlobalConstants;
+import com.moments.claw.service.ChatMessageService;
+import com.moments.claw.service.impl.ChatMessageServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,11 +23,19 @@ import java.util.concurrent.CopyOnWriteArraySet;
 /**
  * WebSocket操作类
  */
+@RequiredArgsConstructor
 @ServerEndpoint("/websocket/{userId}")
 @Component
 @Slf4j
 public class WebSocketSever {
- 
+
+    private static ChatMessageService chatMessageService = new ChatMessageServiceImpl();
+
+    @Autowired
+    public void setChatMessageService(ChatMessageService service) {
+        WebSocketSever.chatMessageService = service;
+    }
+
     // 与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
     private Long userId;
@@ -118,6 +132,7 @@ public class WebSocketSever {
         //判断session是否正常
         if (session == null || !session.isOpen()) {
             log.info("用户ID：" + msg.getAcceptUserId() + ",离线，放入离线消息队列中");
+            msg.setReaded(GlobalConstants.UN_READ);// 设置未读
             if (offlineMessageMap.containsKey(msg.getAcceptUserId())) {
                 List<ChatMessage> list = offlineMessageMap.get(msg.getAcceptUserId());
                 list.add(msg);
@@ -134,12 +149,17 @@ public class WebSocketSever {
                 return false;
             }
         }
+        msg.setSendTime(LocalDateTime.now());
+        chatMessageService.save(msg);
         return true;
     }
- 
     //发送离线消息
     public static Boolean sendOfflineMessageByUser(String message) {
         ChatMessage msg = JSON.parseObject(message, ChatMessage.class);
+        // TODO 消息记录设置已读，后期优化为NoSQL
+        msg.setReaded(GlobalConstants.READED);
+        msg.setSoundTIme(LocalDateTime.now());
+        chatMessageService.updateById(msg);
         log.info("用户ID：" + msg.getAcceptUserId() + ",推送内容：" + message);
         Session session = sessionPool.get(msg.getAcceptUserId());
         try {

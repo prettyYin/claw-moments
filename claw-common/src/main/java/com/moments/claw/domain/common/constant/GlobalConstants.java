@@ -58,4 +58,13 @@ public class GlobalConstants {
 	 */
 	public static final Integer FILE_ID_MAX_LENGTH = 16;
 
+	/**
+	 * 未读
+	 */
+	public static final Integer UN_READ = 0;
+
+	/**
+	 * 已读
+	 */
+	public static final Integer READED = 0;
 }

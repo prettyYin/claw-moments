@@ -5,6 +5,7 @@ import com.moments.claw.domain.common.utils.SecurityUtils;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -27,6 +28,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName("updatedAt", new Date(), metaObject);
         this.setFieldValByName("updatedBy", userName, metaObject);
         this.setFieldValByName("parentId", -1L, metaObject); // 分类默认父id为-1
+        this.setFieldValByName("sendTime", LocalDateTime.now(), metaObject); // 分类默认父id为-1
     }
 
     @Override
