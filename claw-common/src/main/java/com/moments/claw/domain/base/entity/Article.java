@@ -2,7 +2,6 @@ package com.moments.claw.domain.base.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -38,13 +37,16 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "content", value = "内容")
     private String content;
 
+    @ApiModelProperty(name = "isTop", value = "是否置顶（0：否；1：是）")
+    private Integer isTop;
+
     @ApiModelProperty(name = "memberId", value = "会员id")
     private Long memberId;
 
     @ApiModelProperty(name = "nickname", value = "宠物姓名")
     private String nickname;
 
-    @ApiModelProperty(name = "mode", value = "")
+    @ApiModelProperty(name = "mode")
     private Integer mode;
         
     @ApiModelProperty(name = "money", value = "价格")
@@ -184,4 +186,7 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "member", value = "会员信息")
     private Member member;
 
+    @TableField(exist = false)
+    @ApiModelProperty(name = "coverImageUrl", value = "首页图url")
+    private String coverImageUrl;
 }

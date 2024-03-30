@@ -38,11 +38,8 @@ public class Activity extends BaseEntity {
     @ApiModelProperty(name = "content", value = "活动详细描述")
     private String content;
 
-    @ApiModelProperty(name = "isTop", value = "是否置顶（0：否；1：是）")
-    private Integer isTop;
-        
-    @ApiModelProperty(name = "coverImageId", value = "活动封面图片id")
-    private String coverImageId;
+    @ApiModelProperty(name = "imageIds", value = "图片ids")
+    private String imageIds;
 
     @ApiModelProperty(name = "thumbCount", value = "点赞数")
     private Long thumbCount;

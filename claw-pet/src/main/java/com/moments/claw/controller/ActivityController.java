@@ -37,7 +37,7 @@ public class ActivityController extends BaseController {
     private final ActivityService activityService;
 
     /**
-     * 活动推荐列表
+     * 活动列表
      *
      * @return 所有数据
      */

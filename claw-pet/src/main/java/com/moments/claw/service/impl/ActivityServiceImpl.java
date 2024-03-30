@@ -54,7 +54,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.orderByDesc(Activity::getCreatedAt)
 		);
 		List<ActivityVo> ret = CopyBeanUtils.copyBeanList(list, ActivityVo.class);
-		// 赋值报名类型、点赞类型
+		// 赋值报名类型、点赞类型、活动首页图
 		ret.forEach(v -> {
 			ActivityTypeStatusVo vo = activityUserService.getActivityTypeAndThumbStatus(v.getId(), SecurityUtils.getUserId());
 			// 当vo为null时，返回一个临时对象，type为3，thumbStatus为2
@@ -66,6 +66,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 							.build());
 			v.setType(vo.getType());
 			v.setThumbStatus(vo.getThumbStatus());
+			v.setCoverImageUrl(filesService.getFurl(v.getImageIds().split(",")[0]));
 		});
 		// 过滤已报名或未审核的列表
 		if (Objects.nonNull(pageQuery.getType())) {
@@ -168,8 +169,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	@Override
 	public Activity getActivityById(Serializable id) {
 		Activity activity = getById(id);
-		if (activity.getCoverImageId() != null) {
-			String furl = filesService.getFurl(activity.getCoverImageId());
+		if (activity.getImageIds() != null) {
+			String furl = filesService.getFurl(activity.getImageIds().split(",")[0]);
 			activity.setCoverImageUrl(furl);
 		}
 		return activity;

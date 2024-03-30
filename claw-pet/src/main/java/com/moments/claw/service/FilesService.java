@@ -27,7 +27,7 @@ public interface FilesService extends IService<Files> {
 	/**
 	 * 获取图片url
 	 */
-	String getFurl(Serializable id);
+	String getFurl(String id);
 
 	/**
 	 * 批量获取图片url

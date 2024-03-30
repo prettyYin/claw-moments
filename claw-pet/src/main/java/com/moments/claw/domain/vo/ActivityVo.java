@@ -2,6 +2,7 @@ package com.moments.claw.domain.vo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
@@ -21,6 +22,10 @@ public class ActivityVo {
 
 	@ApiModelProperty(name = "title", value = "活动标题")
 	private String title;
+
+	@JsonIgnore
+	@ApiModelProperty(name = "imageIds", value = "图片ids")
+	private String imageIds;
 
 	@ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
 	private String coverImageUrl;
@@ -50,4 +55,5 @@ public class ActivityVo {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
 	@ApiModelProperty(name = "endTime", value = "活动介绍时间")
 	private LocalDateTime endTime;
+
 }

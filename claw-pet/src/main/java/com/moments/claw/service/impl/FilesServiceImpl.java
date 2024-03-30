@@ -34,7 +34,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 	}
 
 	@Override
-	public String getFurl(Serializable id) {
+	public String getFurl(String id) {
 		if (id == null) {
 			return null;
 		}

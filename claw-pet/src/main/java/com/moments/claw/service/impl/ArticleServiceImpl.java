@@ -100,7 +100,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 	@Override
 	public List<Article> petList(ArticleDto articleDto) {
-		return list(new LambdaQueryWrapper<Article>()
+		List<Article> ret = list(new LambdaQueryWrapper<Article>()
 				.eq(Objects.nonNull(articleDto.getType()), Article::getType, articleDto.getType())
 				.eq(StringUtils.isNotBlank(articleDto.getCityId()), Article::getCityId, articleDto.getCityId())
 				.eq(StringUtils.isNotBlank(articleDto.getCityId()), Article::getCityId, articleDto.getCityId())
@@ -114,6 +114,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 				.eq(Objects.nonNull(articleDto.getSize()), Article::getSize, articleDto.getSize())
 				.eq(Objects.nonNull(articleDto.getHair()), Article::getHair, articleDto.getHair())
 		);
+		// 赋值首页图
+		ret.stream().forEach(r -> r.setCoverImageUrl(filesService.getFurl(r.getImageIds().split(",")[0])));
+		return ret;
 	}
 
 	@Transactional

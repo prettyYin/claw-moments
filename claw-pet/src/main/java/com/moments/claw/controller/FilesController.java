@@ -97,7 +97,7 @@ public class FilesController extends BaseController {
      * 获取文件url
      */
     @GetMapping("/getUrl")
-    public R<?> getFurl(@PathVariable Serializable id) {
+    public R<?> getFurl(@PathVariable String id) {
         return R.success(filesService.getFurl(id));
     }
 }
