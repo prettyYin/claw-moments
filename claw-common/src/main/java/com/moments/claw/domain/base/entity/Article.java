@@ -1,16 +1,13 @@
 package com.moments.claw.domain.base.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
-
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * 文章表(Article)表实体类
@@ -55,7 +52,7 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "refundCondition", value = "退款条件")
     private String refundCondition;
         
-    @ApiModelProperty(name = "type", value = "类型（1：领养；2：寻宠；3：寻主）")
+    @ApiModelProperty(name = "type", value = "类型（1：领养；2：丢失；3：关注）")
     private Integer type;
         
     @ApiModelProperty(name = "cate", value = "种类（1：猫；2：狗；3：其他）")
