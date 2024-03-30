@@ -83,10 +83,10 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.stream()
 				.map(ActivityArticle::getArticleId)
 				.collect(Collectors.toList());
-		List<Article> articleList = null;
+		List<ActivityReplyVo> ret = null;
 		if (articleIds.size() > 0) {
-			articleList = articleService.list(new LambdaQueryWrapper<Article>().in(Article::getId, articleIds).orderByAsc(Article::getCreatedAt));
-			List<ActivityReplyVo> ret = CopyBeanUtils.copyBeanList(articleList, ActivityReplyVo.class);
+			List<Article> articleList = articleService.list(new LambdaQueryWrapper<Article>().in(Article::getId, articleIds).orderByAsc(Article::getCreatedAt));
+			ret = CopyBeanUtils.copyBeanList(articleList, ActivityReplyVo.class);
 			// 赋值封面图url和图片url列表
 			ret.forEach(r -> {
 				if (StringUtils.isNotBlank(r.getImageIds())) {
@@ -103,7 +103,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				}
 			});
 		}
-		return PaginationUtil.handPaged(articleList, pageQuery.getPageSize(), pageQuery.getPageNum());
+		return PaginationUtil.handPaged(ret, pageQuery.getPageSize(), pageQuery.getPageNum());
 	}
 
 	@Override
