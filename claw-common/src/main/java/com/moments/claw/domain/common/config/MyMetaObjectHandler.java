@@ -15,18 +15,18 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        Long userId = null;
+        String userName = null;
         try {
-            userId = SecurityUtils.getUserId();
+            userName = SecurityUtils.getUsername();
         } catch (Exception e) {
             e.printStackTrace();
-            userId = -1L;//表示是自己创建
+            userName = "self";//表示是自己创建
         }
-        this.setFieldValByName("created_at", new Date(), metaObject);
-        this.setFieldValByName("created_by",userId , metaObject);
-        this.setFieldValByName("updated_at", new Date(), metaObject);
-        this.setFieldValByName("updated_by", userId, metaObject);
-        this.setFieldValByName("parent_id", -1L, metaObject); // 分类默认父id为-1
+        this.setFieldValByName("createdAt", new Date(), metaObject);
+        this.setFieldValByName("createdBy",userName , metaObject);
+        this.setFieldValByName("updatedAt", new Date(), metaObject);
+        this.setFieldValByName("updatedBy", userName, metaObject);
+        this.setFieldValByName("parentId", -1L, metaObject); // 分类默认父id为-1
     }
 
     @Override

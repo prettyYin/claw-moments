@@ -68,8 +68,8 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "nickname", value = "网名")
     private String nickname;
         
-    @ApiModelProperty(name = "avatar", value = "头像")
-    private String avatar;
+    @ApiModelProperty(name = "avatarId", value = "头像图片id")
+    private String avatarId;
         
     @ApiModelProperty(name = "gender", value = "性别（0：保密；1：男；2：女）")
     private Integer gender;

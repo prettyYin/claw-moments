@@ -166,27 +166,4 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "status", value = "状态（0异常，1正常，2禁用）")
     private Integer status;
 
-    @TableField(exist = false)
-    @ApiModelProperty(name = "images", value = "照片地址")
-    private List<String> images;
-
-    @TableField(exist = false)
-    @ApiModelProperty(name = "comments", value = "评论")
-    private List<String> comments;
-
-    @TableField(exist = false)
-    @ApiModelProperty(name = "tags", value = "标签")
-    private List<String> tags;
-
-    @TableField(exist = false)
-    @ApiModelProperty(name = "requirements", value = "要求")
-    private List<String> requirements;
-
-    @TableField(exist = false)
-    @ApiModelProperty(name = "member", value = "会员信息")
-    private Member member;
-
-    @TableField(exist = false)
-    @ApiModelProperty(name = "coverImageUrl", value = "首页图url")
-    private String coverImageUrl;
 }

@@ -5,8 +5,10 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.dto.ArticleDto;
 import com.moments.claw.domain.dto.SendArticleDto;
+import com.moments.claw.domain.vo.ArticleVo;
 import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +46,7 @@ public class ArticleController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo<?> list(ArticleDto dto) {
         startPage();
-        List<Article> list = articleService.petList(dto);
+        List<ArticleVo> list = articleService.petList(dto);
         return getDataTable(list);
     }
 
@@ -57,7 +59,7 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/view/{id}")
     public R<?> viewDetailById(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        Article article = articleService.viewDetailById(id);
+        ArticleVo article = articleService.viewDetailById(id);
         return R.success(article);
     }
 
@@ -100,8 +102,7 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "我的宠物列表")
     @GetMapping("/m-list")
     public R<?> myPetList(PageQuery pageQuery) {
-        startPage();
-        List<Article> myPetList = articleService.myPetList(pageQuery);
+        List<ArticleVo> myPetList = articleService.myPetList(pageQuery);
         return R.success(myPetList);
     }
 

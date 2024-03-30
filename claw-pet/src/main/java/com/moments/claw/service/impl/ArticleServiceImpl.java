@@ -4,8 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.*;
 import com.moments.claw.domain.common.domain.PageQuery;
+import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.dto.ArticleDto;
 import com.moments.claw.domain.dto.SendArticleDto;
+import com.moments.claw.domain.vo.ArticleVo;
+import com.moments.claw.domain.vo.CommentVo;
+import com.moments.claw.domain.vo.UserCommentVo;
 import com.moments.claw.mapper.ArticleMapper;
 import com.moments.claw.service.*;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +39,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	private final TagsService tagsService;
 	private final RequireService requireService;
 	private final ActivityArticleService activityArticleService;
+	private final UserService userService;
 
 	/**
 	 * 赋值图片url
 	 */
-	private void setImageUrl(Article article) {
+	private void setImageUrl(ArticleVo article) {
 		if(StringUtils.isNotBlank(article.getImageIds())) {
 			List<String> imageIds = Arrays.asList(article.getImageIds().split(","));
 			List<Files> files = filesService.listByFileIds(imageIds);
@@ -48,59 +53,75 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		}
 	}
 
-	private void setMember(Article article) {
+	private void setMember(ArticleVo article) {
 		if (Objects.nonNull(article.getMemberId())) {
 			article.setMember(memberService.getById(article.getMemberId()));
 		}
 	}
 
-	private void setComments(Article article) {
+	private void setComments(ArticleVo article) {
 		List<Comment> rootComments = commentService.getRootComments();
-		List<String> res = rootComments.stream().map(Comment::getContent).collect(Collectors.toList());
-		article.setComments(res);
+		List<CommentVo> ret = CopyBeanUtils.copyBeanList(rootComments, CommentVo.class);
+		// 赋值评论用户信息
+		ret.forEach(commentVo -> {
+			User user = userService.getById(commentVo.getUserId());
+			String avatar = null;
+			String nickName = null;
+			if (StringUtils.isNotBlank(user.getAvatarId())) {
+				avatar = filesService.getFurl(user.getAvatarId());
+			}
+			if (StringUtils.isNotBlank(user.getNickname())) {
+				nickName = user.getNickname();
+			}
+			UserCommentVo userVo = UserCommentVo.builder().avatar(avatar).nickName(nickName).build();
+			commentVo.setUser(userVo);
+		});
+		article.setComments(ret);
 	}
 
 
-	private void setTags(Article article) {
+	private void setTags(ArticleVo article) {
 		List<Tags> tags = tagsService.queryTagsByPetId(article.getId());
 		List<String> tagNames = tags.stream().map(Tags::getTagName).collect(Collectors.toList());
 		article.setTags(tagNames);
 	}
 
 
-	private void setRequirements(Article article) {
+	private void setRequirements(ArticleVo article) {
 		List<Require> requires = requireService.queryRequireByPetId(article.getId());
 		List<String> requireNames = requires.stream().map(Require::getName).collect(Collectors.toList());
 		article.setRequirements(requireNames);
 	}
 
 	@Override
-	public List<Article> selectAll(Article article) {
+	public List<ArticleVo> selectAll() {
 		List<Article> list = list();
-		list.forEach(this::setImageUrl);
-		return list;
+		List<ArticleVo> articleVos = CopyBeanUtils.copyBeanList(list, ArticleVo.class);
+		articleVos.forEach(this::setImageUrl);
+		return articleVos;
 	}
 
 	@Override
-	public Article viewDetailById(Serializable id) {
-		Article pet = getById(id);
-		setImageUrl(pet);
-		setMember(pet);
-		setComments(pet);
-		setTags(pet);
-		setRequirements(pet);
-		return pet;
+	public ArticleVo viewDetailById(Serializable id) {
+		Article article = getById(id);
+		ArticleVo articleVo = CopyBeanUtils.copyBean(article, ArticleVo.class);
+		setImageUrl(articleVo);
+		setMember(articleVo);
+		setComments(articleVo);
+		setTags(articleVo);
+		setRequirements(articleVo);
+		return articleVo;
 	}
 
 	@Override
-	public List<Article> myPetList(PageQuery pageQuery) {
+	public List<ArticleVo> myPetList(PageQuery pageQuery) {
 
 		return null;
 	}
 
 	@Override
-	public List<Article> petList(ArticleDto articleDto) {
-		List<Article> ret = list(new LambdaQueryWrapper<Article>()
+	public List<ArticleVo> petList(ArticleDto articleDto) {
+		List<Article> list = list(new LambdaQueryWrapper<Article>()
 				.eq(Objects.nonNull(articleDto.getType()), Article::getType, articleDto.getType())
 				.eq(StringUtils.isNotBlank(articleDto.getCityId()), Article::getCityId, articleDto.getCityId())
 				.eq(StringUtils.isNotBlank(articleDto.getCityId()), Article::getCityId, articleDto.getCityId())
@@ -114,6 +135,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 				.eq(Objects.nonNull(articleDto.getSize()), Article::getSize, articleDto.getSize())
 				.eq(Objects.nonNull(articleDto.getHair()), Article::getHair, articleDto.getHair())
 		);
+		List<ArticleVo> ret = CopyBeanUtils.copyBeanList(list, ArticleVo.class);
 		// 赋值首页图
 		ret.stream().forEach(r -> r.setCoverImageUrl(filesService.getFurl(r.getImageIds().split(",")[0])));
 		return ret;

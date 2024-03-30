@@ -27,6 +27,7 @@ public class BaseEntity {
 	@ApiModelProperty(value = "修改时间")
 	private Date updatedAt;
 
+	@TableField(fill = FieldFill.INSERT)
 	@ApiModelProperty(value = "创建人")
 	private String createdBy;
 

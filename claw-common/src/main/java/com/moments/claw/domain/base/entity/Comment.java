@@ -27,6 +27,9 @@ public class Comment extends BaseEntity {
 	@ApiModelProperty(name = "id", value = "主键", hidden = true)
 	private Long id;
 
+	@ApiModelProperty(name = "userId", value = "用户id")
+	private Long userId;
+
 	@ApiModelProperty(name = "articleId", value = "文章id")
 	private Long articleId;
 
@@ -42,6 +45,9 @@ public class Comment extends BaseEntity {
 
 	@ApiModelProperty(name = "toCommentId", value = "回复的评论id")
 	private Long toCommentId;
+
+	@ApiModelProperty(name = "thumbCount", value = "点赞数")
+	private Long thumbCount;
 
 	@ApiModelProperty(name = "status", value = "状态（0异常，1正常）")
 	private Integer status;

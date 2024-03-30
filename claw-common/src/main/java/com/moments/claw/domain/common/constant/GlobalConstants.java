@@ -32,7 +32,7 @@ public class GlobalConstants {
 	/**
 	 * parent_id=0
 	 */
-	public static final Long ROOT_PARENT_ID = 0L;
+	public static final Long ROOT_PARENT_ID = -1L;
 	/**
 	 * 报名类型（1已报名;2审核中;3未报名）
 	 */

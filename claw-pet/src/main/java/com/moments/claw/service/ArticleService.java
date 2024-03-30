@@ -5,6 +5,7 @@ import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.dto.ArticleDto;
 import com.moments.claw.domain.dto.SendArticleDto;
+import com.moments.claw.domain.vo.ArticleVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,13 +19,13 @@ import java.util.List;
  */
 public interface ArticleService extends IService<Article> {
 
-	List<Article> selectAll(Article pet);
+	List<ArticleVo> selectAll();
 
-	Article viewDetailById(Serializable id);
+	ArticleVo viewDetailById(Serializable id);
 
-	List<Article> myPetList(PageQuery pageQuery);
+	List<ArticleVo> myPetList(PageQuery pageQuery);
 
-	List<Article> petList(ArticleDto articleDto);
+	List<ArticleVo> petList(ArticleDto articleDto);
 
 	void form(SendArticleDto dto);
 }
