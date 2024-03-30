@@ -18,6 +18,9 @@ public class ActivityReplyVo {
 	@ApiModelProperty(name = "content", value = "内容")
 	private String content;
 
+	@ApiModelProperty(name = "isTop", value = "是否置顶（0：否；1：是）")
+	private Integer isTop;
+
 	@ApiModelProperty(name = "cate", value = "种类（1：猫；2：狗；3：其他）")
 	private Integer cate;
 
