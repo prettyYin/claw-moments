@@ -1,4 +1,4 @@
-package com.moments.claw.config;
+package com.moments.claw.config.websocket;
 
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;

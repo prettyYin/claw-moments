@@ -88,5 +88,11 @@ public class ChatMessageController extends BaseController {
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(chatMessageService.removeByIds(idList));
     }
+
+    @ApiOperation(value = "聊天列表")
+    @GetMapping("/recordList")
+    public TableDataInfo<?> recordList(@RequestParam Long userId) {
+        return chatMessageService.recordList(userId);
+    }
 }
 

@@ -1,4 +1,4 @@
-package com.moments.claw.config;
+package com.moments.claw.config.security;
 
 import com.moments.claw.handler.filter.JwtAuthenticationTokenFilter;
 import com.moments.claw.handler.security.AccessDeniedHandlerImpl;

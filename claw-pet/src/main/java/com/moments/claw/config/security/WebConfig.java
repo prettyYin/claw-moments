@@ -1,4 +1,4 @@
-package com.moments.claw.config;
+package com.moments.claw.config.security;
 
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;

@@ -1,4 +1,4 @@
-package com.moments.claw.config;
+package com.moments.claw.config.cors;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
