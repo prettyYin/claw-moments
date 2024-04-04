@@ -1,8 +1,7 @@
 package com.moments.claw.controller;
 
-import com.moments.claw.domain.base.entity.User;
-import com.moments.claw.domain.common.utils.SecurityUtils;
-import com.moments.claw.service.UserService;
+import com.moments.claw.domain.base.entity.Fans;
+import com.moments.claw.service.FansService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -11,36 +10,24 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * (ClawUser)表控制层
+ * 用户粉丝表(Fans)表控制层
  *
  * @author chandler
- * @since 2024-03-18 21:33:01
+ * @since 2024-04-05 01:35:18
  */
-@Api(tags = "UserController控制层", value = "/user")
+@Api(tags = "FansController控制层", value = "/fans")
 @RestController
-@RequestMapping("/user")
-public class UserController extends BaseController {
+@RequestMapping("/fans")
+public class FansController extends BaseController {
     /**
      * 服务对象
      */
     @Resource
-    private UserService userService;
-
-    /**
-     * 通过主键查询单条数据
-     *
-     * @return 单条数据
-     */
-    @ApiOperation(value = "获取登陆人信息")
-    @GetMapping("/index")
-    public R<?> index() {
-        Long id = SecurityUtils.getUserId();
-        User user = userService.getUserInfoById(id);
-        return R.success(user);
-    }
+    private FansService fansService;
 
     /**
      * 查询所有数据
@@ -51,7 +38,7 @@ public class UserController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo<?> selectAll() {
         startPage();
-        return getDataTable(userService.list());
+        return getDataTable(fansService.list());
     }
 
     /**
@@ -61,33 +48,33 @@ public class UserController extends BaseController {
      * @return 单条数据
      */
     @ApiOperation(value = "通过主键查询单条数据")
-    @GetMapping("/index/{id}")
-    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Long id) {
-        return R.success(userService.getUserInfoById(id));
+    @GetMapping("/{id}")
+    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
+        return R.success(fansService.getById(id));
     }
 
     /**
      * 新增数据
      *
-     * @param user 实体对象
+     * @param fans 实体对象
      * @return 新增结果
      */
     @ApiOperation(value = "新增数据")
     @PostMapping
-    public R<?> insert(@RequestBody User user) {
-        return R.success(userService.save(user));
+    public R<?> insert(@RequestBody Fans fans) {
+        return R.success(fansService.save(fans));
     }
 
     /**
      * 修改数据
      *
-     * @param user 实体对象
+     * @param fans 实体对象
      * @return 修改结果
      */
     @ApiOperation(value = "修改数据")
-    @PutMapping("/update")
-    public R<?> update(@RequestBody User user) {
-        return R.success(userService.updateById(user));
+    @PutMapping
+    public R<?> update(@RequestBody Fans fans) {
+        return R.success(fansService.updateById(fans));
     }
 
     /**
@@ -99,7 +86,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "删除数据")
     @DeleteMapping
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
-        return R.success(userService.removeByIds(idList));
+        return R.success(fansService.removeByIds(idList));
     }
 }
 
