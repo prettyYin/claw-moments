@@ -4,19 +4,16 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.moments.claw.domain.base.entity.ChatMessage;
 import com.moments.claw.domain.common.constant.GlobalConstants;
-import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.domain.entity.Message;
 import com.moments.claw.service.ChatMessageService;
 import com.moments.claw.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,7 +28,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocketServer {
 
     private static ChatMessageService chatMessageService;
-    private static RedisService redisService;
     private static UserService userService;
 
     // 与某个客户端的连接会话，需要通过它来给客户端发送数据
@@ -48,8 +44,7 @@ public class WebSocketServer {
 
     // 解决属性注入为null的问题
     @Autowired
-    public void init(RedisService redisService, ChatMessageService chatMessageService, UserService userService) {
-        WebSocketServer.redisService = redisService;
+    public void init(ChatMessageService chatMessageService, UserService userService) {
         WebSocketServer.chatMessageService = chatMessageService;
         WebSocketServer.userService = userService;
     }
