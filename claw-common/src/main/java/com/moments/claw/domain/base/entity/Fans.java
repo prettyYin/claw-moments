@@ -3,10 +3,7 @@ package com.moments.claw.domain.base.entity;
 import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 
@@ -17,6 +14,8 @@ import com.moments.claw.domain.BaseEntity;
  * @since 2024-04-05 01:29:48
  */
 @EqualsAndHashCode(callSuper = true)
+@ToString
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

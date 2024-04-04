@@ -1,6 +1,7 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Fans;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.service.FansService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,10 @@ public class FansController extends BaseController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public TableDataInfo<?> selectAll() {
+    public TableDataInfo<?> list() {
         startPage();
-        return getDataTable(fansService.list());
+        Long userId = SecurityUtils.getUserId();
+        return getDataTable(fansService.fansList(userId));
     }
 
     /**
@@ -87,6 +89,14 @@ public class FansController extends BaseController {
     @DeleteMapping
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(fansService.removeByIds(idList));
+    }
+
+    @ApiOperation(value = "粉丝数")
+    @GetMapping("/count")
+    public R<?> count() {
+        Long userId = SecurityUtils.getUserId();
+        Integer count = fansService.fansCount(userId);
+        return R.success(count);
     }
 }
 

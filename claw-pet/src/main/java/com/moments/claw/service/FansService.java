@@ -1,7 +1,12 @@
 package com.moments.claw.service;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Fans;
+import com.moments.claw.domain.vo.FansVo;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +17,18 @@ import com.moments.claw.domain.base.entity.Fans;
  */
 public interface FansService extends IService<Fans> {
 
+	default LambdaQueryChainWrapper<Fans> select(SFunction<Fans, ?>... columns) {
+		return lambdaQuery().select(columns);
+	}
+
+	/**
+	 * 粉丝数
+	 * @param userId 当前用户id
+	 */
+	Integer fansCount(Long userId);
+
+	/**
+	 * 粉丝列表
+	 */
+	List<FansVo> fansList(Long userId);
 }

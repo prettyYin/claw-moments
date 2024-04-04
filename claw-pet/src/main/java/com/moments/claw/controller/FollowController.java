@@ -1,6 +1,7 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Follow;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.service.FollowService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,15 +31,14 @@ public class FollowController extends BaseController {
     private FollowService followService;
 
     /**
-     * 查询所有数据
-     *
-     * @return 所有数据
+     * 关注列表
      */
-    @ApiOperation(value = "查询所有数据")
+    @ApiOperation(value = "关注列表")
     @GetMapping("/list")
-    public TableDataInfo<?> selectAll() {
+    public TableDataInfo<?> list() {
         startPage();
-        return getDataTable(followService.list());
+        Long userId = SecurityUtils.getUserId();
+        return getDataTable(followService.followList(userId));
     }
 
     /**
@@ -88,5 +88,15 @@ public class FollowController extends BaseController {
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(followService.removeByIds(idList));
     }
+
+
+    @ApiOperation(value = "关注数")
+    @GetMapping("/count")
+    public R<?> count() {
+        Long userId = SecurityUtils.getUserId();
+        Integer count = followService.followCount(userId);
+        return R.success(count);
+    }
+
 }
 
