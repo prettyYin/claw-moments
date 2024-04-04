@@ -11,7 +11,6 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -39,7 +38,8 @@ public class UserController extends BaseController {
     @GetMapping("/index")
     public R<?> index() {
         Long id = SecurityUtils.getUserId();
-        return R.success(userService.getById(id));
+        User user = userService.getUserInfoById(id);
+        return R.success(user);
     }
 
     /**
@@ -62,8 +62,8 @@ public class UserController extends BaseController {
      */
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/index/{id}")
-    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        return R.success(userService.getById(id));
+    public R<?> selectOne(@ApiParam(name = "id", value = "id", required = true) @PathVariable Long id) {
+        return R.success(userService.getUserInfoById(id));
     }
 
     /**

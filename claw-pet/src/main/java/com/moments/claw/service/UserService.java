@@ -18,4 +18,6 @@ public interface UserService extends IService<User> {
 	User getByUsername(String username);
 
 	String smsCode(MobileDto mobileDto);
+
+	User getUserInfoById(Long id);
 }

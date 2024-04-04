@@ -31,6 +31,11 @@ public class CustomException extends RuntimeException {
         this.message = message;
     }
 
+    public CustomException(String message) {
+        this.code = ResultEnum.FAIL.getCode();
+        this.message = message;
+    }
+
     public int getCode() {
         return code;
     }

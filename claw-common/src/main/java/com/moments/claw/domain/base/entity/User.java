@@ -133,4 +133,8 @@ public class User extends BaseEntity {
 
     @ApiModelProperty(name = "status", value = "状态（-1异常，1正常，2冻结，3注销）")
     private Integer status;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "avatar", value = "头像图片Url")
+    private String avatar;
 }
