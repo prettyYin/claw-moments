@@ -12,4 +12,6 @@ public class FriendVo {
 	private String nickName;
 
 	private String avatar;
+
+	private Boolean isFollow;
 }

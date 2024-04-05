@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface FriendService {
 
-	public List<FriendVo> friendList(Long userId);
+	List<FriendVo> friendList(Long userId);
+
 }

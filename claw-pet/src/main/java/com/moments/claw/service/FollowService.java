@@ -27,5 +27,16 @@ public interface FollowService extends IService<Follow> {
 	 */
 	Integer followCount(Long userId);
 
+	/**
+	 * 关注列表
+	 */
 	List<FollowVo> followList(Long userId);
+
+	/**
+	 * 是否已关注
+	 * @param fansId 粉丝用户id
+	 * @param followingId 被关注者用户id
+	 * @return 是否已关注
+	 */
+	Boolean isFollow(Long fansId, Long followingId);
 }

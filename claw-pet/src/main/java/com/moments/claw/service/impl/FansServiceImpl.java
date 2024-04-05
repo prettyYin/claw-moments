@@ -6,9 +6,7 @@ import com.moments.claw.domain.base.entity.Fans;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.vo.FansVo;
 import com.moments.claw.mapper.FansMapper;
-import com.moments.claw.service.FansService;
-import com.moments.claw.service.FilesService;
-import com.moments.claw.service.UserService;
+import com.moments.claw.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,7 @@ public class FansServiceImpl extends ServiceImpl<FansMapper, Fans> implements Fa
 
 	private final UserService userService;
 	private final FilesService filesService;
+	private final FollowService followService;
 
 	@Override
 	public List<FansVo> fansList(Long userId) {
@@ -42,12 +41,14 @@ public class FansServiceImpl extends ServiceImpl<FansMapper, Fans> implements Fa
 				nickname = user.getNickname();
 				avatar = filesService.getFurl(user.getAvatarId());
 			}
+			Boolean isFollow = followService.isFollow(userId, f.getFansId());
 			result.add(
 					FansVo
 							.builder()
 							.fansUserId(f.getFansId())
 							.nickName(nickname)
 							.avatar(avatar)
+							.isFollow(isFollow)
 							.build());
 		});
 		return result;

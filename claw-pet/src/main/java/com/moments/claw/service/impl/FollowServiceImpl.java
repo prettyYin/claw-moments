@@ -1,6 +1,8 @@
 package com.moments.claw.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Follow;
 import com.moments.claw.domain.base.entity.User;
@@ -30,6 +32,16 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
 	private final FilesService filesService;
 
 	@Override
+	public Boolean isFollow(Long fansId, Long followingId) {
+		// 构建关注查询条件
+		LambdaQueryWrapper<Follow> followQuery = Wrappers.lambdaQuery(Follow.class).eq(Follow::getUserId, fansId).eq(Follow::getFollowId, followingId);
+		// 查询关注记录
+		Follow follow = getOne(followQuery);
+		return Objects.nonNull(follow);
+	}
+
+
+	@Override
 	public List<FollowVo> followList(Long userId) {
 		List<Follow> following = lambdaQuery().eq(Follow::getUserId, userId).list();
 		List<FollowVo> result = new ArrayList<>();
@@ -42,13 +54,15 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
 				nickname = user.getNickname();
 				avatar = filesService.getFurl(user.getAvatarId());
 			}
+			Boolean isFollow = isFollow(userId, f.getFollowId());
 			result.add(
 					FollowVo
-					.builder()
-					.followUserId(f.getFollowId())
-					.nickName(nickname)
-					.avatar(avatar)
-					.build());
+							.builder()
+							.followUserId(f.getFollowId())
+							.nickName(nickname)
+							.avatar(avatar)
+							.isFollow(isFollow)
+							.build());
 		});
 		return result;
 	}
