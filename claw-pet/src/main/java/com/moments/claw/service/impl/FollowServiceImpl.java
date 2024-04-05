@@ -33,9 +33,9 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
 	public List<FollowVo> followList(Long userId) {
 		List<Follow> following = lambdaQuery().eq(Follow::getUserId, userId).list();
 		List<FollowVo> result = new ArrayList<>();
-		following.forEach(follow -> {
+		following.forEach(f -> {
 			// 赋值关注者昵称、头像
-			User user = userService.getById(userId);
+			User user = userService.getById(f.getFollowId());
 			String nickname = "";
 			String avatar = "";
 			if (Objects.nonNull(user)) {
@@ -45,7 +45,7 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
 			result.add(
 					FollowVo
 					.builder()
-					.followUserId(follow.getFollowId())
+					.followUserId(f.getFollowId())
 					.nickName(nickname)
 					.avatar(avatar)
 					.build());

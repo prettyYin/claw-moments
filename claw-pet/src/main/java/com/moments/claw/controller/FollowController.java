@@ -1,7 +1,10 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Follow;
+import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
+import com.moments.claw.domain.dto.FollowDtoPageQuery;
+import com.moments.claw.domain.vo.FollowVo;
 import com.moments.claw.service.FollowService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,10 +38,10 @@ public class FollowController extends BaseController {
      */
     @ApiOperation(value = "关注列表")
     @GetMapping("/list")
-    public TableDataInfo<?> list() {
-        startPage();
+    public TableDataInfo<?> list(FollowDtoPageQuery pageQuery) {
         Long userId = SecurityUtils.getUserId();
-        return getDataTable(followService.followList(userId));
+        List<FollowVo> voList = followService.followList(userId);
+        return PaginationUtil.handPaged(voList, pageQuery.getPageSize(), pageQuery.getPageNum());
     }
 
     /**

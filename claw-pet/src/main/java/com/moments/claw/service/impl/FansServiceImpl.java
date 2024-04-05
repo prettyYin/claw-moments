@@ -33,9 +33,9 @@ public class FansServiceImpl extends ServiceImpl<FansMapper, Fans> implements Fa
 	public List<FansVo> fansList(Long userId) {
 		List<Fans> fans = lambdaQuery().eq(Fans::getUserId, userId).list();
 		List<FansVo> result = new ArrayList<>();
-		fans.forEach(follow -> {
-			// 赋值关注者昵称、头像
-			User user = userService.getById(userId);
+		fans.forEach(f -> {
+			// 赋值粉丝昵称、头像
+			User user = userService.getById(f.getFansId());
 			String nickname = "";
 			String avatar = "";
 			if (Objects.nonNull(user)) {
@@ -45,7 +45,7 @@ public class FansServiceImpl extends ServiceImpl<FansMapper, Fans> implements Fa
 			result.add(
 					FansVo
 							.builder()
-							.fansUserId(follow.getFansId())
+							.fansUserId(f.getFansId())
 							.nickName(nickname)
 							.avatar(avatar)
 							.build());

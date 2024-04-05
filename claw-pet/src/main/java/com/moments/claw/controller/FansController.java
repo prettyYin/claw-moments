@@ -1,7 +1,10 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Fans;
+import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
+import com.moments.claw.domain.dto.FansDtoPageQuery;
+import com.moments.claw.domain.vo.FansVo;
 import com.moments.claw.service.FansService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,10 +40,10 @@ public class FansController extends BaseController {
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public TableDataInfo<?> list() {
-        startPage();
+    public TableDataInfo<?> list(FansDtoPageQuery pageQuery) {
         Long userId = SecurityUtils.getUserId();
-        return getDataTable(fansService.fansList(userId));
+        List<FansVo> voList = fansService.fansList(userId);
+        return PaginationUtil.handPaged(voList, pageQuery.getPageSize(), pageQuery.getPageNum());
     }
 
     /**
