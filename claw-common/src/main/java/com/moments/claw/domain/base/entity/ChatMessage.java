@@ -48,6 +48,5 @@ public class ChatMessage extends BaseEntity {
 	private LocalDateTime sendTime;
 
 	@TableField(exist = false)
-	private User user;
-
+	private String avartar;
 }

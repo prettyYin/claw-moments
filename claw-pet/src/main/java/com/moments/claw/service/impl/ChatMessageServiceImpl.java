@@ -12,7 +12,6 @@ import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.mapper.ChatMessageMapper;
 import com.moments.claw.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +57,6 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 	public List<ChatMessage> getUnreadMessages(Long userId) {
 		List<String> unreadMessages = redisService.lRange(PetConstants.UNREAD_CHAT_MESSAGE_PREFIX + userId, 0, -1);
 		// 聊天缓存中设为已读
-
 		List<ChatMessage> chatMessages = unreadMessages
 				.stream()
 				.map(item -> {

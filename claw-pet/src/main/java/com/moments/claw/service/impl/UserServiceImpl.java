@@ -70,6 +70,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		return user;
 	}
 
+	@Override
+	public String getFileUrlByUserId(Long userId) {
+		User user = getById(userId);
+		return filesService.getFurl(user.getAvatarId());
+	}
+
+	@Override
+	public String getNicknameByUserId(Long userId) {
+		User user = getById(userId);
+		String nickname = "";
+		if (Objects.nonNull(user)) {
+			nickname = user.getNickname();
+		}
+		return nickname;
+	}
+
 	//生成4位数字验证码
 	private static String randomSmsCode(){
 		String str = "0123456789";

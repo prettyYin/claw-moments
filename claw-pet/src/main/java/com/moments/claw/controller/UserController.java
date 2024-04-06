@@ -101,5 +101,25 @@ public class UserController extends BaseController {
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(userService.removeByIds(idList));
     }
+
+    /**
+     * 获取用户的头像地址
+     * @param userId 用户id
+     * @return 头像地址
+     */
+    @GetMapping("/getFileUrl/{userId}")
+    public R<?> getFileUrlByUserId(@PathVariable("userId") Long userId) {
+        return R.success(userService.getFileUrlByUserId(userId));
+    }
+
+    /**
+     * 获取昵称
+     * @param userId 用户id
+     * @return 昵称
+     */
+    @GetMapping("/getNickname/{userId}")
+    public R<?> getNicknameByUserId(@PathVariable("userId") Long userId) {
+        return R.success(userService.getNicknameByUserId(userId));
+    }
 }
 

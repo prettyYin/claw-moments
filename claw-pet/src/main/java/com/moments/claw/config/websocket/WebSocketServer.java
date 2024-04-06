@@ -39,8 +39,6 @@ public class WebSocketServer {
  
     // concurrent包的线程安全Set,用来存放每个客户端对应的WebSocket对象。
     private static final CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
-    // 用于存放离线消息
-//    private static ConcurrentHashMap<Long, List<ChatMessage>> offlineMessageMap = new ConcurrentHashMap();
 
     // 解决属性注入为null的问题
     @Autowired
