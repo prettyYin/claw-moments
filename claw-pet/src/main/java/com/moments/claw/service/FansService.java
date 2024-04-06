@@ -2,7 +2,7 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.moments.claw.domain.base.entity.Fans;
 import com.moments.claw.domain.vo.FansVo;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author chandler
  * @since 2024-04-05 01:32:37
  */
-public interface FansService extends IService<Fans> {
+public interface FansService extends IMppService<Fans> {
 
 	default LambdaQueryChainWrapper<Fans> select(SFunction<Fans, ?>... columns) {
 		return lambdaQuery().select(columns);

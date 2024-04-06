@@ -1,6 +1,6 @@
 package com.moments.claw.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.jeffreyning.mybatisplus.base.MppBaseMapper;
 import com.moments.claw.domain.base.entity.Follow;
 
 
@@ -10,7 +10,7 @@ import com.moments.claw.domain.base.entity.Follow;
  * @author chandler
  * @since 2024-04-05 01:36:59
  */
-public interface FollowMapper extends BaseMapper<Follow> {
+public interface FollowMapper extends MppBaseMapper<Follow> {
 
 }
 

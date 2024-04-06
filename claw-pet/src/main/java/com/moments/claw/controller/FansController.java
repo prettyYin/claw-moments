@@ -27,9 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/fans")
 public class FansController extends BaseController {
-    /**
-     * 服务对象
-     */
+
     @Resource
     private FansService fansService;
 

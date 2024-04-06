@@ -3,7 +3,7 @@ package com.moments.claw.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.moments.claw.domain.base.entity.Follow;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.vo.FollowVo;
@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 @Service("followService")
 @RequiredArgsConstructor
-public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> implements FollowService {
+public class FollowServiceImpl extends MppServiceImpl<FollowMapper, Follow> implements FollowService {
 
 	private final UserService userService;
 	private final FilesService filesService;

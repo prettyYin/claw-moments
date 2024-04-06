@@ -1,7 +1,7 @@
 package com.moments.claw.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.moments.claw.domain.base.entity.Fans;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.vo.FansVo;
@@ -22,7 +22,7 @@ import java.util.Objects;
  */
 @Service("fansService")
 @RequiredArgsConstructor
-public class FansServiceImpl extends ServiceImpl<FansMapper, Fans> implements FansService {
+public class FansServiceImpl extends MppServiceImpl<FansMapper, Fans> implements FansService {
 
 	private final UserService userService;
 	private final FilesService filesService;

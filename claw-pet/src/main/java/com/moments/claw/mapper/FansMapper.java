@@ -1,6 +1,6 @@
 package com.moments.claw.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.jeffreyning.mybatisplus.base.MppBaseMapper;
 import com.moments.claw.domain.base.entity.Fans;
 
 
@@ -10,7 +10,7 @@ import com.moments.claw.domain.base.entity.Fans;
  * @author chandler
  * @since 2024-04-05 01:32:37
  */
-public interface FansMapper extends BaseMapper<Fans> {
+public interface FansMapper extends MppBaseMapper<Fans> {
 
 }
 

@@ -2,7 +2,7 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.moments.claw.domain.base.entity.Follow;
 import com.moments.claw.domain.vo.FollowVo;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * @author chandler
  * @since 2024-04-05 01:36:59
  */
-public interface FollowService extends IService<Follow> {
+public interface FollowService extends IMppService<Follow> {
 
 	default LambdaQueryChainWrapper<Follow> select(SFunction<Follow, ?>... columns) {
 		return lambdaQuery().select(columns);

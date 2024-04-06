@@ -65,7 +65,7 @@ public enum ResultEnum {
     /**
      * 身份验证错误
      */
-    AUTHENTICATION_ERROR(1004, "身份验证异常"),
+    AUTHENTICATION_ERROR(401, "身份验证异常"),
     /**
      * 逻辑错误
      */

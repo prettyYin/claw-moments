@@ -92,7 +92,9 @@ public class FollowController extends BaseController {
         return R.success(followService.removeByIds(idList));
     }
 
-
+    /**
+     * 关注数
+     */
     @ApiOperation(value = "关注数")
     @GetMapping("/count")
     public R<?> count() {
