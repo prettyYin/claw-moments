@@ -151,7 +151,7 @@ public class WebSocketServer {
             return false;
         }
         // todo 缓存聊天记录，后期做定时任务持久化至数据库
-        chatMessageService.cacheMessages(message);
+        chatMessageService.cacheMessages(message, msg.getSendUserId(), msg.getAcceptUserId());
         return true;
     }
     /**

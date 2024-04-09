@@ -1,8 +1,10 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.ChatMessage;
+import com.moments.claw.domain.dto.ChatMessageRecordDtoPageQuery;
 import com.moments.claw.service.ChatMessageService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
@@ -89,10 +91,10 @@ public class ChatMessageController extends BaseController {
         return R.success(chatMessageService.removeByIds(idList));
     }
 
-    @ApiOperation(value = "聊天列表")
-    @GetMapping("/recordList")
-    public TableDataInfo<?> recordList(@RequestParam Long userId) {
-        return chatMessageService.recordList(userId);
+    @ApiOperation(value = "聊天历史")
+    @PostMapping("/recordList")
+    public TableDataInfo<?> recordList(@RequestBody ChatMessageRecordDtoPageQuery pageQuery) {
+        return chatMessageService.recordList(pageQuery);
     }
 }
 

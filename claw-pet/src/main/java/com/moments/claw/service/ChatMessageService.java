@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.ChatMessage;
 import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.domain.dto.ChatMessageRecordDtoPageQuery;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface ChatMessageService extends IService<ChatMessage> {
 		return lambdaQuery().select(columns);
 	}
 
-	TableDataInfo<?> recordList(Long userId);
+	TableDataInfo<?> recordList(ChatMessageRecordDtoPageQuery pageQuery);
 
 	/**
 	 * 从缓存中获取未读消息
@@ -39,7 +40,8 @@ public interface ChatMessageService extends IService<ChatMessage> {
 
 	/**
 	 * 缓存聊天记录
+	 *
 	 * @param message 聊天记录
 	 */
-	void cacheMessages(String message);
+	void cacheMessages(String message, Long sendUserId, Long acceptUserId);
 }

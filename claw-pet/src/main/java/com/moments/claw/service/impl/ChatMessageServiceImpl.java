@@ -9,15 +9,21 @@ import com.moments.claw.domain.base.entity.ChatMessage;
 import com.moments.claw.domain.common.constant.GlobalConstants;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.common.service.RedisService;
+import com.moments.claw.domain.common.utils.PaginationUtil;
+import com.moments.claw.domain.common.utils.SecurityUtils;
+import com.moments.claw.domain.dto.ChatMessageRecordDtoPageQuery;
+import com.moments.claw.domain.vo.ChatMessageVo;
 import com.moments.claw.mapper.ChatMessageMapper;
 import com.moments.claw.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * (ChatMessage)表服务实现类
@@ -32,23 +38,34 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 	private final RedisService redisService;
 
 	@Override
-	public TableDataInfo<?> recordList(Long userId) {
-//		List<ChatMessage> list = select(ChatMessage::getAcceptUserId).eq(ChatMessage::getSendUserId, userId).groupBy(ChatMessage::getAcceptUserId).list();
-//		if (list.size() == 0) { // 没有和该用户的聊天记录
-//			return new TableDataInfo<>();
-//		}
-//		List<Long> acceptUserIds = list.stream().map(ChatMessage::getAcceptUserId).collect(Collectors.toList());
-//		// 根据接收用户id分组出聊天记录
-////		List<>
-//		acceptUserIds.forEach(id -> {
-//			List<ChatMessage> messages = list(
-//					new LambdaQueryWrapper<ChatMessage>()
-//							.eq(ChatMessage::getSendUserId, userId)
-//							.eq(ChatMessage::getAcceptUserId, id)
-//			);
-//		});
-//		redisService.lRange(userId + ":" + )
-		return null;
+	public TableDataInfo<?> recordList(ChatMessageRecordDtoPageQuery pageQuery) {
+		Long sendUserId = SecurityUtils.getUserId();
+		Long acceptUserId = pageQuery.getAcceptUserId();
+		String key = generateShareKey(sendUserId, acceptUserId);
+		// 获取聊天记录
+		List<String> oppositeMsgStr = redisService.lRange(key, 0, -1);
+		List<ChatMessageVo> msgList = oppositeMsgStr
+				.stream()
+				.map(m -> {
+					try {
+						return new ObjectMapper().readValue(m, ChatMessageVo.class);
+					} catch (IOException e) {
+						log.error("数据类型转化错误,{}", e);
+					}
+					return null;
+				})
+				.sorted(Comparator.comparing(ChatMessageVo::getSendTime))
+				.collect(Collectors.toList());
+		// 设置消息接收/发送类型（对于当前用户而言）
+		msgList.forEach(m -> {
+			if (m.getSendUserId().equals(sendUserId)) {
+				m.setTo("out");
+			} else {
+				m.setTo("in");
+			}
+		});
+		// 分页
+		return PaginationUtil.handPaged(msgList, pageQuery.getPageSize(), pageQuery.getPageNum());
 	}
 
 
@@ -88,8 +105,21 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 
 	@Async
 	@Override
-	public void cacheMessages(String message) {
-		redisService.lPush(PetConstants.CHAT_MESSAGE_PREFIX, message);
+	public void cacheMessages(String message, Long sendUserId, Long acceptUserId) {
+		String shareKey = generateShareKey(sendUserId, acceptUserId);
+		redisService.lPush(shareKey, message);
+	}
+
+	/**
+	 * 生成共享redis key,确保他们的聊天记录存储于缓存中的同一个列表中
+	 * @return 共享key
+	 */
+	private String generateShareKey(Long id1, Long id2) {
+		if (id1.compareTo(id2) <= 0) {
+			return PetConstants.CHAT_MESSAGE_PREFIX + id1 + "-" + id2;
+		} else {
+			return PetConstants.CHAT_MESSAGE_PREFIX + id2 + "-" + id1;
+		}
 	}
 }
 

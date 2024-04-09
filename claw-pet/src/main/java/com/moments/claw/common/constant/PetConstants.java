@@ -8,7 +8,7 @@ public class PetConstants {
 	/*用户登录前缀*/
 	public static final String LOGIN_USER_PREFIX = "claw-pet-login:";
 	/*聊天消息前缀*/
-	public static final String CHAT_MESSAGE_PREFIX = "chat-message";
+	public static final String CHAT_MESSAGE_PREFIX = "chat-message:";
 	/*未读聊天消息前缀*/
 	public static final String UNREAD_CHAT_MESSAGE_PREFIX = "unread-chat-message:";
 }

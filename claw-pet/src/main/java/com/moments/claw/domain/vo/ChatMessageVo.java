@@ -1,32 +1,24 @@
-package com.moments.claw.domain.base.entity;
+package com.moments.claw.domain.vo;
 
-
-import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.moments.claw.domain.BaseEntity;
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@ToString
-@EqualsAndHashCode(callSuper = true)
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-@TableName("claw_chat_message")
-public class ChatMessage extends BaseEntity {
-
-	@TableId(type = IdType.AUTO)
-	private Integer id;
+public class ChatMessageVo {
 
 	private Long sendUserId;
 
 	private Long acceptUserId;
+
+	private String avatar;
 
 	private String type;
 
@@ -36,6 +28,9 @@ public class ChatMessage extends BaseEntity {
 
 	private Long readedNum;
 
+	// in:接收,out:发送
+	private String to;
+
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -43,10 +38,7 @@ public class ChatMessage extends BaseEntity {
 
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@TableField(fill = FieldFill.INSERT)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	private LocalDateTime sendTime;
 
-	@TableField(exist = false)
-	private String avatar;
 }
