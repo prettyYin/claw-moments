@@ -1,10 +1,11 @@
 package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.ChatMessage;
+import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.dto.ChatMessageRecordDtoPageQuery;
+import com.moments.claw.domain.vo.ChatWithUserVo;
 import com.moments.claw.service.ChatMessageService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
@@ -95,6 +96,12 @@ public class ChatMessageController extends BaseController {
     @PostMapping("/recordList")
     public TableDataInfo<?> recordList(@RequestBody ChatMessageRecordDtoPageQuery pageQuery) {
         return chatMessageService.recordList(pageQuery);
+    }
+
+    @ApiOperation("有和本人聊天过的列表")
+    @GetMapping("/chatPersonList")
+    public TableDataInfo<ChatWithUserVo> chatPersonList(PageQuery pageQuery) {
+        return chatMessageService.chatPersonList(pageQuery);
     }
 }
 

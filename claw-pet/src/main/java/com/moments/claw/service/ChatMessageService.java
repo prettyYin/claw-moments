@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.ChatMessage;
+import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ChatMessageRecordDtoPageQuery;
+import com.moments.claw.domain.vo.ChatWithUserVo;
 
 import java.util.List;
 
@@ -44,4 +46,6 @@ public interface ChatMessageService extends IService<ChatMessage> {
 	 * @param message 聊天记录
 	 */
 	void cacheMessages(String message, Long sendUserId, Long acceptUserId);
+
+	TableDataInfo<ChatWithUserVo> chatPersonList(PageQuery pageQuery);
 }

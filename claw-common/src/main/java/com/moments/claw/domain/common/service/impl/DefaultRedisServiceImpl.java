@@ -34,7 +34,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @see <a href="http://redis.io/commands/keys">Keys Command</a>
 	 */
 	@Override
-	public Collection<String> keys(String pattern) {
+	public Set<String> keys(String pattern) {
 		return redisTemplate.keys(pattern);
 	}
 

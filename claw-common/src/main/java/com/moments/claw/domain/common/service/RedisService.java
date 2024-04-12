@@ -24,7 +24,7 @@ public interface RedisService<K,V> {
 	 * @return java.util.Set
 	 * @see <a href="http://redis.io/commands/keys">Keys Command</a>
 	 */
-	Collection<String> keys(String pattern);
+	Set<String> keys(String pattern);
 
 	/**
 	 * 保存属性
