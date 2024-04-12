@@ -114,7 +114,7 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 				// 缓存中存放发送者id是当前用户和对方用户的记录,过滤出发送人为对方用户的信息
 					// 随便取出一条记录来赋值聊天对方的信息,这里取最后一条数据，因为已经按时间升序排序,最后一条即为最后发送的信息
 				ChatMessageVo messageVo = chatHistoryList.get(chatHistoryList.size() - 1);
-				if (messageVo.getAcceptUserId().equals(userId) || messageVo.getAcceptUserId().equals(userId)) { // 自己是这条消息的参与者
+				if (messageVo.getSendUserId().equals(userId) || messageVo.getAcceptUserId().equals(userId)) { // 自己是这条消息的参与者
 					Long id = userId.equals(messageVo.getSendUserId()) ? messageVo.getAcceptUserId() : messageVo.getSendUserId();
 					String nickname = userService.getById(messageVo.getAcceptUserId()).getNickname();
 					int unReadCount = getUnreadMessages(userId).size();

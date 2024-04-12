@@ -1,51 +1,49 @@
 package com.moments.claw.domain.common.service;
- 
+
+import com.moments.claw.domain.common.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.geo.Distance;
 import org.springframework.data.redis.core.*;
- 
+
 /**
  * AbstractRedisService
  *
  * @author xm.z
  */
 @Slf4j
-public abstract class AbstractRedisService<K,V> implements RedisService<K,V> {
-
-	public abstract Distance geoCalculationDistance(String key, String placeOne, String placeTwo);
+public abstract class AbstractRedisService implements RedisService {
 
 	/**
 	 * Get Helper class that simplifies Redis data access code.
 	 * @return RedisTemplate 获取
 	 */
-	protected abstract RedisTemplate getTemplate();
- 
-	public HashOperations<String, String, V> hashOps() {
+	protected abstract RedisTemplate<String, Object> getTemplate();
+
+	public HashOperations<String, Object, Object> hashOps() {
 		return this.getTemplate().opsForHash();
 	}
- 
-	public ValueOperations<String, V> valueOps() {
+
+	public ValueOperations<String, Object> valueOps() {
 		return this.getTemplate().opsForValue();
 	}
- 
-	public ListOperations<String, V> listOps() {
+
+	public ListOperations<String, Object> listOps() {
 		return this.getTemplate().opsForList();
 	}
- 
-	public SetOperations<String, V> setOps() {
+
+	public SetOperations<String, Object> setOps() {
 		return this.getTemplate().opsForSet();
 	}
- 
-	public ZSetOperations<String, V> zSetOps() {
+
+	public ZSetOperations<String, Object> zSetOps() {
 		return this.getTemplate().opsForZSet();
 	}
- 
-	public StreamOperations<String, K, V> streamOps() {
+
+	public StreamOperations<String, Object, Object> streamOps() {
 		return this.getTemplate().opsForStream();
 	}
- 
+
 	public GeoOperations<String, Object> geoOps() {
 		return this.getTemplate().opsForGeo();
 	}
- 
+
 }

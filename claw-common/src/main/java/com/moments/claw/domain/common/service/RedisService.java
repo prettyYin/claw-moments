@@ -1,22 +1,23 @@
 package com.moments.claw.domain.common.service;
- 
+
 import org.springframework.data.domain.Sort;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Point;
 import org.springframework.data.redis.connection.RedisGeoCommands;
- 
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
- 
+
 /**
  * Redis 服务
  *
  * @author xm.z
  */
-public interface RedisService<K,V> {
+@SuppressWarnings({"unused","unchecked"})
+public interface RedisService {
 
 	/**
 	 * 获取所有符合指定表达式的 key
@@ -32,21 +33,21 @@ public interface RedisService<K,V> {
 	 * @param value value值
 	 * @param time 时间戳
 	 */
-	 void set(String key, V value, long time);
+	<V> void set(String key, V value, long time);
 
 	/**
 	 * 保存属性
 	 * @param key key值
 	 * @param value value值
 	 */
-	 void set(String key, V value);
+	<V> void set(String key, V value);
 
 	/**
 	 * 获取属性
 	 * @param key key值
 	 * @return 返回对象
 	 */
-	 V get(String key);
+	<V> V get(String key);
 
 	/**
 	 * 从指定的 keys 批量获取属性
@@ -54,14 +55,14 @@ public interface RedisService<K,V> {
 	 * @return values list，当值为空时，该 key 对应的 value 为 null
 	 * @see <a href="http://redis.io/commands/mget">MGet Command</a>
 	 */
-	 List<V> mGet(Collection<String> keys);
+	List<Object> mGet(Collection<String> keys);
 
 	/**
 	 * 批量获取 keys 的属性，并返回一个 map
 	 * @param keys keys
 	 * @return map，key 和 value 的键值对集合，当 value 获取为 null 时，不存入此 map
 	 */
-	 Map<String, V> mGetToMap(Collection<String> keys);
+	Map<String, Object> mGetToMap(Collection<String> keys);
 
 	/**
 	 * 删除属性
@@ -139,7 +140,7 @@ public interface RedisService<K,V> {
 	 * @param hashKey 内部key值
 	 * @return 返回内部key的value
 	 */
-	V hGet(String key, String hashKey);
+	<V> V hGet(String key, String hashKey);
 
 	/**
 	 * 向Hash结构中放入一个属性
@@ -149,7 +150,7 @@ public interface RedisService<K,V> {
 	 * @param time 过期时间
 	 * @return 返回是否成功
 	 */
-	 Boolean hSet(String key, String hashKey, V value, long time);
+	<V> Boolean hSet(String key, String hashKey, V value, long time);
 
 	/**
 	 * 向Hash结构中放入一个属性
@@ -157,14 +158,14 @@ public interface RedisService<K,V> {
 	 * @param hashKey 内部key
 	 * @param value 内部key的value
 	 */
-	 void hSet(String key, String hashKey, V value);
+	<V> void hSet(String key, String hashKey, V value);
 
 	/**
 	 * 直接获取整个Hash结构
 	 * @param key 外部key值
 	 * @return 返回hashMap
 	 */
-	Map<String, V> hGetAll(String key);
+	Map<Object, Object> hGetAll(String key);
 
 	/**
 	 * 直接设置整个Hash结构
@@ -173,21 +174,21 @@ public interface RedisService<K,V> {
 	 * @param time 过期时间
 	 * @return 返回是否成功
 	 */
-	 Boolean hSetAll(String key, Map<String, V> map, long time);
+	<V> Boolean hSetAll(String key, Map<String, V> map, long time);
 
 	/**
 	 * 直接设置整个Hash结构
 	 * @param key 外部key
 	 * @param map hashMap值
 	 */
-	 void hSetAll(String key, Map<String, V> map);
+	void hSetAll(String key, Map<String, ?> map);
 
 	/**
 	 * 删除Hash结构中的属性
 	 * @param key 外部key值
 	 * @param hashKey 内部key值
 	 */
-	 void hDel(String key, K... hashKey);
+	void hDel(String key, Object... hashKey);
 
 	/**
 	 * 判断Hash结构中是否有该属性
@@ -220,7 +221,7 @@ public interface RedisService<K,V> {
 	 * @param key key
 	 * @return 返回set集合
 	 */
-	 Set<V> sMembers(String key);
+	Set<Object> sMembers(String key);
 
 	/**
 	 * 向Set结构中添加属性
@@ -228,7 +229,7 @@ public interface RedisService<K,V> {
 	 * @param values value集
 	 * @return 返回增加数量
 	 */
-	 Long sAdd(String key, V... values);
+	Long sAdd(String key, Object... values);
 
 	/**
 	 * 向Set结构中添加属性
@@ -237,7 +238,7 @@ public interface RedisService<K,V> {
 	 * @param values 值集合
 	 * @return 返回添加的数量
 	 */
-	 Long sAdd(String key, long time, V... values);
+	Long sAdd(String key, long time, Object... values);
 
 	/**
 	 * 是否为Set中的属性
@@ -245,7 +246,7 @@ public interface RedisService<K,V> {
 	 * @param value value
 	 * @return 返回是否存在
 	 */
-	 Boolean sIsMember(String key, V value);
+	Boolean sIsMember(String key, Object value);
 
 	/**
 	 * 获取Set结构的长度
@@ -260,7 +261,7 @@ public interface RedisService<K,V> {
 	 * @param values value集合
 	 * @return 删除掉的数据量
 	 */
-	 Long sRemove(String key, V... values);
+	Long sRemove(String key, Object... values);
 
 	/**
 	 * 获取List结构中的属性
@@ -269,7 +270,7 @@ public interface RedisService<K,V> {
 	 * @param end 结束
 	 * @return 返回查询的集合
 	 */
-	 List<V> lRange(String key, long start, long end);
+	<V> List<V> lRange(String key, long start, long end);
 
 	/**
 	 * 获取List结构的长度
@@ -284,7 +285,7 @@ public interface RedisService<K,V> {
 	 * @param index 索引
 	 * @return 对象
 	 */
-	 V lIndex(String key, long index);
+	Object lIndex(String key, long index);
 
 	/**
 	 * 向List结构中添加属性
@@ -292,7 +293,7 @@ public interface RedisService<K,V> {
 	 * @param value value
 	 * @return 增加后的长度
 	 */
-	 Long lPush(String key, V value);
+	<V> Long lPush(String key, V value);
 
 	/**
 	 * 向List结构中添加属性
@@ -301,7 +302,7 @@ public interface RedisService<K,V> {
 	 * @param time 过期时间
 	 * @return 增加后的长度
 	 */
-	 Long lPush(String key, V value, long time);
+	<V> Long lPush(String key, V value, long time);
 
 	/**
 	 * 向List结构中批量添加属性
@@ -309,7 +310,7 @@ public interface RedisService<K,V> {
 	 * @param values value 集合
 	 * @return 增加后的长度
 	 */
-	 Long lPushAll(String key, V... values);
+	<V> Long lPushAll(String key, V... values);
 
 	/**
 	 * 向List结构中批量添加属性
@@ -318,7 +319,7 @@ public interface RedisService<K,V> {
 	 * @param values value集合
 	 * @return 增加后的长度
 	 */
-	 Long lPushAll(String key, Long time, V... values);
+	<V> Long lPushAll(String key, Long time, V... values);
 
 	/**
 	 * 从List结构中移除属性
@@ -327,7 +328,7 @@ public interface RedisService<K,V> {
 	 * @param value value
 	 * @return 返回删除后的长度
 	 */
-	 Long lRemove(String key, long count, V value);
+	<V> Long lRemove(String key, long count, V value);
 
 	/**
 	 * 向bitmap中新增值
@@ -385,16 +386,16 @@ public interface RedisService<K,V> {
 	 * @param place 地点
 	 * @return 坐标集合
 	 */
-	 List<Point> geoGetPointList(String key, Object... place);
+	List<Point> geoGetPointList(String key, Object... place);
 
 	/**
 	 * 计算两个城市之间的距离
 	 * @param key key
 	 * @param placeOne 地点1
-	 * @param placeTwo 地点2
+	 * @param placeTow 地点2
 	 * @return 返回距离
 	 */
-	Distance geoCalculationDistance(String key, String placeOne, String placeTwo);
+	Distance geoCalculationDistance(String key, String placeOne, String placeTow);
 
 	/**
 	 * 获取附该地点附近的其他地点
@@ -405,9 +406,9 @@ public interface RedisService<K,V> {
 	 * @param sort 排序规则
 	 * @return 返回附近的地点集合
 	 */
-	 GeoResults<RedisGeoCommands.GeoLocation<Object>> geoNearByPlace(String key, String place, Distance distance,
-			long limit, Sort.Direction sort);
- 
+	GeoResults<RedisGeoCommands.GeoLocation<Object>> geoNearByPlace(String key, String place, Distance distance,
+																	long limit, Sort.Direction sort);
+
 	/**
 	 * 获取地点的hash
 	 * @param key key
@@ -415,5 +416,5 @@ public interface RedisService<K,V> {
 	 * @return 返回集合
 	 */
 	List<String> geoGetHash(String key, String... place);
- 
+
 }

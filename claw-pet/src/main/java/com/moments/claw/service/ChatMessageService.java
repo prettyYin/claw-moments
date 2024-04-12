@@ -29,7 +29,6 @@ public interface ChatMessageService extends IService<ChatMessage> {
 	/**
 	 * 从缓存中获取未读消息
 	 * @param userId 未读消息的用户id
-	 * @return
 	 */
 	List<ChatMessage> getUnreadMessages(Long userId);
 

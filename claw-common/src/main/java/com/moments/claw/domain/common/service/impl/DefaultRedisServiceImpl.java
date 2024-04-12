@@ -1,6 +1,5 @@
 package com.moments.claw.domain.common.service.impl;
 
-import com.moments.claw.domain.common.constant.RedisConstants;
 import com.moments.claw.domain.common.service.AbstractRedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -12,9 +11,12 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import static com.moments.claw.domain.common.constant.RedisConstants.DECR_BY_EXPIRE_LUA_SCRIPT;
+import static com.moments.claw.domain.common.constant.RedisConstants.INCR_BY_EXPIRE_LUA_SCRIPT;
+
 
 /**
  * 默认 Redis 服务实现
@@ -22,10 +24,9 @@ import java.util.concurrent.TimeUnit;
  * @author xm.z
  */
 @RequiredArgsConstructor
-public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
+public class DefaultRedisServiceImpl extends AbstractRedisService {
 
-	@Resource
-	private final RedisTemplate redisTemplate;
+	private final RedisTemplate<String, Object> redisTemplate;
 
 	/**
 	 * 获取所有符合指定表达式的 key
@@ -45,7 +46,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @param time 时间戳
 	 */
 	@Override
-	public void set(String key, V value, long time) {
+	public void set(String key, Object value, long time) {
 		valueOps().set(key, value, time, TimeUnit.SECONDS);
 	}
 
@@ -55,7 +56,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @param value value值
 	 */
 	@Override
-	public void set(String key, V value) {
+	public void set(String key, Object value) {
 		valueOps().set(key, value);
 	}
 
@@ -65,7 +66,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回对象
 	 */
 	@Override
-	public V get(String key) {
+	public Object get(String key) {
 		return valueOps().get(key);
 	}
 
@@ -76,7 +77,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @see <a href="http://redis.io/commands/mget">MGet Command</a>
 	 */
 	@Override
-	public List<V> mGet(Collection<String> keys) {
+	public List<Object> mGet(Collection<String> keys) {
 		return valueOps().multiGet(keys);
 	}
 
@@ -86,18 +87,18 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return map，key 和 value 的键值对集合，当 value 获取为 null 时，不存入此 map
 	 */
 	@Override
-	public Map<String, V> mGetToMap(Collection<String> keys) {
-		List<V> values = valueOps().multiGet(keys);
-		Map<String, V> map = new HashMap<>(keys.size());
+	public Map<String, Object> mGetToMap(Collection<String> keys) {
+		List<Object> values = valueOps().multiGet(keys);
+		Map<String, Object> map = new HashMap<>(keys.size());
 		if (values == null || values.isEmpty()) {
 			return map;
 		}
 
 		Iterator<String> keysIterator = keys.iterator();
-		Iterator<V> valuesIterator = values.iterator();
+		Iterator<Object> valuesIterator = values.iterator();
 		while (keysIterator.hasNext()) {
 			String key = keysIterator.next();
-			V value = valuesIterator.next();
+			Object value = valuesIterator.next();
 			if (value != null) {
 				map.put(key, value);
 			}
@@ -176,7 +177,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 */
 	@Override
 	public Long incrAndExpire(String key, long delta, long timeout) {
-		return (Long) redisTemplate.execute(RedisConstants.INCR_BY_EXPIRE_LUA_SCRIPT, Collections.singletonList(key), String.valueOf(delta),
+		return redisTemplate.execute(INCR_BY_EXPIRE_LUA_SCRIPT, Collections.singletonList(key), String.valueOf(delta),
 				String.valueOf(timeout));
 	}
 
@@ -200,7 +201,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 */
 	@Override
 	public Long decrAndExpire(String key, long delta, long timeout) {
-		return (Long) redisTemplate.execute(RedisConstants.DECR_BY_EXPIRE_LUA_SCRIPT, Collections.singletonList(key), String.valueOf(delta),
+		return redisTemplate.execute(DECR_BY_EXPIRE_LUA_SCRIPT, Collections.singletonList(key), String.valueOf(delta),
 				String.valueOf(timeout));
 	}
 
@@ -211,7 +212,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回内部key的value
 	 */
 	@Override
-	public V hGet(String key, String hashKey) {
+	public Object hGet(String key, String hashKey) {
 		return hashOps().get(key, hashKey);
 	}
 
@@ -224,7 +225,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回是否成功
 	 */
 	@Override
-	public Boolean hSet(String key, String hashKey, V value, long time) {
+	public Boolean hSet(String key, String hashKey, Object value, long time) {
 		hashOps().put(key, hashKey, value);
 		return expire(key, time);
 	}
@@ -236,7 +237,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @param value 内部key的value
 	 */
 	@Override
-	public void hSet(String key, String hashKey, V value) {
+	public void hSet(String key, String hashKey, Object value) {
 		hashOps().put(key, hashKey, value);
 	}
 
@@ -246,7 +247,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回hashMap
 	 */
 	@Override
-	public Map<String, V> hGetAll(String key) {
+	public Map<Object, Object> hGetAll(String key) {
 		return hashOps().entries(key);
 	}
 
@@ -258,7 +259,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回是否成功
 	 */
 	@Override
-	public Boolean hSetAll(String key, Map<String, V> map, long time) {
+	public <V> Boolean hSetAll(String key, Map<String, V> map, long time) {
 		hashOps().putAll(key, map);
 		return expire(key, time);
 	}
@@ -269,7 +270,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @param map hashMap值
 	 */
 	@Override
-	public void hSetAll(String key, Map<String, V> map) {
+	public void hSetAll(String key, Map<String, ?> map) {
 		hashOps().putAll(key, map);
 	}
 
@@ -324,7 +325,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回set集合
 	 */
 	@Override
-	public Set<V> sMembers(String key) {
+	public Set<Object> sMembers(String key) {
 		return setOps().members(key);
 	}
 
@@ -335,7 +336,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回增加数量
 	 */
 	@Override
-	public Long sAdd(String key, V... values) {
+	public Long sAdd(String key, Object... values) {
 		return setOps().add(key, values);
 	}
 
@@ -347,7 +348,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回添加的数量
 	 */
 	@Override
-	public Long sAdd(String key, long time, V... values) {
+	public Long sAdd(String key, long time, Object... values) {
 		Long count = setOps().add(key, values);
 		expire(key, time);
 		return count;
@@ -360,7 +361,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回是否存在
 	 */
 	@Override
-	public Boolean sIsMember(String key, V value) {
+	public Boolean sIsMember(String key, Object value) {
 		return setOps().isMember(key, value);
 	}
 
@@ -381,7 +382,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 删除掉的数据量
 	 */
 	@Override
-	public Long sRemove(String key, V... values) {
+	public Long sRemove(String key, Object... values) {
 		return setOps().remove(key, values);
 	}
 
@@ -393,7 +394,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 返回查询的集合
 	 */
 	@Override
-	public List<V> lRange(String key, long start, long end) {
+	public List<Object> lRange(String key, long start, long end) {
 		return listOps().range(key, start, end);
 	}
 
@@ -414,7 +415,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 对象
 	 */
 	@Override
-	public V lIndex(String key, long index) {
+	public Object lIndex(String key, long index) {
 		return listOps().index(key, index);
 	}
 
@@ -425,7 +426,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 增加后的长度
 	 */
 	@Override
-	public Long lPush(String key, V value) {
+	public Long lPush(String key, Object value) {
 		return listOps().rightPush(key, value);
 	}
 
@@ -437,7 +438,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 增加后的长度
 	 */
 	@Override
-	public Long lPush(String key, V value, long time) {
+	public Long lPush(String key, Object value, long time) {
 		Long index = listOps().rightPush(key, value);
 		expire(key, time);
 		return index;
@@ -450,7 +451,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 增加后的长度
 	 */
 	@Override
-	public Long lPushAll(String key, V... values) {
+	public Long lPushAll(String key, Object... values) {
 		return listOps().rightPushAll(key, values);
 	}
 
@@ -462,7 +463,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return 增加后的长度
 	 */
 	@Override
-	public Long lPushAll(String key, Long time, V... values) {
+	public Long lPushAll(String key, Long time, Object... values) {
 		Long count = listOps().rightPushAll(key, values);
 		expire(key, time);
 		return count;
@@ -510,7 +511,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 */
 	@Override
 	public Long bitCount(String key) {
-		return (Long) redisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes()));
+		return redisTemplate.execute((RedisCallback<Long>) con -> con.bitCount(key.getBytes()));
 	}
 
 	/**
@@ -522,7 +523,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 */
 	@Override
 	public List<Long> bitField(String key, int limit, int offset) {
-		return (List<Long>) redisTemplate.execute((RedisCallback<List<Long>>) con -> con.bitField(key.getBytes(),
+		return redisTemplate.execute((RedisCallback<List<Long>>) con -> con.bitField(key.getBytes(),
 				BitFieldSubCommands.create().get(BitFieldSubCommands.BitFieldType.unsigned(limit)).valueAt(offset)));
 	}
 
@@ -533,7 +534,7 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 */
 	@Override
 	public byte[] bitGetAll(String key) {
-		return (byte[]) redisTemplate.execute((RedisCallback<byte[]>) con -> con.get(key.getBytes()));
+		return redisTemplate.execute((RedisCallback<byte[]>) con -> con.get(key.getBytes()));
 	}
 
 	/**
@@ -583,10 +584,10 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 */
 	@Override
 	public GeoResults<RedisGeoCommands.GeoLocation<Object>> geoNearByPlace(String key, String place, Distance distance,
-																   long limit, Sort.Direction sort) {
+																		   long limit, Sort.Direction sort) {
 		RedisGeoCommands.GeoRadiusCommandArgs args = RedisGeoCommands.GeoRadiusCommandArgs.newGeoRadiusArgs()
-			.includeDistance()
-			.includeCoordinates();
+				.includeDistance()
+				.includeCoordinates();
 		// 判断排序方式
 		if (Sort.Direction.ASC == sort) {
 			args.sortAscending();
@@ -614,8 +615,8 @@ public class DefaultRedisServiceImpl<K,V> extends AbstractRedisService<K,V>{
 	 * @return RedisTemplate 获取
 	 */
 	@Override
-	protected RedisTemplate getTemplate() {
+	protected RedisTemplate<String, Object> getTemplate() {
 		return redisTemplate;
 	}
- 
+
 }
