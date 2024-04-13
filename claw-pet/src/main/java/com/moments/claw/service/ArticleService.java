@@ -9,6 +9,7 @@ import com.moments.claw.domain.dto.IndexArticleDto;
 import com.moments.claw.domain.dto.SendArticleFromActivityDto;
 import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
+import com.moments.claw.domain.vo.CommunityArticleVo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,5 +35,5 @@ public interface ArticleService extends IService<Article> {
 
 	void communityForm(SendOrUpdateArticleFromCommunityDto dto);
 
-	TableDataInfo<?> communityList(CommunityArticleDto dto);
+	TableDataInfo<CommunityArticleVo> communityList(CommunityArticleDto dto);
 }

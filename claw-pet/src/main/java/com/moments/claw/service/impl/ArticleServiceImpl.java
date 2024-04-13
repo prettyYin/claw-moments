@@ -191,7 +191,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	}
 
 	@Override
-	public TableDataInfo<?> communityList(CommunityArticleDto dto) {
+	public TableDataInfo<CommunityArticleVo> communityList(CommunityArticleDto dto) {
 		List<Article> article = lambdaQuery()
 				.eq(Objects.nonNull(dto.getType()), Article::getType, dto.getType())
 				.eq(Objects.nonNull(dto.getStatus()), Article::getStatus, dto.getStatus())

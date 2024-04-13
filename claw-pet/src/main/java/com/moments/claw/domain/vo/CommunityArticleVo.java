@@ -10,6 +10,9 @@ import java.util.Date;
 @Data
 public class CommunityArticleVo {
 
+	@ApiModelProperty(name = "id", value = "主键", hidden = true)
+	private Long id;
+
 	@ApiModelProperty(name = "title", value = "标题")
 	private String title;
 

@@ -10,6 +10,7 @@ import com.moments.claw.domain.dto.IndexArticleDto;
 import com.moments.claw.domain.dto.SendArticleFromActivityDto;
 import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
+import com.moments.claw.domain.vo.CommunityArticleVo;
 import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,7 +56,7 @@ public class ArticleController extends BaseController {
 
     @ApiOperation("查询社区帖子列表")
     @GetMapping("/community/list")
-    public TableDataInfo<?> communityList(@Valid CommunityArticleDto dto) {
+    public TableDataInfo<CommunityArticleVo> communityList(@Valid CommunityArticleDto dto) {
         return articleService.communityList(dto);
     }
 
