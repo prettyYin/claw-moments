@@ -28,6 +28,9 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
 
+    @ApiModelProperty(name = "userId", value = "用户id")
+    private Long userId;
+
     @ApiModelProperty(name = "title", value = "标题")
     private String title;
 

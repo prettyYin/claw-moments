@@ -5,12 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.*;
 import com.moments.claw.domain.common.domain.PageQuery;
+import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
-import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.domain.common.utils.PaginationUtil;
+import com.moments.claw.domain.common.utils.SecurityUtils;
+import com.moments.claw.domain.dto.CommunityArticleDto;
+import com.moments.claw.domain.dto.IndexArticleDto;
 import com.moments.claw.domain.dto.SendArticleFromActivityDto;
 import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
 import com.moments.claw.domain.vo.CommentVo;
+import com.moments.claw.domain.vo.CommunityArticleVo;
 import com.moments.claw.domain.vo.UserCommentVo;
 import com.moments.claw.mapper.ArticleMapper;
 import com.moments.claw.service.*;
@@ -122,24 +127,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	}
 
 	@Override
-	public List<ArticleVo> petList(ArticleDto articleDto) {
+	public List<ArticleVo> petList(IndexArticleDto indexArticleDto) {
 		List<Article> list = list(new LambdaQueryWrapper<Article>()
-				.eq(Objects.nonNull(articleDto.getType()), Article::getType, articleDto.getType())
-				.eq(StringUtils.isNotBlank(articleDto.getCityId()), Article::getCityId, articleDto.getCityId())
-				.eq(StringUtils.isNotBlank(articleDto.getCityId()), Article::getCityId, articleDto.getCityId())
-				.eq(Objects.nonNull(articleDto.getCate()), Article::getCate, articleDto.getCate())
-				.eq(StringUtils.isNotBlank(articleDto.getGender()), Article::getCityId, articleDto.getCityId())
-				.eq(Objects.nonNull(articleDto.getAge()), Article::getAge, articleDto.getAge())
-				.eq(Objects.nonNull(articleDto.getStatus()), Article::getStatus, articleDto.getStatus())
-				.eq(Objects.nonNull(articleDto.getVaccine()), Article::getVaccine, articleDto.getVaccine())
-				.eq(Objects.nonNull(articleDto.getSterilize()), Article::getSterilize, articleDto.getSterilize())
-				.eq(Objects.nonNull(articleDto.getDeworm()), Article::getDeworm, articleDto.getDeworm())
-				.eq(Objects.nonNull(articleDto.getSize()), Article::getSize, articleDto.getSize())
-				.eq(Objects.nonNull(articleDto.getHair()), Article::getHair, articleDto.getHair())
+				.eq(Objects.nonNull(indexArticleDto.getType()), Article::getType, indexArticleDto.getType())
+				.eq(StringUtils.isNotBlank(indexArticleDto.getCityId()), Article::getCityId, indexArticleDto.getCityId())
+				.eq(StringUtils.isNotBlank(indexArticleDto.getCityId()), Article::getCityId, indexArticleDto.getCityId())
+				.eq(Objects.nonNull(indexArticleDto.getCate()), Article::getCate, indexArticleDto.getCate())
+				.eq(StringUtils.isNotBlank(indexArticleDto.getGender()), Article::getCityId, indexArticleDto.getCityId())
+				.eq(Objects.nonNull(indexArticleDto.getAge()), Article::getAge, indexArticleDto.getAge())
+				.eq(Objects.nonNull(indexArticleDto.getStatus()), Article::getStatus, indexArticleDto.getStatus())
+				.eq(Objects.nonNull(indexArticleDto.getVaccine()), Article::getVaccine, indexArticleDto.getVaccine())
+				.eq(Objects.nonNull(indexArticleDto.getSterilize()), Article::getSterilize, indexArticleDto.getSterilize())
+				.eq(Objects.nonNull(indexArticleDto.getDeworm()), Article::getDeworm, indexArticleDto.getDeworm())
+				.eq(Objects.nonNull(indexArticleDto.getSize()), Article::getSize, indexArticleDto.getSize())
+				.eq(Objects.nonNull(indexArticleDto.getHair()), Article::getHair, indexArticleDto.getHair())
 		);
 		List<ArticleVo> ret = CopyBeanUtils.copyBeanList(list, ArticleVo.class);
 		// 赋值首页图
-		ret.stream().forEach(r -> {
+		ret.forEach(r -> {
 			if (StringUtils.isNotBlank(r.getImageIds())) {
 				r.setCoverImageUrl(filesService.getFurl(r.getImageIds().split(",")[0]));
 			}
@@ -169,8 +174,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	@Override
 	public void communityForm(SendOrUpdateArticleFromCommunityDto dto) {
 		Article article = Article.builder()
+				.userId(SecurityUtils.getUserId())
 				.title(dto.getTitle())
-				.cate(dto.getCate())
+				.type(dto.getType())
 				.content(dto.getContent())
 				.imageIds(String.join(",", dto.getImages()))
 				.videoId(dto.getVideo())
@@ -182,6 +188,29 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 			article.setId(dto.getArticleId());
 			updateById(article);
 		}
+	}
+
+	@Override
+	public TableDataInfo<?> communityList(CommunityArticleDto dto) {
+		List<Article> article = lambdaQuery()
+				.eq(Objects.nonNull(dto.getType()), Article::getType, dto.getType())
+				.eq(Objects.nonNull(dto.getStatus()), Article::getStatus, dto.getStatus())
+				.list();
+		List<CommunityArticleVo> resultVo = CopyBeanUtils.copyBeanList(article, CommunityArticleVo.class);
+		TableDataInfo<CommunityArticleVo> result = PaginationUtil.handPaged(resultVo, dto.getPageSize(), dto.getPageNum());
+		// 先分页后赋值，可以减少数据库的查询次数
+		if (CollUtil.isNotEmpty(result.getRows())) {
+			result.getRows().forEach(r -> {
+				if (Objects.nonNull(r.getUserId())) {
+					User articleSendUser = userService.getById(r.getUserId());
+					String nickname = articleSendUser.getNickname();
+					String avatar = filesService.getFurl(articleSendUser.getAvatarId());
+					r.setAvatar(avatar);
+					r.setUserName(nickname);
+				}
+			});
+		}
+		return result;
 	}
 }
 

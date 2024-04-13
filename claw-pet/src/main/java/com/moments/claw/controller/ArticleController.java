@@ -5,7 +5,8 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.domain.dto.CommunityArticleDto;
+import com.moments.claw.domain.dto.IndexArticleDto;
 import com.moments.claw.domain.dto.SendArticleFromActivityDto;
 import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
@@ -17,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 
@@ -44,10 +47,16 @@ public class ArticleController extends BaseController {
      */
     @ApiOperation(value = "宠物列表")
     @GetMapping("/list")
-    public TableDataInfo<?> list(ArticleDto dto) {
+    public TableDataInfo<?> list(IndexArticleDto dto) {
         startPage();
         List<ArticleVo> list = articleService.petList(dto);
         return getDataTable(list);
+    }
+
+    @ApiOperation("查询社区帖子列表")
+    @GetMapping("/community/list")
+    public TableDataInfo<?> communityList(@Valid CommunityArticleDto dto) {
+        return articleService.communityList(dto);
     }
 
     /**

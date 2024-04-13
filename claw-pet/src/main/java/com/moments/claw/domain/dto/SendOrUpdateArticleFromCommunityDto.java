@@ -24,8 +24,8 @@ public class SendOrUpdateArticleFromCommunityDto {
 	@ApiModelProperty(name = "content", value = "帖子内容")
 	private String content;
 
-	@ApiModelProperty(name = "cate", value = "类型（1：领养；2：丢失；3：关注；4：科普；5：救助；6：闲置；7：其他）")
-	private Integer cate;
+	@ApiModelProperty(name = "type", value = "类型（1：领养；2：丢失；3：关注；4：科普；5：救助；6：闲置；7：其他）")
+	private Integer type;
 
 	@ApiModelProperty(name = "images",value = "图片文件id列表")
 	private List<String> images;

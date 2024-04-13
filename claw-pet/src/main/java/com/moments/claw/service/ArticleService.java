@@ -3,7 +3,9 @@ package com.moments.claw.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.domain.PageQuery;
-import com.moments.claw.domain.dto.ArticleDto;
+import com.moments.claw.domain.common.response.TableDataInfo;
+import com.moments.claw.domain.dto.CommunityArticleDto;
+import com.moments.claw.domain.dto.IndexArticleDto;
 import com.moments.claw.domain.dto.SendArticleFromActivityDto;
 import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
@@ -26,9 +28,11 @@ public interface ArticleService extends IService<Article> {
 
 	List<ArticleVo> myPetList(PageQuery pageQuery);
 
-	List<ArticleVo> petList(ArticleDto articleDto);
+	List<ArticleVo> petList(IndexArticleDto indexArticleDto);
 
 	void form(SendArticleFromActivityDto dto);
 
 	void communityForm(SendOrUpdateArticleFromCommunityDto dto);
+
+	TableDataInfo<?> communityList(CommunityArticleDto dto);
 }
