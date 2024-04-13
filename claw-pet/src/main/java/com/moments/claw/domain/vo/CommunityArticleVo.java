@@ -1,8 +1,11 @@
 package com.moments.claw.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class CommunityArticleVo {
@@ -49,4 +52,8 @@ public class CommunityArticleVo {
 
 	@ApiModelProperty(name = "status", value = "状态（0异常，1正常，2禁用）")
 	private Integer status;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@ApiModelProperty(value = "创建时间")
+	private Date createdAt;
 }
