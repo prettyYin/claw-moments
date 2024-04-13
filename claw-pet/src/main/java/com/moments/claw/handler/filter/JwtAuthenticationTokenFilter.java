@@ -8,6 +8,7 @@ import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.domain.common.utils.JwtUtil;
 import com.moments.claw.domain.common.utils.WebUtils;
 import io.jsonwebtoken.Claims;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	private RedisService redisService;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+	protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
 		// 1.获取token
 		String token = request.getHeader("Authorization");
 		// 如果token不存在，放行执行后续的filter
