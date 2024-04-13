@@ -1,12 +1,14 @@
 package com.moments.claw.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.*;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.dto.ArticleDto;
-import com.moments.claw.domain.dto.SendArticleDto;
+import com.moments.claw.domain.dto.SendArticleFromActivityDto;
+import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
 import com.moments.claw.domain.vo.CommentVo;
 import com.moments.claw.domain.vo.UserCommentVo;
@@ -137,13 +139,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		);
 		List<ArticleVo> ret = CopyBeanUtils.copyBeanList(list, ArticleVo.class);
 		// 赋值首页图
-		ret.stream().forEach(r -> r.setCoverImageUrl(filesService.getFurl(r.getImageIds().split(",")[0])));
+		ret.stream().forEach(r -> {
+			if (StringUtils.isNotBlank(r.getImageIds())) {
+				r.setCoverImageUrl(filesService.getFurl(r.getImageIds().split(",")[0]));
+			}
+		});
 		return ret;
 	}
 
 	@Transactional
 	@Override
-	public void form(SendArticleDto dto) {
+	public void form(SendArticleFromActivityDto dto) {
 		// 保存文章信息
 		Article article = Article.builder()
 				.title(dto.getTitle())
@@ -158,6 +164,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		// 保存活动文章关联表
 		ActivityArticle activityArticle = ActivityArticle.builder().articleId(article.getId()).activityId(dto.getActivityId()).build();
 		activityArticleService.save(activityArticle);
+	}
+
+	@Override
+	public void communityForm(SendOrUpdateArticleFromCommunityDto dto) {
+		Article article = Article.builder()
+				.title(dto.getTitle())
+				.cate(dto.getCate())
+				.content(dto.getContent())
+				.imageIds(String.join(",", dto.getImages()))
+				.videoId(dto.getVideo())
+				.build();
+		// 保存文章
+		if (Objects.isNull(dto.getArticleId())) {
+			save(article);
+		} else { // 修改文章
+			article.setId(dto.getArticleId());
+			updateById(article);
+		}
 	}
 }
 

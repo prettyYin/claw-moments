@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ArticleDto extends PageDomain {
-	@ApiModelProperty(name = "type", value = "类型（1：领养；2：寻宠；3：寻主）")
+	@ApiModelProperty(name = "type", value = "类型（1：领养；2：丢失；3：关注；4：科普；5：救助；6：闲置；7：其他）")
 	private Integer type;
 	@ApiModelProperty(name = "cityId", value = "市行政编码")
 	private String cityId;

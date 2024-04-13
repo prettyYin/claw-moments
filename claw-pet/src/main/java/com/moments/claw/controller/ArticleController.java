@@ -5,9 +5,9 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.dto.ArticleDto;
-import com.moments.claw.domain.dto.SendArticleDto;
+import com.moments.claw.domain.dto.SendArticleFromActivityDto;
+import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
 import com.moments.claw.domain.vo.ArticleVo;
 import com.moments.claw.service.*;
 import io.swagger.annotations.Api;
@@ -111,8 +111,18 @@ public class ArticleController extends BaseController {
      */
     @ApiOperation(value = "活动跟帖")
     @PostMapping("/form")
-    public R<?> form(@RequestBody @Validated SendArticleDto dto) {
+    public R<?> form(@RequestBody @Validated SendArticleFromActivityDto dto) {
         articleService.form(dto);
+        return R.success();
+    }
+
+    /**
+     * 社区发帖或编辑帖子
+     */
+    @ApiOperation(value = "社区发帖或编辑帖子")
+    @PostMapping("/community/form")
+    public R<?> communityForm(@RequestBody @Validated SendOrUpdateArticleFromCommunityDto dto) {
+        articleService.communityForm(dto);
         return R.success();
     }
 }

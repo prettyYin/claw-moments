@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-public class SendArticleDto {
+public class SendArticleFromActivityDto {
 
-	@NotNull(message = "文章id不能为空")
+	@NotNull(message = "活动id不能为空")
 	@ApiModelProperty(name = "activityId", value = "文章id")
 	private Long activityId;
 
@@ -29,7 +29,7 @@ public class SendArticleDto {
 	@ApiModelProperty(name = "age", value = "宠物年龄")
 	private Integer age;
 
-	@ApiModelProperty(name = "cate", value = "宠物种类（1猫，2狗，3其他）")
+	@ApiModelProperty(name = "cate", value = "类型（1：领养；2：丢失；3：关注；4：科普；5：救助；6：闲置；7：其他）")
 	private Integer cate;
 
 	@ApiModelProperty(name = "nickname", value = "宠物昵称")

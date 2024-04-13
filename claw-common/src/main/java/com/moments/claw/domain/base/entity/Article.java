@@ -52,7 +52,7 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "refundCondition", value = "退款条件")
     private String refundCondition;
         
-    @ApiModelProperty(name = "type", value = "类型（1：领养；2：丢失；3：关注）")
+    @ApiModelProperty(name = "type", value = "类型（1：领养；2：丢失；3：关注；4：科普；5：救助；6：闲置；7：其他）")
     private Integer type;
         
     @ApiModelProperty(name = "cate", value = "种类（1：猫；2：狗；3：其他）")
