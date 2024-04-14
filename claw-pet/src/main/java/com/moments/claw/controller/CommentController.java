@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Api(tags = "")
 @RestController
-@RequestMapping("comment")
+@RequestMapping("/comment")
 public class CommentController extends BaseController {
     /**
      * 服务对象
@@ -99,6 +99,15 @@ public class CommentController extends BaseController {
     @PostMapping("/form")
     public R<?> form(@RequestBody @Valid CommentSendDto dto) {
         commentService.form(dto);
+        return R.success();
+    }
+
+    /**
+     * 评论点赞
+     */
+    @GetMapping("/like")
+    public R<?> toggleLike(@RequestParam("id") Long id) {
+        commentService.toggleLike(id);
         return R.success();
     }
 }

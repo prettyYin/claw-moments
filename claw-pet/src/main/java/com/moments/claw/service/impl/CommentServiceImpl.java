@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Comment;
 import com.moments.claw.domain.common.constant.GlobalConstants;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.CommentSendDto;
 import com.moments.claw.mapper.CommentMapper;
 import com.moments.claw.service.CommentService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 评论表(Comments)表服务实现类
@@ -34,7 +36,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 	@Override
 	public void form(CommentSendDto dto) {
 		Comment comment = CopyBeanUtils.copyBean(dto, Comment.class);
+		comment.setUserId(SecurityUtils.getUserId());
 		save(comment);
+	}
+
+	@Override
+	public void toggleLike(Long id) {
+		Comment comment = getById(id);
+		Optional.ofNullable(comment).ifPresent(c -> lambdaUpdate()
+				.set(Comment::getThumbCount, c.getThumbCount() + 1)
+				.eq(Comment::getId, id)
+				.update());
 	}
 }
 

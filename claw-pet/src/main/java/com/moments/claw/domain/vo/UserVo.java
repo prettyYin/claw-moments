@@ -1,8 +1,11 @@
 package com.moments.claw.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class UserVo {
@@ -18,6 +21,10 @@ public class UserVo {
 
 	@ApiModelProperty(name = "qq", value = "qq号")
 	private String qq;
+
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+	@ApiModelProperty(name = "birthday", value = "出生年月")
+	private Date birthday;
 
 	@JsonIgnore
 	@ApiModelProperty(name = "avatarId", value = "头像图片id")

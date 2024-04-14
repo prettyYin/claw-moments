@@ -18,4 +18,6 @@ public interface CommentService extends IService<Comment> {
 	List<Comment> getRootComments(Long articleId);
 
 	void form(CommentSendDto dto);
+
+	void toggleLike(Long id);
 }
