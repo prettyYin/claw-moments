@@ -40,9 +40,6 @@ public class Article extends BaseEntity {
     @ApiModelProperty(name = "isTop", value = "是否置顶（0：否；1：是）")
     private Integer isTop;
 
-    @ApiModelProperty(name = "memberId", value = "会员id")
-    private Long memberId;
-
     @ApiModelProperty(name = "nickname", value = "宠物姓名")
     private String nickname;
 

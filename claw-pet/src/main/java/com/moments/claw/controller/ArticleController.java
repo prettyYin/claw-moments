@@ -69,7 +69,7 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "通过主键查询单条数据")
     @GetMapping("/view/{id}")
     public R<?> viewDetailById(@ApiParam(name = "id", value = "id", required = true) @PathVariable Serializable id) {
-        ArticleVo article = articleService.viewDetailById(id);
+        ArticleVo article = articleService.viewArticleDetailById(id);
         return R.success(article);
     }
 
@@ -133,6 +133,26 @@ public class ArticleController extends BaseController {
     @PostMapping("/community/form")
     public R<?> communityForm(@RequestBody @Validated SendOrUpdateArticleFromCommunityDto dto) {
         articleService.communityForm(dto);
+        return R.success();
+    }
+
+    /**
+     * 点赞
+     */
+    @ApiOperation(value = "点赞")
+    @GetMapping("/toggleLike")
+    public R<?> toggleLike(@RequestParam("articleId") Long articleId) {
+        articleService.toggleLike(articleId);
+        return R.success();
+    }
+
+    /**
+     * 查看数+1
+     */
+    @ApiOperation(value = "查看数+1")
+    @GetMapping("/incrView")
+    public R<?> incrView(@RequestParam("articleId") Long articleId) {
+        articleService.incrView(articleId);
         return R.success();
     }
 }

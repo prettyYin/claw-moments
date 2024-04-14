@@ -1,7 +1,7 @@
 package com.moments.claw.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class CommunityArticleVo {
 	@ApiModelProperty(name = "title", value = "标题")
 	private String title;
 
-	@JsonIgnoreProperties
+	@JsonIgnore
 	@ApiModelProperty(name = "userId", value = "用户id")
 	private Long userId;
 

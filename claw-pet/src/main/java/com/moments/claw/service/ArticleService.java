@@ -25,7 +25,7 @@ public interface ArticleService extends IService<Article> {
 
 	List<ArticleVo> selectAll();
 
-	ArticleVo viewDetailById(Serializable id);
+	ArticleVo viewArticleDetailById(Serializable id);
 
 	List<ArticleVo> myPetList(PageQuery pageQuery);
 
@@ -36,4 +36,8 @@ public interface ArticleService extends IService<Article> {
 	void communityForm(SendOrUpdateArticleFromCommunityDto dto);
 
 	TableDataInfo<CommunityArticleVo> communityList(CommunityArticleDto dto);
+
+	void toggleLike(Long articleId);
+
+	void incrView(Long articleId);
 }

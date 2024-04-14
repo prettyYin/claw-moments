@@ -11,6 +11,7 @@ import com.moments.claw.service.CommentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 评论表(Comments)表服务实现类
@@ -22,12 +23,12 @@ import java.util.List;
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
 	@Override
-	public List<Comment> getRootComments() {
-		List<Comment> rootComments = list(new LambdaQueryWrapper<Comment>()
+	public List<Comment> getRootComments(Long articleId) {
+		return list(new LambdaQueryWrapper<Comment>()
 				.eq(Comment::getParentId, GlobalConstants.ROOT_PARENT_ID)
 				.eq(Comment::getStatus, GlobalConstants.NORMAL_STATUS)
+				.eq(Objects.nonNull(articleId), Comment::getArticleId, articleId)
 		);
-		return rootComments;
 	}
 
 	@Override

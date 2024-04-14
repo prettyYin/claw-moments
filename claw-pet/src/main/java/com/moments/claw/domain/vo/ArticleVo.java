@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,9 +22,6 @@ public class ArticleVo {
 
 	@ApiModelProperty(name = "isTop", value = "是否置顶（0：否；1：是）")
 	private Integer isTop;
-
-	@ApiModelProperty(name = "memberId", value = "会员id")
-	private Long memberId;
 
 	@ApiModelProperty(name = "nickname", value = "宠物姓名")
 	private String nickname;
@@ -148,19 +146,15 @@ public class ArticleVo {
 	@ApiModelProperty(name = "status", value = "状态（0异常，1正常，2禁用）")
 	private Integer status;
 
-	@TableField(exist = false)
 	@ApiModelProperty(name = "images", value = "照片地址")
 	private List<String> images;
 
-	@TableField(exist = false)
 	@ApiModelProperty(name = "comments", value = "评论")
 	private List<CommentVo> comments;
 
-	@TableField(exist = false)
 	@ApiModelProperty(name = "tags", value = "标签")
 	private List<String> tags;
 
-	@TableField(exist = false)
 	@ApiModelProperty(name = "requirements", value = "要求")
 	private List<String> requirements;
 
@@ -168,7 +162,12 @@ public class ArticleVo {
 	@ApiModelProperty(name = "member", value = "会员信息")
 	private Member member;
 
-	@TableField(exist = false)
 	@ApiModelProperty(name = "coverImageUrl", value = "首页图url")
 	private String coverImageUrl;
+
+	@ApiModelProperty(name = "createdAt", value = "创建时间")
+	private Date createdAt;
+
+	@ApiModelProperty(name = "user", value = "用户信息")
+	private UserVo user;
 }

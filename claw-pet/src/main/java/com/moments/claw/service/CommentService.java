@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CommentService extends IService<Comment> {
 
-	List<Comment> getRootComments();
+	List<Comment> getRootComments(Long articleId);
 
 	void form(CommentSendDto dto);
 }

@@ -89,7 +89,7 @@ public class CommentController extends BaseController {
      */
     @GetMapping("/rootComments")
     public R<?> rootComments() {
-        List<Comment> rootComments = commentService.getRootComments();
+        List<Comment> rootComments = commentService.getRootComments(null);
         return R.success(rootComments);
     }
 

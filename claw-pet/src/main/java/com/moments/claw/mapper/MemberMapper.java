@@ -1,6 +1,6 @@
 package com.moments.claw.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.jeffreyning.mybatisplus.base.MppBaseMapper;
 import com.moments.claw.domain.base.entity.Member;
 
 
@@ -10,7 +10,7 @@ import com.moments.claw.domain.base.entity.Member;
  * @author chandler
  * @since 2024-03-11 22:31:24
  */
-public interface MemberMapper extends BaseMapper<Member> {
+public interface MemberMapper extends MppBaseMapper<Member> {
 
 }
 

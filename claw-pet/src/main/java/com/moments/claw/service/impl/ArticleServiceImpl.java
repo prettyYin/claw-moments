@@ -13,10 +13,7 @@ import com.moments.claw.domain.dto.CommunityArticleDto;
 import com.moments.claw.domain.dto.IndexArticleDto;
 import com.moments.claw.domain.dto.SendArticleFromActivityDto;
 import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
-import com.moments.claw.domain.vo.ArticleVo;
-import com.moments.claw.domain.vo.CommentVo;
-import com.moments.claw.domain.vo.CommunityArticleVo;
-import com.moments.claw.domain.vo.UserCommentVo;
+import com.moments.claw.domain.vo.*;
 import com.moments.claw.mapper.ArticleMapper;
 import com.moments.claw.service.*;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -60,18 +58,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		}
 	}
 
-	private void setMember(ArticleVo article) {
-		if (Objects.nonNull(article.getMemberId())) {
-			article.setMember(memberService.getById(article.getMemberId()));
-		}
+	private void setMember(ArticleVo article,Long userId) {
+		Member member = memberService.getMemberInfoByUserId(userId);
+		Optional.ofNullable(member).ifPresent(article::setMember);
 	}
 
 	private void setComments(ArticleVo article) {
-		List<Comment> rootComments = commentService.getRootComments();
+		List<Comment> rootComments = commentService.getRootComments(article.getId());
 		List<CommentVo> ret = CopyBeanUtils.copyBeanList(rootComments, CommentVo.class);
 		// 赋值评论用户信息
-		ret.forEach(commentVo -> {
-			User user = userService.getById(commentVo.getUserId());
+		Optional.ofNullable(ret).ifPresent(comments -> comments.forEach(comment -> {
+			User user = userService.getById(comment.getUserId());
 			String avatar = null;
 			String nickName = null;
 			if (StringUtils.isNotBlank(user.getAvatarId())) {
@@ -81,8 +78,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 				nickName = user.getNickname();
 			}
 			UserCommentVo userVo = UserCommentVo.builder().avatar(avatar).nickName(nickName).build();
-			commentVo.setUser(userVo);
-		});
+			comment.setUser(userVo);
+		}));
 		article.setComments(ret);
 	}
 
@@ -100,6 +97,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		article.setRequirements(requireNames);
 	}
 
+	private void setUser(ArticleVo article,Long userId) {
+		User user = userService.getById(userId);
+		UserVo userVo = CopyBeanUtils.copyBean(user, UserVo.class);
+		if (StringUtils.isNotBlank(user.getAvatarId())) {
+			String avatar = filesService.getFurl(user.getAvatarId());
+			userVo.setAvatar(avatar);
+		}
+		article.setUser(userVo);
+	}
+
 	@Override
 	public List<ArticleVo> selectAll() {
 		List<Article> list = list();
@@ -109,14 +116,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	}
 
 	@Override
-	public ArticleVo viewDetailById(Serializable id) {
+	public ArticleVo viewArticleDetailById(Serializable id) {
+		Long userId = SecurityUtils.getUserId();
 		Article article = getById(id);
 		ArticleVo articleVo = CopyBeanUtils.copyBean(article, ArticleVo.class);
 		setImageUrl(articleVo);
-		setMember(articleVo);
+		setMember(articleVo, userId);
 		setComments(articleVo);
 		setTags(articleVo);
 		setRequirements(articleVo);
+		setUser(articleVo, userId);
 		return articleVo;
 	}
 
@@ -211,6 +220,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 			});
 		}
 		return result;
+	}
+
+	@Override
+	public void toggleLike(Long articleId) {
+		Article article = getById(articleId);
+		Optional.ofNullable(article).ifPresent(item -> lambdaUpdate().set(Article::getPraise, article.getPraise() + 1).eq(Article::getId, articleId).update());
+	}
+
+	@Override
+	public void incrView(Long articleId) {
+		Article article = getById(articleId);
+		Optional.ofNullable(article).ifPresent(item -> lambdaUpdate().set(Article::getView, article.getView() + 1).eq(Article::getId, articleId).update());
+
 	}
 }
 
