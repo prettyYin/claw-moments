@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class CommentSendDto {
 
 	@NotNull
-	private String articleId;
+	private Long articleId;
 
 	@NotNull
 	@Min(1)
