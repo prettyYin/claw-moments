@@ -40,4 +40,6 @@ public interface ArticleService extends IService<Article> {
 	void toggleLike(Long articleId);
 
 	void incrView(Long articleId);
+
+	Long share(Long id);
 }

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -234,5 +235,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		Optional.ofNullable(article).ifPresent(item -> lambdaUpdate().set(Article::getView, article.getView() + 1).eq(Article::getId, articleId).update());
 
 	}
+
+	@Override
+	public Long share(Long id) {
+		Article article = getById(id);
+		AtomicReference<Long> shareCount = new AtomicReference<>(0L);
+		Optional.ofNullable(article).ifPresent(item -> {
+			lambdaUpdate().set(Article::getShare, article.getShare() + 1).eq(Article::getId, id).update();
+			shareCount.set(getById(id).getShare());
+		});
+		return shareCount.get();
+	}
+
 }
 

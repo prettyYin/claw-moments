@@ -155,5 +155,11 @@ public class ArticleController extends BaseController {
         articleService.incrView(articleId);
         return R.success();
     }
+
+    @ApiOperation(value = "分享帖子")
+    @GetMapping("/share")
+    public R<?> share(@RequestParam("id") Long id) {
+        return R.success(articleService.share(id));
+    }
 }
 
