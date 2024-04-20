@@ -5,6 +5,7 @@ import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.dto.MyActivityPageQueryDto;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -129,6 +130,14 @@ public class ActivityController extends BaseController {
         Long userId = SecurityUtils.getUserId();
         activityService.apply(userId, activityId);
         return R.success();
+    }
+
+    /**
+     * 我的活动
+     */
+    @GetMapping("/m-list")
+    public TableDataInfo<?> myActivityList(MyActivityPageQueryDto dto) {
+        return activityService.myActivityList(dto);
     }
 
 }

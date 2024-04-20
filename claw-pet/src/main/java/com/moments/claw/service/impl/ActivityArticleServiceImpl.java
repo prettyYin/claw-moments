@@ -7,6 +7,8 @@ import com.moments.claw.service.ActivityArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * (ActivityArticle)表服务实现类
  *
@@ -17,5 +19,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ActivityArticleServiceImpl extends ServiceImpl<ActivityArticleMapper, ActivityArticle> implements ActivityArticleService {
 
+	@Override
+	public List<ActivityArticle> getActivityArticleInArticleIds(List<Long> articleIds) {
+		return lambdaQuery().in(ActivityArticle::getArticleId, articleIds).list();
+	}
 }
 

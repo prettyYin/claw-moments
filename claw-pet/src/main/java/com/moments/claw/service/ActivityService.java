@@ -8,8 +8,10 @@ import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.dto.MyActivityPageQueryDto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 活动表(Activity)表服务接口
@@ -44,4 +46,17 @@ public interface ActivityService extends IService<Activity> {
 	void apply(Long userId, Long activityId);
 
 	Activity getActivityById(Serializable id);
+
+	/**
+	 * 我的活动
+	 */
+	TableDataInfo<?> myActivityList(MyActivityPageQueryDto dto);
+
+	/**
+	 * 根据userId获取发布的活动列表
+	 *
+	 * @param userId 用户id
+	 * @return 活动列表
+	 */
+	List<Activity> getMyPublishActivityList(Long userId);
 }

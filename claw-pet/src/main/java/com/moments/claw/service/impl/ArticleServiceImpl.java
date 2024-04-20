@@ -247,5 +247,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		return shareCount.get();
 	}
 
+	@Override
+	public List<Article> getMyParticipate(Long userId) {
+		return lambdaQuery().eq(Article::getUserId, userId).list();
+	}
+
 }
 

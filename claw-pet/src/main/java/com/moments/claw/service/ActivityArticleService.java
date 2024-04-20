@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.ActivityArticle;
 
+import java.util.List;
+
 
 /**
  * (ActivityArticle)表服务接口
@@ -18,4 +20,6 @@ public interface ActivityArticleService extends IService<ActivityArticle> {
 	default LambdaQueryChainWrapper<ActivityArticle> select(SFunction<ActivityArticle, ?>... columns) {
 		return lambdaQuery().select(columns);
 	}
+
+	List<ActivityArticle> getActivityArticleInArticleIds(List<Long> articleIds);
 }

@@ -31,7 +31,10 @@ public class Activity extends BaseEntity {
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
-        
+
+    @ApiModelProperty(name = "publishUserId", value = "发布人id")
+    private Long publishUserId;
+
     @ApiModelProperty(name = "title", value = "活动标题")
     private String title;
         

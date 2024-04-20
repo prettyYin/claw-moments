@@ -13,6 +13,7 @@ import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.dto.MyActivityPageQueryDto;
 import com.moments.claw.domain.vo.ActivityReplyVo;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
 import com.moments.claw.domain.vo.ActivityVo;
@@ -23,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,6 +39,14 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
+
+	/*活动进行中*/
+	public static final String ACTIVITY_IN_PROGRESS = "1";
+	/*活动已结束*/
+	public static final String ACTIVITY_ENDED = "2";
+	/*我发布的活动*/
+	public static final String ACTIVITY_MY_PUBLISH = "3";
+
 
 	private final ArticleService articleService;
 	private final ActivityArticleService activityArticleService;
@@ -77,6 +87,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 
 	@Override
 	public TableDataInfo<?> articleList(ActivityArticleDtoPageQuery pageQuery) {
+		@SuppressWarnings("unchecked")
 		List<Long> articleIds = activityArticleService
 				.select(ActivityArticle::getArticleId)
 				.eq(ActivityArticle::getActivityId, pageQuery.getActivityId())
@@ -85,7 +96,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				.map(ActivityArticle::getArticleId)
 				.collect(Collectors.toList());
 		List<ActivityReplyVo> ret = null;
-		if (articleIds.size() > 0) {
+		if (!articleIds.isEmpty()) {
 			List<Article> articleList = articleService.list(new LambdaQueryWrapper<Article>().in(Article::getId, articleIds).orderByAsc(Article::getCreatedAt));
 			ret = CopyBeanUtils.copyBeanList(articleList, ActivityReplyVo.class);
 			// 赋值封面图url和图片url列表
@@ -174,6 +185,73 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 			activity.setCoverImageUrl(furl);
 		}
 		return activity;
+	}
+
+	@Override
+	public TableDataInfo<?> myActivityList(MyActivityPageQueryDto dto) {
+		Long operator = SecurityUtils.getUserId();
+		// 查询我参与的所有活动
+		List<Activity> myParticipateActivityList = new ArrayList<>();
+		// 我发布的所有文章
+		List<Article> myPublishArticleList = articleService.getMyParticipate(operator);
+		if (!myPublishArticleList.isEmpty()) {
+			List<Long> myPublishArticleIds = myPublishArticleList.stream().map(Article::getId).collect(Collectors.toList());
+			// 过滤我发布的文章属于参与活动的文章
+			List<ActivityArticle> activityArticleList = activityArticleService.getActivityArticleInArticleIds(myPublishArticleIds);
+			if (!activityArticleList.isEmpty()) {
+				List<Long> activityIds = activityArticleList.stream().map(ActivityArticle::getActivityId).collect(Collectors.toList());
+				// 过滤我参与过发布文章的活动列表
+				myParticipateActivityList = getBaseMapper().selectBatchIds(activityIds);
+			}
+		}
+
+		if (myParticipateActivityList.isEmpty()) {
+			return new TableDataInfo<>();
+		}
+
+		LocalDateTime now = LocalDateTime.now();// 当前时间
+		switch (dto.getType()) {
+			// 进行中的
+			case ACTIVITY_IN_PROGRESS:
+				myParticipateActivityList = myParticipateActivityList.stream().filter(activity -> activity.getStartTime().isBefore(now) && activity.getEndTime().isAfter(now)).collect(Collectors.toList());
+				break;
+			// 已结束的
+			case ACTIVITY_ENDED:
+				myParticipateActivityList = myParticipateActivityList.stream().filter(activity -> activity.getStartTime().isBefore(now) && activity.getEndTime().isBefore(now)).collect(Collectors.toList());
+				break;
+			// 我发布的
+			case ACTIVITY_MY_PUBLISH:
+				List<Activity> myPublishActivity = getMyPublishActivityList(operator);
+				if (!myPublishActivity.isEmpty()) {
+					setImageUrls(myPublishActivity);
+				}
+				return PaginationUtil.handPaged(myPublishActivity, dto.getPageSize(), dto.getPageNum());
+			default:
+				return new TableDataInfo<>();
+		}
+		setImageUrls(myParticipateActivityList);
+		return PaginationUtil.handPaged(myParticipateActivityList, dto.getPageSize(), dto.getPageNum());
+	}
+
+	/**
+	 * 设置活动首页缩略图
+	 */
+	private void setImageUrls(List<Activity> myPublishActivity) {
+		myPublishActivity.forEach(activity -> {
+			String fileId = activity.getImageIds().split(",")[0];
+			String fileUrl = filesService.getFurl(fileId);
+			activity.setCoverImageUrl(fileUrl);
+		});
+	}
+
+	/**
+	 * 根据userId获取发布的活动列表
+	 * @param userId 用户id
+	 * @return 活动列表
+	 */
+	@Override
+	public List<Activity> getMyPublishActivityList(Long userId) {
+		return lambdaQuery().eq(Activity::getPublishUserId, userId).list();
 	}
 }
 

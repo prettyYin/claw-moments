@@ -2,10 +2,11 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
+
+import java.util.List;
 
 
 /**
@@ -29,4 +30,11 @@ public interface ActivityUserService extends IMppService<ActivityUser> {
 	 * 根据activityId和userId获取活动用户关联数据
 	 */
 	ActivityUser getActivityUser(Long activityId, Long userId);
+
+	/**
+	 * 活动关联列表
+	 * @param userId 用户id
+	 * @return 活动关联列表
+	 */
+	List<ActivityUser> getByUserId(Long userId);
 }

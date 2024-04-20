@@ -2,6 +2,7 @@ package com.moments.claw.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
+import com.moments.claw.domain.base.entity.ActivityArticle;
 import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
@@ -9,6 +10,7 @@ import com.moments.claw.mapper.ActivityUserMapper;
 import com.moments.claw.service.ActivityUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,7 +24,7 @@ public class ActivityUserServiceImpl extends MppServiceImpl<ActivityUserMapper, 
 
 	@Override
 	public ActivityTypeStatusVo getActivityTypeAndThumbStatus(Long activityId, Long userId) {
-
+		@SuppressWarnings("unchecked")
 		ActivityUser activityUser =
 				select(ActivityUser::getType, ActivityUser::getThumbStatus)
 				.eq(ActivityUser::getActivityId, activityId)
@@ -33,12 +35,16 @@ public class ActivityUserServiceImpl extends MppServiceImpl<ActivityUserMapper, 
 
 	@Override
 	public ActivityUser getActivityUser(Long activityId, Long userId) {
-		ActivityUser activityUser = getOne(
+		return getOne(
 				new LambdaQueryWrapper<ActivityUser>()
 						.eq(ActivityUser::getActivityId, activityId)
 						.eq(ActivityUser::getUserId, userId)
 		);
-		return activityUser;
+	}
+
+	@Override
+	public List<ActivityUser> getByUserId(Long userId) {
+		return lambdaQuery().eq(ActivityUser::getUserId, userId).list();
 	}
 }
 
