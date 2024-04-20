@@ -24,10 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -223,21 +220,21 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 			case ACTIVITY_MY_PUBLISH:
 				List<Activity> myPublishActivity = getMyPublishActivityList(operator);
 				if (!myPublishActivity.isEmpty()) {
-					setImageUrls(myPublishActivity);
+					setImageUrlsAndSorted(myPublishActivity);
 				}
 				return PaginationUtil.handPaged(myPublishActivity, dto.getPageSize(), dto.getPageNum());
 			default:
 				return new TableDataInfo<>();
 		}
-		setImageUrls(myParticipateActivityList);
+		setImageUrlsAndSorted(myParticipateActivityList);
 		return PaginationUtil.handPaged(myParticipateActivityList, dto.getPageSize(), dto.getPageNum());
 	}
 
 	/**
 	 * 设置活动首页缩略图
 	 */
-	private void setImageUrls(List<Activity> myPublishActivity) {
-		myPublishActivity.forEach(activity -> {
+	private void setImageUrlsAndSorted(List<Activity> myPublishActivity) {
+		myPublishActivity.stream().sorted(Comparator.comparing(Activity::getCreatedAt).reversed()).forEach(activity -> {
 			String fileId = activity.getImageIds().split(",")[0];
 			String fileUrl = filesService.getFurl(fileId);
 			activity.setCoverImageUrl(fileUrl);
