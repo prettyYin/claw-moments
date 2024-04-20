@@ -41,11 +41,12 @@ public class PetLoginServiceImpl implements PetLoginService {
 
 	@Override
 	public PetLoginDomain loginByPass(LoginDto loginDto) {
+		// 默认以手机号注册作为用户名
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginDto.getMobile(), loginDto.getPassword());
 		Authentication authenticate = authenticationManager.authenticate(authentication);
 		// 认证是否通过
 		if (Objects.isNull(authenticate)) {
-			throw new BizException(ResultEnum.LOGIN_ERROR);
+			throw new BizException(ResultEnum.SUCCESS.getCode(),ResultEnum.LOGIN_ERROR.getMsg());
 		}
 		// 通过jwt生成token，userId 和 userInfo 存入redis中
 		LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
@@ -68,7 +69,7 @@ public class PetLoginServiceImpl implements PetLoginService {
 	@Override
 	public PetLoginDomain register(RegisterDto registerDto) {
 		// 查询是否已注册过
-		User user = userService.getByMobile(registerDto.getMobile());
+		User user = userService.getByUsername(registerDto.getMobile());
 		if (Objects.nonNull(user)) {
 			throw new BizException(ResultEnum.REGISTERED_ALREADY);
 		}

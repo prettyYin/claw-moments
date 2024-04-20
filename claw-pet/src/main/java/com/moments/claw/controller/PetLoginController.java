@@ -3,7 +3,6 @@ package com.moments.claw.controller;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.common.enums.ResultEnum;
 import com.moments.claw.domain.common.response.R;
-import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.domain.dto.LoginDto;
 import com.moments.claw.domain.dto.MobileDto;
 import com.moments.claw.domain.dto.RegisterDto;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 public class PetLoginController {
@@ -53,7 +51,7 @@ public class PetLoginController {
 	@PostMapping("/site/sms-code")
 	public R<?> smsCode(@Validated @RequestBody MobileDto mobileDto) {
 		// 是否已注册
-		User user = userService.getByMobile(mobileDto.getMobile());
+		User user = userService.getByUsername(mobileDto.getMobile());
 		if (Objects.nonNull(user)) {
 			return R.fail(ResultEnum.REGISTERED_ALREADY.getCode(),ResultEnum.REGISTERED_ALREADY.getMsg());
 		}
