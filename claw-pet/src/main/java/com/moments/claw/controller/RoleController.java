@@ -2,6 +2,7 @@ package com.moments.claw.controller;
 
 
 import com.moments.claw.domain.base.entity.Role;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -89,5 +90,12 @@ public class RoleController extends BaseController {
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(roleService.removeByIds(idList));
     }
+
+    @ApiOperation(value = "获取当前用户所有权限")
+    @GetMapping("/perms")
+    public R<?> getAllPerms() {
+        return R.success(roleService.getPermsByUserId(SecurityUtils.getUserId()));
+    }
+
 }
 

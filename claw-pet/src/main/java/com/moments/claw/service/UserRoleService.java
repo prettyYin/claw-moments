@@ -12,4 +12,17 @@ import com.moments.claw.domain.base.entity.UserRole;
  */
 public interface UserRoleService extends IMppService<UserRole> {
 
+	/**
+	 * 根据主键查询已被逻辑删除的数据
+	 * @param userId 用户id
+	 * @param roleId 角色id
+	 * @return 角色关联对象信息
+	 */
+	UserRole selectByMultiIdIfDelLogic(Long userId, Long roleId);
+
+	/**
+	 * 修改逻辑删除
+	 * @param userRole 修改对象
+	 */
+	void updateDelLogicByMultiId(UserRole userRole);
 }

@@ -31,5 +31,10 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 		// 返回该用户的权限
 		return roleMapper.selectPermsByUserId(userId);
 	}
+
+	@Override
+	public Role getRoleByPermissionKey(String permissionKey) {
+		return lambdaQuery().eq(Role::getPermissionKey, permissionKey).one();
+	}
 }
 

@@ -3,13 +3,17 @@ package com.moments.claw.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.common.constant.PetConstants;
+import com.moments.claw.domain.base.entity.Role;
 import com.moments.claw.domain.base.entity.User;
+import com.moments.claw.domain.base.entity.UserRole;
 import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.domain.common.service.RedisService;
 import com.moments.claw.domain.common.utils.SmsUtils;
 import com.moments.claw.domain.dto.MobileDto;
 import com.moments.claw.mapper.UserMapper;
 import com.moments.claw.service.FilesService;
+import com.moments.claw.service.RoleService;
+import com.moments.claw.service.UserRoleService;
 import com.moments.claw.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * (ClawUser)表服务实现类
@@ -29,8 +32,12 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+	private static final String ADMIN_PERMISSION_KEY = "admin:admin";
+
 	private final RedisService redisService;
 	private final FilesService filesService;
+	private final UserRoleService userRoleService;
+	private final RoleService roleService;
 
 	@Override
 	public User getByMobile(String mobile) {
@@ -58,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		// 暂时先从redis中读取
 		String code = SmsUtils.randomSmsCode();
 		redisService.set(PetConstants.SMS_PREFIX + mobileDto.getMobile(), code, 60);
-		return (String) redisService.get(PetConstants.SMS_PREFIX + mobileDto.getMobile());
+		return redisService.get(PetConstants.SMS_PREFIX + mobileDto.getMobile());
 	}
 
 	@Override
@@ -100,6 +107,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		return users;
 	}
 
+	@Override
+	public void setAdmin(Long userId) {
+		Role role = roleService.getRoleByPermissionKey(ADMIN_PERMISSION_KEY);
+		UserRole userRoleEntity = UserRole.builder().userId(userId).roleId(role.getRoleId()).build();
+		UserRole userRole = userRoleService.selectByMultiIdIfDelLogic(userRoleEntity.getUserId(), userRoleEntity.getRoleId());
+		// 如果是被逻辑删除了,则更新del_flag
+		if (userRole != null) {
+			userRole.setDelFlag(0);
+			userRoleService.updateDelLogicByMultiId(userRole);
+			return;
+		}
+		userRoleService.saveOrUpdateByMultiId(userRoleEntity);
+	}
+
+	@Override
+	public void cancelAdmin(Long userId) {
+		Role role = roleService.getRoleByPermissionKey(ADMIN_PERMISSION_KEY);
+		UserRole userRole = userRoleService.selectByMultiId(UserRole.builder().userId(userId).roleId(role.getRoleId()).build());
+		userRoleService.deleteByMultiId(userRole);
+	}
 
 }
 

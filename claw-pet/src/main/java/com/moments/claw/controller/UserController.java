@@ -133,15 +133,23 @@ public class UserController extends BaseController {
         return R.success(userService.searchUserLikeNickname(nickname));
     }
 
+    /**
+     * 设为管理员权限
+     */
     @PreAuthorize("@perms.hasAuthority('admin:admin')")
-    @GetMapping("/setAdmin")
-    public R<?> setAdmin() {
+    @PostMapping("/setAdmin/{userId}")
+    public R<?> setAdmin(@PathVariable Long userId) {
+        userService.setAdmin(userId);
         return R.success();
     }
 
+    /**
+     * 取消管理员权限
+     */
     @PreAuthorize("@perms.hasAuthority('admin:admin')")
-    @GetMapping("/cancelAdmin")
-    public R<?> cancelAdmin() {
+    @PostMapping("/cancelAdmin/{userId}")
+    public R<?> cancelAdmin(@PathVariable Long userId) {
+        userService.cancelAdmin(userId);
         return R.success();
     }
 }

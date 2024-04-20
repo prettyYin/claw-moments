@@ -2,6 +2,7 @@ package com.moments.claw.mapper;
 
 import com.github.jeffreyning.mybatisplus.base.MppBaseMapper;
 import com.moments.claw.domain.base.entity.UserRole;
+import org.apache.ibatis.annotations.Param;
 
 
 /**
@@ -12,5 +13,8 @@ import com.moments.claw.domain.base.entity.UserRole;
  */
 public interface UserRoleMapper extends MppBaseMapper<UserRole> {
 
+	UserRole selectByMultiIdIfLogicDel(@Param("userId") Long userId, @Param("roleId") Long roleId);
+
+	void updateDelLogicByMultiId(UserRole userRole);
 }
 

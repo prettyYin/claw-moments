@@ -4,7 +4,6 @@ import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
 

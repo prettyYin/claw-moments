@@ -19,4 +19,11 @@ public interface RoleService extends IService<Role> {
 	 * @return 权限集合
 	 */
 	Set<String> getPermsByUserId(Long userId);
+
+	/**
+	 * 根据权限标识获取用户信息
+	 * @param permissionKey 权限标识符
+	 * @return 用户对象信息
+	 */
+	Role getRoleByPermissionKey(String permissionKey);
 }

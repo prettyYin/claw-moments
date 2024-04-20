@@ -28,4 +28,8 @@ public interface UserService extends IService<User> {
 	String getNicknameByUserId(Long userId);
 
 	List<User> searchUserLikeNickname(String nickname);
+
+	void setAdmin(Long userId);
+
+	void cancelAdmin(Long userId);
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0 EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moments.claw.mapper.UserRoleMapper">
+
+    <select id="selectByMultiIdIfLogicDel" resultType="com.moments.claw.domain.base.entity.UserRole">
+        select *
+        from claw_user_role
+        where user_id = #{userId} and role_id = #{roleId} and del_flag = -1
+    </select>
+
+    <update id="updateDelLogicByMultiId" parameterType="com.moments.claw.domain.base.entity.UserRole">
+        update claw_user_role
+        set del_flag = #{delFlag}
+        where user_id = #{userId} and role_id = #{roleId}
+    </update>
+</mapper>
