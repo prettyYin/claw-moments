@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Role;
+import java.util.Set;
 
 
 /**
@@ -12,4 +13,10 @@ import com.moments.claw.domain.base.entity.Role;
  */
 public interface RoleService extends IService<Role> {
 
+	/**
+	 * 返回用户的所有权限
+	 * @param userId 用户id
+	 * @return 权限集合
+	 */
+	Set<String> getPermsByUserId(Long userId);
 }

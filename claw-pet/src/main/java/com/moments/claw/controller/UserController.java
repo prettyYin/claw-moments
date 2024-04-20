@@ -6,6 +6,7 @@ import com.moments.claw.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
@@ -122,9 +123,26 @@ public class UserController extends BaseController {
         return R.success(userService.getNicknameByUserId(userId));
     }
 
+    /**
+     * 根据昵称模糊查找用户
+     * @param nickname 用户昵称
+     * @return 用户信息
+     */
     @GetMapping("/searchUser")
     public R<?> searchUser(@RequestParam("nickname") String nickname) {
         return R.success(userService.searchUserLikeNickname(nickname));
+    }
+
+    @PreAuthorize("@perms.hasAuthority('admin:admin')")
+    @GetMapping("/setAdmin")
+    public R<?> setAdmin() {
+        return R.success();
+    }
+
+    @PreAuthorize("@perms.hasAuthority('admin:admin')")
+    @GetMapping("/cancelAdmin")
+    public R<?> cancelAdmin() {
+        return R.success();
     }
 }
 

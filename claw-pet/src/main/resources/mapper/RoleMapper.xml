@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0 EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moments.claw.mapper.RoleMapper">
+
+
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+        select permission_key
+        from claw_role r
+            left join claw_user_role ur on r.role_id = ur.role_id
+            left join claw_user u on ur.user_id = u.id
+        where u.id = #{userId}
+    </select>
+</mapper>
