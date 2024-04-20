@@ -42,7 +42,7 @@ public class ActivityController extends BaseController {
      *
      * @return 所有数据
      */
-    @ApiOperation(value = "查询所有数据")
+    @ApiOperation(value = "分页查询活动列表")
     @GetMapping("/list")
     public TableDataInfo<?> list(@Validated ActivityDtoPageQuery pageQuery) {
         return activityService.recommendList(pageQuery);

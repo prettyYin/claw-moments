@@ -188,7 +188,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	public TableDataInfo<?> myActivityList(MyActivityPageQueryDto dto) {
 		Long operator = SecurityUtils.getUserId();
 		// 查询我参与的所有活动
-		List<Activity> myParticipateActivityList = new ArrayList<>();
+		List<Activity> myParticipateArticleList = new ArrayList<>();
 		// 我发布的所有文章
 		List<Article> myPublishArticleList = articleService.getMyParticipate(operator);
 		if (!myPublishArticleList.isEmpty()) {
@@ -198,11 +198,11 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 			if (!activityArticleList.isEmpty()) {
 				List<Long> activityIds = activityArticleList.stream().map(ActivityArticle::getActivityId).collect(Collectors.toList());
 				// 过滤我参与过发布文章的活动列表
-				myParticipateActivityList = getBaseMapper().selectBatchIds(activityIds);
+				myParticipateArticleList = getBaseMapper().selectBatchIds(activityIds);
 			}
 		}
 
-		if (myParticipateActivityList.isEmpty()) {
+		if (myParticipateArticleList.isEmpty()) {
 			return new TableDataInfo<>();
 		}
 
@@ -210,31 +210,38 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 		switch (dto.getType()) {
 			// 进行中的
 			case ACTIVITY_IN_PROGRESS:
-				myParticipateActivityList = myParticipateActivityList.stream().filter(activity -> activity.getStartTime().isBefore(now) && activity.getEndTime().isAfter(now)).collect(Collectors.toList());
+				myParticipateArticleList = myParticipateArticleList.stream().filter(activity -> activity.getStartTime().isBefore(now) && activity.getEndTime().isAfter(now)).collect(Collectors.toList());
 				break;
 			// 已结束的
 			case ACTIVITY_ENDED:
-				myParticipateActivityList = myParticipateActivityList.stream().filter(activity -> activity.getStartTime().isBefore(now) && activity.getEndTime().isBefore(now)).collect(Collectors.toList());
+				myParticipateArticleList = myParticipateArticleList.stream().filter(activity -> activity.getStartTime().isBefore(now) && activity.getEndTime().isBefore(now)).collect(Collectors.toList());
 				break;
 			// 我发布的
 			case ACTIVITY_MY_PUBLISH:
-				List<Activity> myPublishActivity = getMyPublishActivityList(operator);
-				if (!myPublishActivity.isEmpty()) {
-					setImageUrlsAndSorted(myPublishActivity);
-				}
-				return PaginationUtil.handPaged(myPublishActivity, dto.getPageSize(), dto.getPageNum());
+				myParticipateArticleList = getMyPublishActivityList(operator);
+				break;
 			default:
 				return new TableDataInfo<>();
 		}
-		setImageUrlsAndSorted(myParticipateActivityList);
-		return PaginationUtil.handPaged(myParticipateActivityList, dto.getPageSize(), dto.getPageNum());
+		List<ActivityVo> result = CopyBeanUtils.copyBeanList(myParticipateArticleList, ActivityVo.class);
+		setThumbStatusAndImageUrlsAndSorted(result);
+		return PaginationUtil.handPaged(result, dto.getPageSize(), dto.getPageNum());
 	}
 
 	/**
-	 * 设置活动首页缩略图
+	 * 设置活动是否点赞和首页缩略图并排序
 	 */
-	private void setImageUrlsAndSorted(List<Activity> myPublishActivity) {
-		myPublishActivity.stream().sorted(Comparator.comparing(Activity::getCreatedAt).reversed()).forEach(activity -> {
+	private void setThumbStatusAndImageUrlsAndSorted(List<ActivityVo> myPublishActivity) {
+		Long userId = SecurityUtils.getUserId();
+		myPublishActivity.stream().sorted(Comparator.comparing(ActivityVo::getStartTime).thenComparing(ActivityVo::getEndTime)).forEach(activity -> {
+			// 赋值点赞类型
+			ActivityTypeStatusVo typeAndThumbStatus = activityUserService.getActivityTypeAndThumbStatus(activity.getId(), userId);
+			if (null != typeAndThumbStatus) { // 有点赞
+				activity.setThumbStatus(typeAndThumbStatus.getThumbStatus());
+			} else { // 未点赞
+				activity.setThumbStatus(GlobalConstants.UN_THUMB_UP_TYPE);
+			}
+			// 赋值缩略图
 			String fileId = activity.getImageIds().split(",")[0];
 			String fileUrl = filesService.getFurl(fileId);
 			activity.setCoverImageUrl(fileUrl);
