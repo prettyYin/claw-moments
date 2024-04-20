@@ -1,6 +1,6 @@
 package com.moments.claw.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.moments.claw.domain.base.entity.UserRole;
 
 
@@ -10,6 +10,6 @@ import com.moments.claw.domain.base.entity.UserRole;
  * @author chandler
  * @since 2024-04-20 21:12:28
  */
-public interface UserRoleService extends IService<UserRole> {
+public interface UserRoleService extends IMppService<UserRole> {
 
 }

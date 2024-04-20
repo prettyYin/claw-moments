@@ -1,6 +1,6 @@
 package com.moments.claw.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.jeffreyning.mybatisplus.base.MppBaseMapper;
 import com.moments.claw.domain.base.entity.UserRole;
 
 
@@ -10,7 +10,7 @@ import com.moments.claw.domain.base.entity.UserRole;
  * @author chandler
  * @since 2024-04-20 21:12:28
  */
-public interface UserRoleMapper extends BaseMapper<UserRole> {
+public interface UserRoleMapper extends MppBaseMapper<UserRole> {
 
 }
 

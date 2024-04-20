@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.dto.MobileDto;
 
+import java.util.List;
+
 
 /**
  * (ClawUser)表服务接口
@@ -24,4 +26,6 @@ public interface UserService extends IService<User> {
 	String getFileUrlByUserId(Long userId);
 
 	String getNicknameByUserId(Long userId);
+
+	List<User> searchUserLikeNickname(String nickname);
 }

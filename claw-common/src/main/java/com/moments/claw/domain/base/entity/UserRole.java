@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -23,11 +24,11 @@ import com.moments.claw.domain.BaseEntity;
 @ApiModel(value = "claw_user_role实体类",description = "用于存储传输claw_user_role信息")
 public class UserRole extends BaseEntity {
     
-    @TableId
+    @MppMultiId
     @ApiModelProperty(name = "userId", value = "用户主键", hidden = true)
     private Long userId;
     
-    @TableId
+    @MppMultiId
     @ApiModelProperty(name = "roleId", value = "角色主键", hidden = true)  
     private Long roleId;
         

@@ -121,5 +121,10 @@ public class UserController extends BaseController {
     public R<?> getNicknameByUserId(@PathVariable("userId") Long userId) {
         return R.success(userService.getNicknameByUserId(userId));
     }
+
+    @GetMapping("/searchUser")
+    public R<?> searchUser(@RequestParam("nickname") String nickname) {
+        return R.success(userService.searchUserLikeNickname(nickname));
+    }
 }
 
