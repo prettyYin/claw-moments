@@ -262,6 +262,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	@Override
 	public void publish(ActivityPublishDto dto) {
 		Activity activity = CopyBeanUtils.copyBean(dto, Activity.class);
+		activity.setSurplusCount(dto.getCapacity()); // 默认可报名剩余人数为活动总容量
 		activity.setPublishUserId(SecurityUtils.getUserId());
 		activity.setImageIds(String.join(",", dto.getImages()));
 		save(activity);
