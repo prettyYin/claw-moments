@@ -52,7 +52,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	private final FilesService filesService;
 
 	@Override
-	public TableDataInfo<?> recommendList(ActivityDtoPageQuery pageQuery) {
+	public TableDataInfo<?> activityList(ActivityDtoPageQuery pageQuery) {
 		// 查询有效活动时间内的活动
 		LocalDateTime now = LocalDateTime.now();
 		List<Activity> list = list(
@@ -234,7 +234,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	 */
 	private void setThumbStatusAndImageUrlsAndSorted(List<ActivityVo> myPublishActivity) {
 		Long userId = SecurityUtils.getUserId();
-		myPublishActivity.stream().sorted(Comparator.comparing(ActivityVo::getStartTime).thenComparing(ActivityVo::getEndTime)).forEach(activity -> {
+		myPublishActivity.stream().sorted(Comparator.comparing(ActivityVo::getCreatedAt).reversed()).forEach(activity -> {
 			// 赋值点赞类型
 			ActivityTypeStatusVo typeAndThumbStatus = activityUserService.getActivityTypeAndThumbStatus(activity.getId(), userId);
 			if (null != typeAndThumbStatus) { // 有点赞

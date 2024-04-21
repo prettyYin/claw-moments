@@ -26,7 +26,7 @@ public interface ActivityService extends IService<Activity> {
 		return lambdaQuery().select(columns);
 	}
 
-	TableDataInfo<?> recommendList(ActivityDtoPageQuery pageQuery);
+	TableDataInfo<?> activityList(ActivityDtoPageQuery pageQuery);
 
 	TableDataInfo<?> articleList(ActivityArticleDtoPageQuery pageQuery);
 

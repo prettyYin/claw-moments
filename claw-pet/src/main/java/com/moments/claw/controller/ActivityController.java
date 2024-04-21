@@ -46,7 +46,7 @@ public class ActivityController extends BaseController {
     @ApiOperation(value = "分页查询活动列表")
     @GetMapping("/list")
     public TableDataInfo<?> list(@Validated ActivityDtoPageQuery pageQuery) {
-        return activityService.recommendList(pageQuery);
+        return activityService.activityList(pageQuery);
     }
 
     /**

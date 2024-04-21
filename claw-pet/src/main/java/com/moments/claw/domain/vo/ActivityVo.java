@@ -56,4 +56,6 @@ public class ActivityVo {
 	@ApiModelProperty(name = "endTime", value = "活动介绍时间")
 	private LocalDateTime endTime;
 
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+	private Date createdAt;
 }
