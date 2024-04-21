@@ -13,6 +13,7 @@ import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.dto.ActivityPublishDto;
 import com.moments.claw.domain.dto.MyActivityPageQueryDto;
 import com.moments.claw.domain.vo.ActivityReplyVo;
 import com.moments.claw.domain.vo.ActivityTypeStatusVo;
@@ -256,6 +257,14 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	@Override
 	public List<Activity> getMyPublishActivityList(Long userId) {
 		return lambdaQuery().eq(Activity::getPublishUserId, userId).list();
+	}
+
+	@Override
+	public void publish(ActivityPublishDto dto) {
+		Activity activity = CopyBeanUtils.copyBean(dto, Activity.class);
+		activity.setPublishUserId(SecurityUtils.getUserId());
+		activity.setImageIds(String.join(",", dto.getImages()));
+		save(activity);
 	}
 }
 

@@ -8,6 +8,7 @@ import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.dto.ActivityPublishDto;
 import com.moments.claw.domain.dto.MyActivityPageQueryDto;
 
 import java.io.Serializable;
@@ -59,4 +60,6 @@ public interface ActivityService extends IService<Activity> {
 	 * @return 活动列表
 	 */
 	List<Activity> getMyPublishActivityList(Long userId);
+
+	void publish(ActivityPublishDto dto);
 }

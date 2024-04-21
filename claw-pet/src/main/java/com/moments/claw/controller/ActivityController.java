@@ -5,6 +5,7 @@ import com.moments.claw.domain.base.entity.ActivityUser;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.ActivityArticleDtoPageQuery;
 import com.moments.claw.domain.dto.ActivityDtoPageQuery;
+import com.moments.claw.domain.dto.ActivityPublishDto;
 import com.moments.claw.domain.dto.MyActivityPageQueryDto;
 import com.moments.claw.service.ActivityService;
 import io.swagger.annotations.Api;
@@ -140,5 +141,15 @@ public class ActivityController extends BaseController {
         return activityService.myActivityList(dto);
     }
 
+    /**
+     * 发布活动
+     * @param dto 请求对象
+     */
+    @ApiOperation("发布活动")
+    @PostMapping("/publish")
+    public R<?> publish(@Valid @RequestBody ActivityPublishDto dto) {
+        activityService.publish(dto);
+        return R.success();
+    }
 }
 

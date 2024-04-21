@@ -6,10 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
@@ -20,6 +17,8 @@ import com.moments.claw.domain.BaseEntity;
  * @author chandler
  * @since 2024-03-23 21:46:34
  */
+@ToString
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
