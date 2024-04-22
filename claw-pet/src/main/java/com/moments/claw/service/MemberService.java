@@ -1,9 +1,7 @@
 package com.moments.claw.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Member;
-
-import java.util.Optional;
 
 
 /**
@@ -12,7 +10,6 @@ import java.util.Optional;
  * @author chandler
  * @since 2024-03-11 22:19:30
  */
-public interface MemberService extends IMppService<Member> {
+public interface MemberService extends IService<Member> {
 
-	Member getMemberInfoByUserId(Long userId);
 }

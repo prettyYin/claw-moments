@@ -41,6 +41,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 	private final FilesService filesService;
 	private final MemberService memberService;
+	private final UserMemberService userMemberService;
 	private final CommentService commentService;
 	private final TagsService tagsService;
 	private final RequireService requireService;
@@ -60,8 +61,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	}
 
 	private void setMember(ArticleVo article,Long userId) {
-		Member member = memberService.getMemberInfoByUserId(userId);
-		Optional.ofNullable(member).ifPresent(article::setMember);
+		UserMember userMember = userMemberService.getMemberInfoByUserId(userId);
+		Optional.ofNullable(userMember).ifPresent(
+				m -> {
+					MemberVo memberVo = CopyBeanUtils.copyBean(userMember, MemberVo.class);
+					Long memberId = m.getMemberId();
+					Member member = memberService.getById(memberId);
+					memberVo.setName(member.getName());
+					memberVo.setIcon(member.getIcon());
+					memberVo.setLevel(member.getLevel());
+					article.setMemberVo(memberVo);
+				}
+		);
 	}
 
 	private void setComments(ArticleVo article) {

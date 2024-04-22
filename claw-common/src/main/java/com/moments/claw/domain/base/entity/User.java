@@ -119,9 +119,6 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "lastLoginIp", value = "上次登录ip")
     private String lastLoginIp;
         
-    @ApiModelProperty(name = "currentLevel", value = "当前会员等级")
-    private Integer currentLevel;
-        
     @ApiModelProperty(name = "follow", value = "关注数")
     private Long follow;
         

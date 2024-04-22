@@ -1,7 +1,5 @@
 package com.moments.claw.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.moments.claw.domain.base.entity.Member;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -158,9 +156,8 @@ public class ArticleVo {
 	@ApiModelProperty(name = "requirements", value = "要求")
 	private List<String> requirements;
 
-	@TableField(exist = false)
 	@ApiModelProperty(name = "member", value = "会员信息")
-	private Member member;
+	private MemberVo memberVo;
 
 	@ApiModelProperty(name = "coverImageUrl", value = "首页图url")
 	private String coverImageUrl;
