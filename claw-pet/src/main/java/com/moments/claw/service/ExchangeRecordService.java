@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.moments.claw.domain.base.entity.ExchangeRecord;
+import com.moments.claw.domain.dto.EquipNowDto;
 
 
 /**
@@ -12,4 +13,7 @@ import com.moments.claw.domain.base.entity.ExchangeRecord;
  */
 public interface ExchangeRecordService extends IMppService<ExchangeRecord> {
 
+	String latestJson();
+
+	void equipNow(EquipNowDto dto);
 }

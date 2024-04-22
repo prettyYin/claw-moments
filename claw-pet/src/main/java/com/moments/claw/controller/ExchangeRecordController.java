@@ -2,6 +2,7 @@ package com.moments.claw.controller;
 
 
 import com.moments.claw.domain.base.entity.ExchangeRecord;
+import com.moments.claw.domain.dto.EquipNowDto;
 import com.moments.claw.service.ExchangeRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,6 +58,7 @@ public class ExchangeRecordController extends BaseController {
 
     /**
      * 商品兑换
+     *
      * @param exchangeRecord 实体对象
      * @return 新增结果
      */
@@ -89,5 +91,19 @@ public class ExchangeRecordController extends BaseController {
     public R<?> delete(@ApiParam(name = "idList", value = "id数组", required = true) @RequestParam("idList") List<Long> idList) {
         return R.success(exchangeRecordService.removeByIds(idList));
     }
+
+    @ApiOperation(value = "获取最新一条装备的数据")
+    @GetMapping("/latestJson")
+    public R<?> latestJson() {
+        return R.success(exchangeRecordService.latestJson());
+    }
+
+    @ApiOperation(value = "立即装备上背景图")
+    @PutMapping("/equipNow")
+    public R<?> equipNow(@RequestBody @Valid EquipNowDto dto) {
+        exchangeRecordService.equipNow(dto);
+        return R.success();
+    }
+
 }
 
