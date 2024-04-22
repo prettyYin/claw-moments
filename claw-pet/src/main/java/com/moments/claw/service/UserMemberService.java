@@ -30,4 +30,10 @@ public interface UserMemberService extends IMppService<UserMember> {
 	 * @param integral 积分数
 	 */
 	void addIntegral(Long userId, Integer integral);
+
+	/**
+	 * 根据userid查询用户的会员信息
+	 * @return 会员信息
+	 */
+	UserMember selectByUserId(Long userId);
 }

@@ -58,5 +58,11 @@ public class UserMemberServiceImpl extends MppServiceImpl<UserMemberMapper, User
 			updateByMultiId(userMember);
 		}
 	}
+
+	@Override
+	public UserMember selectByUserId(Long userId) {
+		return lambdaQuery().eq(UserMember::getUserId, userId).one();
+	}
+
 }
 

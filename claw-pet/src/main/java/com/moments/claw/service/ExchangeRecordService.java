@@ -17,10 +17,4 @@ public interface ExchangeRecordService extends IMppService<ExchangeRecord> {
 
 	void equipNow(EquipNowDto dto);
 
-	/**
-	 * 商品兑换
-	 * @param exchangeRecord 实体对象
-	 * @return 新增结果
-	 */
-	void addExchangeRecord(ExchangeRecord exchangeRecord);
 }

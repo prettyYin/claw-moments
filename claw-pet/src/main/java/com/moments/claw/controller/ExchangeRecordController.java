@@ -1,12 +1,14 @@
 package com.moments.claw.controller;
 
 
+import com.moments.claw.biz.ExchangeRecordBiz;
 import com.moments.claw.domain.base.entity.ExchangeRecord;
 import com.moments.claw.domain.dto.EquipNowDto;
 import com.moments.claw.service.ExchangeRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
@@ -24,13 +26,12 @@ import java.util.List;
  */
 @Api(tags = "ExchangeRecordController控制层", value = "/exchangeRecord")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/exchangeRecord")
 public class ExchangeRecordController extends BaseController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private ExchangeRecordService exchangeRecordService;
+
+    private final ExchangeRecordBiz exchangeRecordBiz;
+    private final ExchangeRecordService exchangeRecordService;
 
     /**
      * 查询所有数据
@@ -65,7 +66,7 @@ public class ExchangeRecordController extends BaseController {
     @ApiOperation(value = "新增数据")
     @PostMapping("/exchange")
     public R<?> addExchangeRecord(@RequestBody @Valid ExchangeRecord exchangeRecord) {
-        exchangeRecordService.addExchangeRecord(exchangeRecord);
+        exchangeRecordBiz.addExchangeRecord(exchangeRecord);
         return R.success();
     }
 
