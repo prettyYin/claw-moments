@@ -2,6 +2,9 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.IntegralItem;
+import com.moments.claw.domain.vo.IntegralItemVo;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +15,5 @@ import com.moments.claw.domain.base.entity.IntegralItem;
  */
 public interface IntegralItemService extends IService<IntegralItem> {
 
+	List<IntegralItemVo> integralItemList();
 }

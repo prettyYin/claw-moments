@@ -10,9 +10,7 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import javax.annotation.Resource;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 积分商品表(IntegralItem)表控制层
@@ -31,14 +29,14 @@ public class IntegralItemController extends BaseController {
     private IntegralItemService integralItemService;
 
     /**
-     * 查询所有数据
+     * 获取积分物品列表
      *
      * @return 所有数据
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public R<?> selectAll() {
-        return R.success(integralItemService.list().stream().sorted(Comparator.comparing(IntegralItem::getGoodsScore).reversed()).collect(Collectors.toList()));
+    public R<?> integralItemList() {
+        return R.success(integralItemService.integralItemList());
     }
 
     /**

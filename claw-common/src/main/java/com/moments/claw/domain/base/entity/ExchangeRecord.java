@@ -4,9 +4,10 @@ import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.moments.claw.domain.BaseEntity;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 积分兑换商品记录表(ExchangeRecord)表实体类
@@ -25,13 +26,16 @@ import com.moments.claw.domain.BaseEntity;
 public class ExchangeRecord extends BaseEntity {
     
     @MppMultiId
+    @NotNull(message = "用户id不能为空")
     @ApiModelProperty(name = "itemId", value = "商品id", hidden = true)
     private Long itemId;
     
     @MppMultiId
-    @ApiModelProperty(name = "userId", value = "用户id", hidden = true)  
+    @NotNull(message = "商品id不能为空")
+    @ApiModelProperty(name = "userId", value = "用户id", hidden = true)
     private Long userId;
-        
+
+    @NotNull(message = "商品json不能为空")
     @ApiModelProperty(name = "itemJson", value = "商品json数据")
     private String itemJson;
         

@@ -11,6 +11,7 @@ import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,14 +56,13 @@ public class ExchangeRecordController extends BaseController {
     }
 
     /**
-     * 新增数据
-     *
+     * 商品兑换
      * @param exchangeRecord 实体对象
      * @return 新增结果
      */
     @ApiOperation(value = "新增数据")
-    @PostMapping
-    public R<?> insert(@RequestBody ExchangeRecord exchangeRecord) {
+    @PostMapping("/exchange")
+    public R<?> addExchangeRecord(@RequestBody @Valid ExchangeRecord exchangeRecord) {
         return R.success(exchangeRecordService.save(exchangeRecord));
     }
 
