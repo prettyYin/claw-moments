@@ -65,7 +65,8 @@ public class ExchangeRecordController extends BaseController {
     @ApiOperation(value = "新增数据")
     @PostMapping("/exchange")
     public R<?> addExchangeRecord(@RequestBody @Valid ExchangeRecord exchangeRecord) {
-        return R.success(exchangeRecordService.save(exchangeRecord));
+        exchangeRecordService.addExchangeRecord(exchangeRecord);
+        return R.success();
     }
 
     /**

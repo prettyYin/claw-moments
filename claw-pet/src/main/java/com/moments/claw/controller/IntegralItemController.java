@@ -1,10 +1,12 @@
 package com.moments.claw.controller;
 
+import com.moments.claw.biz.IntegralItemBiz;
 import com.moments.claw.domain.base.entity.IntegralItem;
 import com.moments.claw.service.IntegralItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
@@ -20,23 +22,21 @@ import java.util.List;
  */
 @Api(tags = "IntegralItemController控制层", value = "/integralItem")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/integralItem")
 public class IntegralItemController extends BaseController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private IntegralItemService integralItemService;
+
+    private final IntegralItemBiz integralItemBiz;
+    private final IntegralItemService integralItemService;
 
     /**
      * 获取积分物品列表
-     *
      * @return 所有数据
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
     public R<?> integralItemList() {
-        return R.success(integralItemService.integralItemList());
+        return R.success(integralItemBiz.integralItemList());
     }
 
     /**

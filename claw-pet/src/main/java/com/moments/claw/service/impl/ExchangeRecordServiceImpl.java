@@ -50,5 +50,12 @@ public class ExchangeRecordServiceImpl extends MppServiceImpl<ExchangeRecordMapp
 				.set(ExchangeRecord::getIsPayload, 1)
 				.update();
 	}
+
+	@Override
+	public void addExchangeRecord(ExchangeRecord exchangeRecord) {
+		save(exchangeRecord);
+		// 扣除相应积分
+
+	}
 }
 
