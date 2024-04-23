@@ -3,6 +3,7 @@ package com.moments.claw.biz;
 import com.moments.claw.domain.base.entity.ExchangeRecord;
 import com.moments.claw.domain.base.entity.IntegralItem;
 import com.moments.claw.domain.base.entity.UserMember;
+import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.service.ExchangeRecordService;
 import com.moments.claw.service.IntegralItemService;
@@ -25,20 +26,21 @@ public class ExchangeRecordBiz {
 	 */
 	@Transactional
 	public void addExchangeRecord(ExchangeRecord exchangeRecord) {
-		// 添加兑换记录
-		exchangeRecordService.save(exchangeRecord);
 		// 扣除相应积分
 		IntegralItem integralItem = integralItemService.getById(exchangeRecord.getItemId());// 获取兑换物品信息
+
 		if (integralItem != null) {
 			Long userId = SecurityUtils.getUserId();
 			UserMember userMember = userMemberService.selectByUserId(userId);
-			if (userMember != null) {
-				userMemberService
-						.lambdaUpdate()
-						.eq(UserMember::getUserId, userId)
-						.set(UserMember::getIntegral, userMember.getIntegral() - integralItem.getGoodsScore())
-						.update();
+			if (userMember.getIntegral().compareTo(Long.parseLong(integralItem.getGoodsScore().toString())) < 0) {
+				throw new BizException("积分不足，快去做任务获取积分吧~");
 			}
+			userMemberService
+					.lambdaUpdate()
+					.eq(UserMember::getUserId, userId)
+					.set(UserMember::getIntegral, userMember.getIntegral() - integralItem.getGoodsScore())
+					.update();
+			exchangeRecordService.save(exchangeRecord);
 		}
 	}
 }
