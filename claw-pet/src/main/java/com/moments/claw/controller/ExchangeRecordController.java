@@ -3,6 +3,7 @@ package com.moments.claw.controller;
 
 import com.moments.claw.biz.ExchangeRecordBiz;
 import com.moments.claw.domain.base.entity.ExchangeRecord;
+import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.EquipNowDto;
 import com.moments.claw.service.ExchangeRecordService;
 import io.swagger.annotations.Api;
@@ -12,8 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
-import com.moments.claw.domain.common.response.TableDataInfo;
-import javax.annotation.Resource;
+
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
@@ -34,15 +34,13 @@ public class ExchangeRecordController extends BaseController {
     private final ExchangeRecordService exchangeRecordService;
 
     /**
-     * 查询所有数据
-     *
+     * 我的兑换记录列表
      * @return 所有数据
      */
     @ApiOperation(value = "查询所有数据")
     @GetMapping("/list")
-    public TableDataInfo<?> selectAll() {
-        startPage();
-        return getDataTable(exchangeRecordService.list());
+    public R<?> listMyRecord() {
+        return R.success(exchangeRecordService.listRecordByUserId(SecurityUtils.getUserId()));
     }
 
     /**

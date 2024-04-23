@@ -50,5 +50,10 @@ public class ExchangeRecordServiceImpl extends MppServiceImpl<ExchangeRecordMapp
 				.set(ExchangeRecord::getIsPayload, 1)
 				.update();
 	}
+
+	@Override
+	public List<ExchangeRecord> listRecordByUserId(Long userId) {
+		return lambdaQuery().eq(ExchangeRecord::getUserId, userId).list();
+	}
 }
 

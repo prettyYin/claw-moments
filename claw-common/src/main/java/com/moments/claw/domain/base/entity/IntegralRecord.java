@@ -26,18 +26,24 @@ import com.moments.claw.domain.BaseEntity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("claw_sign_record")
-@ApiModel(value = "claw_sign_record实体类",description = "用于存储传输claw_sign_record信息")
-public class SignRecord extends BaseEntity {
+@TableName("claw_integral_record")
+@ApiModel(value = "claw_integral_record实体类",description = "用于存储传输claw_integral_record信息")
+public class IntegralRecord extends BaseEntity {
     
     @MppMultiId
     @ApiModelProperty(name = "userId", value = "用户id", hidden = true)
     private Long userId;
     
     @MppMultiId
-    @ApiModelProperty(name = "signinDate", value = "签到日期", hidden = true)
+    @ApiModelProperty(name = "obtainDate", value = "获取积分日期", hidden = true)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private LocalDate signinDate;
+    private LocalDate obtainDate;
+
+    @ApiModelProperty(name = "type", value = "积分类型")
+    private String type;
+
+    @ApiModelProperty(name = "score", value = "积分数")
+    private Integer score;
 }

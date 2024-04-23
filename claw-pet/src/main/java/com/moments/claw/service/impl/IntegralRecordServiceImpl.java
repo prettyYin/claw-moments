@@ -1,27 +1,28 @@
 package com.moments.claw.service.impl;
 
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.moments.claw.domain.base.entity.SignRecord;
+import com.moments.claw.domain.base.entity.IntegralRecord;
 import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.domain.common.utils.SecurityUtils;
-import com.moments.claw.mapper.SignRecordMapper;
+import com.moments.claw.mapper.IntegralRecordMapper;
 import com.moments.claw.service.UserMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.moments.claw.service.SignRecordService;
+import com.moments.claw.service.IntegralRecordService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
- * 用户签到表(SignRecord)表服务实现类
+ * 用户签到表(IntegralRecord)表服务实现类
  *
  * @author chandler
  * @since 2024-04-22 15:43:15
  */
-@Service("signRecordService")
+@Service("integralRecordService")
 @RequiredArgsConstructor
-public class SignRecordServiceImpl extends MppServiceImpl<SignRecordMapper, SignRecord> implements SignRecordService {
+public class IntegralRecordServiceImpl extends MppServiceImpl<IntegralRecordMapper, IntegralRecord> implements IntegralRecordService {
 
 	private final UserMemberService userMemberService;
 
@@ -31,12 +32,12 @@ public class SignRecordServiceImpl extends MppServiceImpl<SignRecordMapper, Sign
 		// 查询今日是否已签到
 		LocalDate today = LocalDate.now();
 		Long operator = SecurityUtils.getUserId();
-		SignRecord signRecordToday = getSignRecordDate(operator, today);
-		if (null != signRecordToday) {
+		IntegralRecord integralRecordToday = getSignRecordDate(operator, today);
+		if (null != integralRecordToday) {
 			throw new BizException("今日已签到~");
 		}
-		SignRecord signRecord = SignRecord.builder().userId(operator).signinDate(today).build();
-		save(signRecord); // 保存签到记录
+		IntegralRecord integralRecord = IntegralRecord.builder().userId(operator).obtainDate(today).build();
+		save(integralRecord); // 保存签到记录
 		userMemberService.addIntegral(operator, integral); // 添加积分数量
 		// 查询连续签到天数
 		Integer signDays = 0;
@@ -53,9 +54,9 @@ public class SignRecordServiceImpl extends MppServiceImpl<SignRecordMapper, Sign
 	 */
 	@Override
 	public Integer getConsecutiveSignDays(Long userId, LocalDate date, Integer signDays) {
-		SignRecord signRecordToday = getSignRecordDate(userId, date);
+		IntegralRecord integralRecordToday = getSignRecordDate(userId, date);
 		// 当天和前一天都没有签到记录则返回该签到天数
-		if (signRecordToday == null) {
+		if (integralRecordToday == null) {
 			return signDays;
 		}
 		LocalDate beforeDay = date.minusDays(1); // 前一天
@@ -73,8 +74,14 @@ public class SignRecordServiceImpl extends MppServiceImpl<SignRecordMapper, Sign
 	 * 查询用户某日的签到记录
 	 */
 	@Override
-	public SignRecord getSignRecordDate(Long userId, LocalDate date) {
-		return lambdaQuery().eq(SignRecord::getUserId, userId).eq(SignRecord::getSigninDate, date).one();
+	public IntegralRecord getSignRecordDate(Long userId, LocalDate date) {
+		return lambdaQuery().eq(IntegralRecord::getUserId, userId).eq(IntegralRecord::getObtainDate, date).one();
 	}
+
+	@Override
+	public List<IntegralRecord> listRecordByUserId(Long userId) {
+		return lambdaQuery().eq(IntegralRecord::getUserId, userId).list();
+	}
+
 }
 

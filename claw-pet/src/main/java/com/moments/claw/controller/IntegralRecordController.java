@@ -1,9 +1,9 @@
 package com.moments.claw.controller;
 
-import com.moments.claw.domain.base.entity.SignRecord;
+import com.moments.claw.domain.base.entity.IntegralRecord;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.domain.dto.SignRecordDto;
-import com.moments.claw.service.SignRecordService;
+import com.moments.claw.service.IntegralRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -15,20 +15,19 @@ import com.moments.claw.domain.common.response.TableDataInfo;
 import java.time.LocalDate;
 
 /**
- * 用户签到表(SignRecord)表控制层
+ * 用户积分获取表(IntegralRecord)表控制层
  *
  * @author chandler
  * @since 2024-04-22 15:43:15
  */
-@Api(tags = "SignRecordController控制层", value = "/signRecord")
+@Api(tags = "IntegralRecordController控制层", value = "/signRecord")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sign")
-public class SignRecordController extends BaseController {
+public class IntegralRecordController extends BaseController {
     /**
      * 服务对象
      */
-    private final SignRecordService signRecordService;
+    private final IntegralRecordService integralRecordService;
 
     /**
      * 查询所有数据
@@ -39,7 +38,7 @@ public class SignRecordController extends BaseController {
     @GetMapping("/list")
     public TableDataInfo<?> selectAll() {
         startPage();
-        return getDataTable(signRecordService.list());
+        return getDataTable(integralRecordService.list());
     }
 
     /**
@@ -47,47 +46,47 @@ public class SignRecordController extends BaseController {
      * @return 连续签到天数
      */
     @ApiOperation(value = "新增数据")
-    @PostMapping("/signToday")
+    @PostMapping("/sign/signToday")
     public R<?> signToday(@RequestBody SignRecordDto dto) {
-        return R.success(signRecordService.signToday(dto.getIntegral()));
+        return R.success(integralRecordService.signToday(dto.getIntegral()));
     }
 
     /**
      * 获取连续签到天数
      * @return 连续签到天数
      */
-    @GetMapping("/signDays")
+    @GetMapping("/sign/signDays")
     public R<?> getConsecutiveSignDays() {
         Long userId = SecurityUtils.getUserId();
         LocalDate today = LocalDate.now(); // 今天
         Integer signDays = 0;
-        SignRecord todaySignRecord = signRecordService.getSignRecordDate(userId, today);
-        if (todaySignRecord != null) {
+        IntegralRecord todayIntegralRecord = integralRecordService.getSignRecordDate(userId, today);
+        if (todayIntegralRecord != null) {
             signDays++;
         }
         LocalDate beforeDay = today.minusDays(1); // 前一天
-        return R.success(signRecordService.getConsecutiveSignDays(userId, beforeDay, signDays));
+        return R.success(integralRecordService.getConsecutiveSignDays(userId, beforeDay, signDays));
     }
 
     /**
      * 今日是否已签到
      * @return 今日签到结果
      */
-    @GetMapping("/isSignedToday")
+    @GetMapping("/sign/isSignedToday")
     public R<?> isSignedToday() {
-        return R.success(signRecordService.isSignedToday());
+        return R.success(integralRecordService.isSignedToday());
     }
 
     /**
      * 修改数据
      *
-     * @param signRecord 实体对象
+     * @param integralRecord 实体对象
      * @return 修改结果
      */
     @ApiOperation(value = "修改数据")
     @PutMapping
-    public R<?> update(@RequestBody SignRecord signRecord) {
-        return R.success(signRecordService.updateById(signRecord));
+    public R<?> update(@RequestBody IntegralRecord integralRecord) {
+        return R.success(integralRecordService.updateById(integralRecord));
     }
 }
 

@@ -1,17 +1,18 @@
 package com.moments.claw.controller;
 
+import com.moments.claw.biz.UserBiz;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.common.utils.SecurityUtils;
 import com.moments.claw.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,13 +23,12 @@ import java.util.List;
  */
 @Api(tags = "UserController控制层", value = "/user")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController extends BaseController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private UserService userService;
+
+    private final UserService userService;
+    private final UserBiz userBiz;
 
     /**
      * 通过主键查询单条数据
@@ -105,6 +105,7 @@ public class UserController extends BaseController {
 
     /**
      * 获取用户的头像地址
+     *
      * @param userId 用户id
      * @return 头像地址
      */
@@ -115,6 +116,7 @@ public class UserController extends BaseController {
 
     /**
      * 获取昵称
+     *
      * @param userId 用户id
      * @return 昵称
      */
@@ -125,6 +127,7 @@ public class UserController extends BaseController {
 
     /**
      * 根据昵称模糊查找用户
+     *
      * @param nickname 用户昵称
      * @return 用户信息
      */
@@ -152,5 +155,11 @@ public class UserController extends BaseController {
         userService.cancelAdmin(userId);
         return R.success();
     }
+
+    @GetMapping("/integral/detail")
+    public R<?> integralDetail() {
+        return R.success(userBiz.integralDetail());
+    }
+
 }
 

@@ -1,18 +1,19 @@
 package com.moments.claw.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
-import com.moments.claw.domain.base.entity.SignRecord;
+import com.moments.claw.domain.base.entity.IntegralRecord;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 /**
- * 用户签到表(SignRecord)表服务接口
+ * 用户签到表(IntegralRecord)表服务接口
  *
  * @author chandler
  * @since 2024-04-22 15:43:15
  */
-public interface SignRecordService extends IMppService<SignRecord> {
+public interface IntegralRecordService extends IMppService<IntegralRecord> {
 
 	/**
 	 * 今日签到
@@ -38,5 +39,7 @@ public interface SignRecordService extends IMppService<SignRecord> {
 	/**
 	 * 查询用户某日的签到记录
 	 */
-	SignRecord getSignRecordDate(Long userId, LocalDate date);
+	IntegralRecord getSignRecordDate(Long userId, LocalDate date);
+
+	List<IntegralRecord> listRecordByUserId(Long userId);
 }
