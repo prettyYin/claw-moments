@@ -24,9 +24,7 @@ import java.time.LocalDate;
 @RestController
 @RequiredArgsConstructor
 public class IntegralRecordController extends BaseController {
-    /**
-     * 服务对象
-     */
+
     private final IntegralRecordService integralRecordService;
 
     /**
@@ -48,7 +46,7 @@ public class IntegralRecordController extends BaseController {
     @ApiOperation(value = "新增数据")
     @PostMapping("/sign/signToday")
     public R<?> signToday(@RequestBody SignRecordDto dto) {
-        return R.success(integralRecordService.signToday(dto.getIntegral()));
+        return R.success(integralRecordService.signToday(dto));
     }
 
     /**

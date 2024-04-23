@@ -2,6 +2,7 @@ package com.moments.claw.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.moments.claw.domain.base.entity.IntegralRecord;
+import com.moments.claw.domain.dto.SignRecordDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +20,7 @@ public interface IntegralRecordService extends IMppService<IntegralRecord> {
 	 * 今日签到
 	 * @return 连续签到天数
 	 */
-	Integer signToday(Integer integral);
+	Integer signToday(SignRecordDto integral);
 
 	/**
 	 * 查询某个用户的连续签到天数

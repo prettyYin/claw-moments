@@ -4,6 +4,7 @@ import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.moments.claw.domain.base.entity.IntegralRecord;
 import com.moments.claw.domain.common.exception.BizException;
 import com.moments.claw.domain.common.utils.SecurityUtils;
+import com.moments.claw.domain.dto.SignRecordDto;
 import com.moments.claw.mapper.IntegralRecordMapper;
 import com.moments.claw.service.UserMemberService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class IntegralRecordServiceImpl extends MppServiceImpl<IntegralRecordMapp
 
 	@Override
 	@Transactional
-	public Integer signToday(Integer integral) {
+	public Integer signToday(SignRecordDto dto) {
 		// 查询今日是否已签到
 		LocalDate today = LocalDate.now();
 		Long operator = SecurityUtils.getUserId();
@@ -36,9 +37,15 @@ public class IntegralRecordServiceImpl extends MppServiceImpl<IntegralRecordMapp
 		if (null != integralRecordToday) {
 			throw new BizException("今日已签到~");
 		}
-		IntegralRecord integralRecord = IntegralRecord.builder().userId(operator).obtainDate(today).build();
+		IntegralRecord integralRecord = IntegralRecord
+				.builder()
+				.userId(operator)
+				.obtainDate(today)
+				.type("每日签到")
+				.score(dto.getIntegral())
+				.build();
 		save(integralRecord); // 保存签到记录
-		userMemberService.addIntegral(operator, integral); // 添加积分数量
+		userMemberService.addIntegral(operator, dto.getIntegral()); // 添加积分数量
 		// 查询连续签到天数
 		Integer signDays = 0;
 		signDays = getConsecutiveSignDays(operator, today, signDays);
