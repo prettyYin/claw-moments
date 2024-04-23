@@ -25,11 +25,14 @@ public class UserMemberServiceImpl extends MppServiceImpl<UserMemberMapper, User
 
 	@Override
 	public Long integralCount() {
-		return lambdaQuery()
+		UserMember userMember = lambdaQuery()
 				.select(UserMember::getIntegral)
 				.eq(UserMember::getUserId, SecurityUtils.getUserId())
-				.one()
-				.getIntegral();
+				.one();
+		if (userMember != null) {
+			return userMember.getIntegral();
+		}
+		return 0L;
 	}
 
 	@Override

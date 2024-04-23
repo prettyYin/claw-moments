@@ -27,7 +27,10 @@ public class SendOrUpdateArticleFromCommunityDto {
 	@ApiModelProperty(name = "type", value = "类型（1：领养；2：丢失；3：关注；4：科普；5：救助；6：闲置；7：其他）")
 	private Integer type;
 
-	@ApiModelProperty(name = "images",value = "图片文件id列表")
+	@ApiModelProperty(name = "imageIds",value = "图片文件id列表(编辑时不为空)")
+	private String imageIds;
+
+	@ApiModelProperty(name = "images",value = "图片文件id列表(发布时不为空)")
 	private List<String> images;
 
 	@ApiModelProperty(name = "video",value = "视频文件id")

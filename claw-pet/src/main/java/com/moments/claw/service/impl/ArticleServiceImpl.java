@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -195,12 +192,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 	@Override
 	public void communityForm(SendOrUpdateArticleFromCommunityDto dto) {
+		// 编辑：imageIds有值；发布：images有值
+		String imageIds = "";
+		if (StringUtils.isNotBlank(dto.getImageIds())) {
+			imageIds = String.join(",", Arrays.asList(dto.getImageIds().split(",")));
+		} else if (CollUtil.isNotEmpty(dto.getImages())) {
+			imageIds = String.join(",", dto.getImages());
+		}
 		Article article = Article.builder()
 				.userId(SecurityUtils.getUserId())
 				.title(dto.getTitle())
 				.type(dto.getType())
 				.content(dto.getContent())
-				.imageIds(String.join(",", dto.getImages()))
+				.imageIds(imageIds)
 				.videoId(dto.getVideo())
 				.build();
 		// 保存文章
