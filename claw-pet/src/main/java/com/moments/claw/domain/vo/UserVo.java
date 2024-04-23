@@ -10,6 +10,9 @@ import java.util.Date;
 @Data
 public class UserVo {
 
+	@ApiModelProperty(name = "id", value = "用户主键")
+	private Long id;
+
 	@ApiModelProperty(name = "nickname", value = "网名")
 	private String nickname;
 
