@@ -3,6 +3,7 @@ package com.moments.claw.controller;
 import com.moments.claw.biz.UserBiz;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.domain.common.utils.SecurityUtils;
+import com.moments.claw.domain.dto.AuditDto;
 import com.moments.claw.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
+
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -161,5 +164,32 @@ public class UserController extends BaseController {
         return R.success(userBiz.integralDetail());
     }
 
+    /**
+     * 我的活动审核列表
+     *
+     * @return 审核人员列表
+     */
+    @GetMapping("/auditList")
+    public R<?> auditList(@RequestParam("activityId") Long activityId) {
+        return R.success(userBiz.auditList(activityId));
+    }
+
+    /**
+     * 审批通过
+     */
+    @PostMapping("/passApply")
+    public R<?> passApply(@RequestBody @Valid AuditDto dto) {
+        userBiz.passApply(dto);
+        return R.success();
+    }
+
+    /**
+     * 审批拒绝
+     */
+    @PostMapping("/declineApply")
+    public R<?> declineApply(@RequestBody @Valid AuditDto dto) {
+        userBiz.declineApply(dto);
+        return R.success();
+    }
 }
 

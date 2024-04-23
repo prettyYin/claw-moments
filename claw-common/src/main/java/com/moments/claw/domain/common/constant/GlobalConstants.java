@@ -34,17 +34,21 @@ public class GlobalConstants {
 	 */
 	public static final Long ROOT_PARENT_ID = -1L;
 	/**
-	 * 报名类型（1已报名;2审核中;3未报名）
+	 * 报名类型（1已通过;2审核中;3未报名;4已拒绝）
 	 */
-	public static final Integer ENROLL_TYPE = 1;
+	public static final Integer PASS_TYPE = 1;
 	/**
-	 * 报名类型（1已报名;2审核中;3未报名）
+	 * 报名类型（1已报名;2审核中;3未报名;4已拒绝）
 	 */
 	public static final Integer AUDIT_TYPE = 2;
 	/**
-	 * 报名类型（1已报名;2审核中;3未报名）
+	 * 报名类型（1已报名;2审核中;3未报名;4已拒绝）
 	 */
 	public static final Integer UN_ENROLL_TYPE = 3;
+	/**
+	 * 报名类型（1已报名;2审核中;3未报名;4已拒绝）
+	 */
+	public static final Integer DECLINE_TYPE = 4;
 	/**
 	 * 点赞类型（1已点赞，2未点赞）
 	 */

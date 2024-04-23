@@ -44,4 +44,9 @@ public class UserVo {
 
 	@ApiModelProperty
 	private Boolean isFollow;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone = "GMT+8")
+	@ApiModelProperty
+	private Date createdAt;
+
 }

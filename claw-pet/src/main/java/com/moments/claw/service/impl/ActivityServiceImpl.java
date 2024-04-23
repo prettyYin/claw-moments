@@ -168,6 +168,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 				() -> ActivityUser
 						.builder()
 						.activityId(activityId)
+						.userId(userId)
 						.thumbStatus(GlobalConstants.UN_THUMB_UP_TYPE)
 						.build()
 		);
