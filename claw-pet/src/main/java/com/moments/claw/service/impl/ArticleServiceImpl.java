@@ -69,7 +69,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		);
 	}
 
-	private void setComments(ArticleVo article) {
+	/**
+	 * 评论条数
+	 * @param article 要查找评论的文章对象
+	 * @return 评论条数
+	 */
+	private Integer setComments(ArticleVo article) {
 		List<Comment> rootComments = commentService.getRootComments(article.getId());
 		List<CommentVo> ret = CopyBeanUtils.copyBeanList(rootComments, CommentVo.class);
 		// 赋值评论用户信息
@@ -87,6 +92,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 			comment.setUser(userVo);
 		}));
 		article.setComments(ret);
+		return ret != null ? ret.size() : 0;
 	}
 
 
@@ -233,6 +239,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 					String avatar = filesService.getFurl(articleSendUser.getAvatarId());
 					r.setAvatar(avatar);
 					r.setUserName(nickname);
+					int comment = commentService.getRootComments(r.getId()).size();
+					r.setComment(comment);
 				}
 			});
 		}

@@ -48,7 +48,7 @@ public class CommunityArticleVo {
 	private Long dislike;
 
 	@ApiModelProperty(name = "comment", value = "评论数")
-	private Long comment;
+	private Integer comment;
 
 	@ApiModelProperty(name = "share", value = "分享数")
 	private Long share;
