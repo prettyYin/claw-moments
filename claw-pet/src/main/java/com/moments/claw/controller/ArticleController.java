@@ -2,13 +2,9 @@ package com.moments.claw.controller;
 
 import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.common.controller.BaseController;
-import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import com.moments.claw.domain.dto.CommunityArticleDto;
-import com.moments.claw.domain.dto.IndexArticleDto;
-import com.moments.claw.domain.dto.SendArticleFromActivityDto;
-import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
+import com.moments.claw.domain.dto.*;
 import com.moments.claw.domain.vo.ArticleVo;
 import com.moments.claw.domain.vo.CommunityArticleVo;
 import com.moments.claw.service.*;
@@ -36,9 +32,7 @@ import java.util.List;
 @RequestMapping("/article")
 @Slf4j
 public class ArticleController extends BaseController {
-    /**
-     * 服务对象
-     */
+
     private final ArticleService articleService;
 
     /**
@@ -46,11 +40,11 @@ public class ArticleController extends BaseController {
      *
      * @return 所有数据
      */
-    @ApiOperation(value = "宠物列表")
+    @ApiOperation(value = "首页帖子列表")
     @GetMapping("/list")
     public TableDataInfo<?> list(IndexArticleDto dto) {
         startPage();
-        List<ArticleVo> list = articleService.petList(dto);
+        List<ArticleVo> list = articleService.indexArticleList(dto);
         return getDataTable(list);
     }
 
@@ -109,11 +103,10 @@ public class ArticleController extends BaseController {
         return R.success(articleService.removeByIds(idList));
     }
 
-    @ApiOperation(value = "我的宠物列表")
-    @GetMapping("/m-list")
-    public R<?> myPetList(PageQuery pageQuery) {
-        List<ArticleVo> myPetList = articleService.myPetList(pageQuery);
-        return R.success(myPetList);
+    @ApiOperation(value = "我的帖子列表")
+    @GetMapping("/my-list")
+    public TableDataInfo<?> myPetList(MyArticlePageQueryDto pageQuery) {
+        return articleService.myArticleList(pageQuery);
     }
 
     /**

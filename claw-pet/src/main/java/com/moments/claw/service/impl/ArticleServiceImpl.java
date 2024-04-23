@@ -4,15 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.*;
-import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
 import com.moments.claw.domain.common.utils.CopyBeanUtils;
 import com.moments.claw.domain.common.utils.PaginationUtil;
 import com.moments.claw.domain.common.utils.SecurityUtils;
-import com.moments.claw.domain.dto.CommunityArticleDto;
-import com.moments.claw.domain.dto.IndexArticleDto;
-import com.moments.claw.domain.dto.SendArticleFromActivityDto;
-import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
+import com.moments.claw.domain.dto.*;
 import com.moments.claw.domain.vo.*;
 import com.moments.claw.mapper.ArticleMapper;
 import com.moments.claw.service.*;
@@ -147,13 +143,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	}
 
 	@Override
-	public List<ArticleVo> myPetList(PageQuery pageQuery) {
-
-		return null;
+	public TableDataInfo<?> myArticleList(MyArticlePageQueryDto dto) {
+		List<ArticleVo> list = indexArticleList(IndexArticleDto.builder().type(dto.getType()).build());
+		return PaginationUtil.handPaged(list, dto.getPageSize(), dto.getPageNum());
 	}
 
 	@Override
-	public List<ArticleVo> petList(IndexArticleDto indexArticleDto) {
+	public List<ArticleVo> indexArticleList(IndexArticleDto indexArticleDto) {
 		List<Article> list = list(new LambdaQueryWrapper<Article>()
 				.eq(Objects.nonNull(indexArticleDto.getType()), Article::getType, indexArticleDto.getType())
 				.eq(StringUtils.isNotBlank(indexArticleDto.getCityId()), Article::getCityId, indexArticleDto.getCityId())

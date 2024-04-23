@@ -2,12 +2,8 @@ package com.moments.claw.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.moments.claw.domain.base.entity.Article;
-import com.moments.claw.domain.common.domain.PageQuery;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import com.moments.claw.domain.dto.CommunityArticleDto;
-import com.moments.claw.domain.dto.IndexArticleDto;
-import com.moments.claw.domain.dto.SendArticleFromActivityDto;
-import com.moments.claw.domain.dto.SendOrUpdateArticleFromCommunityDto;
+import com.moments.claw.domain.dto.*;
 import com.moments.claw.domain.vo.ArticleVo;
 import com.moments.claw.domain.vo.CommunityArticleVo;
 
@@ -27,9 +23,12 @@ public interface ArticleService extends IService<Article> {
 
 	ArticleVo viewArticleDetailById(Serializable id);
 
-	List<ArticleVo> myPetList(PageQuery pageQuery);
+	/**
+	 * 我发布的帖子
+	 */
+	TableDataInfo<?> myArticleList(MyArticlePageQueryDto dto);
 
-	List<ArticleVo> petList(IndexArticleDto indexArticleDto);
+	List<ArticleVo> indexArticleList(IndexArticleDto indexArticleDto);
 
 	void form(SendArticleFromActivityDto dto);
 
