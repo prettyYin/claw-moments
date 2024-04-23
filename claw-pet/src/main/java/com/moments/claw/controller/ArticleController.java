@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.List;
@@ -92,7 +91,7 @@ public class ArticleController extends BaseController {
     }
 
     /**
-     * 删除数据
+     * 批量删除数据
      *
      * @param idList 主键结合
      * @return 删除结果
@@ -103,10 +102,28 @@ public class ArticleController extends BaseController {
         return R.success(articleService.removeByIds(idList));
     }
 
+    /**
+     * 删除数据
+     *
+     * @param dto 删除对象
+     * @return 删除结果
+     */
+    @ApiOperation(value = "删除数据")
+    @DeleteMapping("/trash")
+    public R<?> delete(@ApiParam(name = "id", required = true) @RequestBody @Valid ArticleDeleteDto dto) {
+        return R.success(articleService.removeById(dto.getId()));
+    }
+
     @ApiOperation(value = "我的帖子列表")
     @GetMapping("/my-list")
     public TableDataInfo<?> myPetList(MyArticlePageQueryDto pageQuery) {
         return articleService.myArticleList(pageQuery);
+    }
+
+    @ApiOperation(value = "我发布的帖子详情")
+    @GetMapping("/my-view")
+    public R<?> myPetList(Long articleId) {
+        return R.success(articleService.myArticleView(articleId));
     }
 
     /**

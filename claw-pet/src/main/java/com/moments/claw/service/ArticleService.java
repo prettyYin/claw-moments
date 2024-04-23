@@ -43,4 +43,6 @@ public interface ArticleService extends IService<Article> {
 	Long share(Long id);
 
 	List<Article> getMyParticipate(Long userId);
+
+	ArticleVo myArticleView(Long articleId);
 }

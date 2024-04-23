@@ -264,5 +264,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		return lambdaQuery().eq(Article::getUserId, userId).list();
 	}
 
+	@Override
+	public ArticleVo myArticleView(Long articleId) {
+		Article article = getById(articleId);
+		ArticleVo articleVo = CopyBeanUtils.copyBean(article, ArticleVo.class);
+		if (StringUtils.isNotBlank(articleVo.getImageIds())) {
+			String[] imageIds = articleVo.getImageIds().split(",");
+			List<String> imageUrl = filesService.getFurlBatch(imageIds);
+			articleVo.setImages(imageUrl);
+		}
+		return articleVo;
+	}
+
 }
 
