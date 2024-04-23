@@ -72,4 +72,8 @@ public class Activity extends BaseEntity {
     @TableField(exist = false)
     @ApiModelProperty(name = "coverImageUrl", value = "活动封面图片URL")
     private String coverImageUrl;
+
+    @TableField(exist = false)
+    @ApiModelProperty(name = "isMyPublish", value = "是否本人发布的活动")
+    private Boolean isMyPublish;
 }
