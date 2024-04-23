@@ -41,4 +41,7 @@ public class UserVo {
 
 	@ApiModelProperty(name = "fans", value = "粉丝数")
 	private Long fans;
+
+	@ApiModelProperty
+	private Boolean isFollow;
 }

@@ -47,6 +47,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	private final RequireService requireService;
 	private final ActivityArticleService activityArticleService;
 	private final UserService userService;
+	private final FollowService followService;
 
 	/**
 	 * 赋值图片url
@@ -112,10 +113,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 	private void setUser(ArticleVo article,Long userId) {
 		User user = userService.getById(userId);
 		UserVo userVo = CopyBeanUtils.copyBean(user, UserVo.class);
+		// 设置头像
 		if (StringUtils.isNotBlank(user.getAvatarId())) {
 			String avatar = filesService.getFurl(user.getAvatarId());
 			userVo.setAvatar(avatar);
 		}
+		// 设置对于当前用户来说，是否已关注
+		Long operator = SecurityUtils.getUserId();
+		userVo.setIsFollow(followService.isFollow(userId, operator));
 		article.setUser(userVo);
 	}
 

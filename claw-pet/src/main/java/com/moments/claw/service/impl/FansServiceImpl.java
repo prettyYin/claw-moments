@@ -1,6 +1,6 @@
 package com.moments.claw.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.moments.claw.domain.base.entity.Fans;
 import com.moments.claw.domain.base.entity.User;
@@ -57,7 +57,7 @@ public class FansServiceImpl extends MppServiceImpl<FansMapper, Fans> implements
 	@Override
 	public Integer fansCount(Long userId) {
 		List<Fans> fans = lambdaQuery().eq(Fans::getUserId, userId).list();
-		if (CollectionUtil.isEmpty(fans)) {
+		if (CollUtil.isEmpty(fans)) {
 			return 0;
 		}
 		return fans.size();

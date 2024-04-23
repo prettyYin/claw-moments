@@ -9,11 +9,11 @@ import com.moments.claw.service.FollowService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.moments.claw.domain.common.controller.BaseController;
 import com.moments.claw.domain.common.response.R;
 import com.moments.claw.domain.common.response.TableDataInfo;
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -25,13 +25,11 @@ import java.util.List;
  */
 @Api(tags = "FollowController控制层", value = "/follow")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/follow")
 public class FollowController extends BaseController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private FollowService followService;
+
+    private final FollowService followService;
 
     /**
      * 关注列表

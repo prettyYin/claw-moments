@@ -36,7 +36,7 @@ public class FriendController {
 	public R<?> follow(@PathVariable("followId") Long followId) {
 		Long userId = SecurityUtils.getUserId();
 		friendService.follow(userId,followId);
-		return R.success();
+		return R.success("关注成功");
 	}
 
 	/**
@@ -46,6 +46,6 @@ public class FriendController {
 	public R<?> unfollow(@PathVariable("followId") Long followId) {
 		Long userId = SecurityUtils.getUserId();
 		friendService.unfollow(userId,followId);
-		return R.success();
+		return R.success("取关成功");
 	}
 }
