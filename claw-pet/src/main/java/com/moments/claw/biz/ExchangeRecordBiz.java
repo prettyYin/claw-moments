@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class ExchangeRecordBiz {
@@ -29,6 +31,7 @@ public class ExchangeRecordBiz {
 		// 扣除相应积分
 		IntegralItem integralItem = integralItemService.getById(exchangeRecord.getItemId());// 获取兑换物品信息
 
+		// 如果有物品信息，则扣除积分并添加兑换记录
 		if (integralItem != null) {
 			Long userId = SecurityUtils.getUserId();
 			UserMember userMember = userMemberService.selectByUserId(userId);
@@ -40,6 +43,7 @@ public class ExchangeRecordBiz {
 					.eq(UserMember::getUserId, userId)
 					.set(UserMember::getIntegral, userMember.getIntegral() - integralItem.getGoodsScore())
 					.update();
+			exchangeRecord.setConsumeDate(LocalDate.now());
 			exchangeRecordService.save(exchangeRecord);
 		}
 	}
