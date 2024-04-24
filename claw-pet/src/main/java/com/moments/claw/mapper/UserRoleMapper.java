@@ -15,6 +15,6 @@ public interface UserRoleMapper extends MppBaseMapper<UserRole> {
 
 	UserRole selectByMultiIdIfLogicDel(@Param("userId") Long userId, @Param("roleId") Long roleId);
 
-	void updateDelLogicByMultiId(UserRole userRole);
+	void updateDelLogicByMultiId(@Param("delFlag") Integer delFlag, @Param("userId") Long userId, @Param("roleId") Long roleId);
 }
 

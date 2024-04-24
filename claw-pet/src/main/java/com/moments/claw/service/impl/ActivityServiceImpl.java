@@ -179,13 +179,15 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 	@Override
 	public Activity getActivityById(Serializable id) {
 		Activity activity = getById(id);
-		// 设置图片
-		if (activity.getImageIds() != null) {
-			String furl = filesService.getFurl(activity.getImageIds().split(",")[0]);
-			activity.setCoverImageUrl(furl);
+		if (activity != null) {
+			// 设置图片
+			if (activity.getImageIds() != null) {
+				String furl = filesService.getFurl(activity.getImageIds().split(",")[0]);
+				activity.setCoverImageUrl(furl);
+			}
+			// 设置是否为本人发布的活动
+			activity.setIsMyPublish(activity.getPublishUserId().equals(SecurityUtils.getUserId()));
 		}
-		// 设置是否为本人发布的活动
-		activity.setIsMyPublish(activity.getPublishUserId().equals(SecurityUtils.getUserId()));
 		return activity;
 	}
 

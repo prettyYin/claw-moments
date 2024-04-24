@@ -27,7 +27,7 @@ public class UserRoleServiceImpl extends MppServiceImpl<UserRoleMapper, UserRole
 
 	@Override
 	public void updateDelLogicByMultiId(UserRole userRole) {
-		userRoleMapper.updateDelLogicByMultiId(userRole);
+		userRoleMapper.updateDelLogicByMultiId(userRole.getDelFlag(),userRole.getUserId(),userRole.getRoleId());
 	}
 }
 
