@@ -4,37 +4,32 @@
 /claw-pet/target/
 **/**.idea
 
-*.ipr
-*.iml
-*.iws
-.idea/
+######################################################################
+# Build Tools
 
-# Maven
-target/
-
-# Gradle
-build
 .gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
 
-# Log file
-*.log
-log/
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
-# out
-**/out/
+######################################################################
+# IDE
 
-# Mac
-.DS_Store
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
 
-# others
-*.jar
-*.war
-*.zip
-*.tar
-*.tar.gz
-*.pid
-*.orig
-temp/
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
 ### JRebel ###
 rebel.xml
