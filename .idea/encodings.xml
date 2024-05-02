@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-framework/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-generator/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-quartz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-quartz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-system/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-pet/src/main/java" charset="UTF-8" />

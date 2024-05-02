@@ -7,8 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="claw-admin-quartz" />
+        <module name="claw-admin-framework" />
+        <module name="claw-admin-common" />
         <module name="claw-gateway" />
         <module name="claw-common" />
+        <module name="claw-admin-admin" />
+        <module name="claw-admin-system" />
+        <module name="claw-admin-generator" />
         <module name="claw-pet" />
       </profile>
     </annotationProcessing>

@@ -9,6 +9,15 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/claw-geteway/pom.xml" />
+        <option value="$PROJECT_DIR$/claw-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/claw-admin/claw-admin-common/pom.xml" />
+        <option value="$PROJECT_DIR$/claw-admin/claw-admin-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/claw-admin/claw-admin-generator/pom.xml" />
+        <option value="$PROJECT_DIR$/claw-admin/claw-admin-quartz/pom.xml" />
+        <option value="$PROJECT_DIR$/claw-admin/claw-admin-system/pom.xml" />
+        <option value="$PROJECT_DIR$/RuoYi-Vue/pom.xml" />
+        <option value="$PROJECT_DIR$/RuoYi-Vue-master/pom.xml" />
+        <option value="$PROJECT_DIR$/RuoYi-Vue-master/ruoyi-admin/pom.xml" />
       </list>
     </option>
   </component>

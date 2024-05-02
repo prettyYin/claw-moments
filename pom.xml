@@ -19,6 +19,7 @@
         <module>claw-gateway</module>
         <module>claw-common</module>
         <module>claw-pet</module>
+        <module>claw-admin</module>
     </modules>
 
     <properties>
