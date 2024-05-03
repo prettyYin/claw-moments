@@ -80,7 +80,7 @@
 			 left join claw_user_role ur on rm.role_id = ur.role_id
 			 left join claw_role ro on ur.role_id = ro.role_id
 			 left join claw_user u on ur.user_id = u.id
-		where u.id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0
+		where u.id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 1
 		order by m.parent_id, m.order_num
 	</select>
 	
