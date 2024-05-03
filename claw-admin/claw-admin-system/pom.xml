@@ -23,6 +23,26 @@
             <artifactId>claw-admin-common</artifactId>
         </dependency>
 
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- 前后台通用模块 -->
+        <dependency>
+            <groupId>com.moments.claw</groupId>
+            <artifactId>claw-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

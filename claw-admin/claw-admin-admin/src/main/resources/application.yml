@@ -106,6 +106,14 @@ mybatis:
   # 加载全局的配置文件
   configLocation: classpath:mybatis/mybatis-config.xml
 
+# MyBatis-Plus配置
+mybatis-plus:
+  # Mapper.xml 文件位置 Maven 多模块项目的扫描路径需以 classpath*: 开头
+  # 实现接口绑定
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+
+
+
 # PageHelper分页插件
 pagehelper:
   helperDialect: mysql
@@ -127,3 +135,13 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# 七牛云
+oss:
+  qiniuyun:
+    accessKey: OSElehf53cj6E7VG0eObBuGHK42VRNnYiumv_POy
+    secretKey: ateu3UUtYXG6I18WZ6plBq9k6zwZH_TX2DK8R6-S
+    bucket: claw-moments
+    fileUrl: http://scx5os5ct.hn-bkt.clouddn.com/
+    avatarsPathName: avatars
+    imagesPathName: images

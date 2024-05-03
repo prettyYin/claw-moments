@@ -341,13 +341,13 @@ public class SysUserServiceImpl implements ISysUserService
      * 修改用户头像
      * 
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param avatarId 头像id
      * @return 结果
      */
     @Override
-    public boolean updateUserAvatar(String userName, String avatar)
+    public boolean updateUserAvatar(String userName, String avatarId)
     {
-        return userMapper.updateUserAvatar(userName, avatar) > 0;
+        return userMapper.updateUserAvatar(userName, avatarId) > 0;
     }
 
     /**

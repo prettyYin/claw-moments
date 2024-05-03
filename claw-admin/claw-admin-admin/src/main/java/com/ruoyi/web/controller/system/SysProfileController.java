@@ -1,5 +1,7 @@
 package com.ruoyi.web.controller.system;
 
+import com.ruoyi.system.service.FileUploadService;
+import com.ruoyi.system.service.FilesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,8 @@ import com.ruoyi.common.utils.file.MimeTypeUtils;
 import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysUserService;
 
+import javax.annotation.Resource;
+
 /**
  * 个人信息 业务处理
  * 
@@ -38,6 +42,12 @@ public class SysProfileController extends BaseController
     @Autowired
     private TokenService tokenService;
 
+    @Resource
+    private FilesService filesService;
+
+    @Resource
+    private FileUploadService fileUploadService;
+
     /**
      * 个人信息
      */
@@ -46,6 +56,10 @@ public class SysProfileController extends BaseController
     {
         LoginUser loginUser = getLoginUser();
         SysUser user = loginUser.getUser();
+        if (user.getAvatarId() != null) {
+            String avatar = filesService.getFurl(user.getAvatarId());
+            user.setAvatar(avatar);
+        }
         AjaxResult ajax = AjaxResult.success(user);
         ajax.put("roleGroup", userService.selectUserRoleGroup(loginUser.getUsername()));
         ajax.put("postGroup", userService.selectUserPostGroup(loginUser.getUsername()));
@@ -121,13 +135,15 @@ public class SysProfileController extends BaseController
         if (!file.isEmpty())
         {
             LoginUser loginUser = getLoginUser();
-            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
-            if (userService.updateUserAvatar(loginUser.getUsername(), avatar))
+//            String avatarId = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
+            String avatarId = fileUploadService.uploadAvatar(file);
+            if (userService.updateUserAvatar(loginUser.getUsername(), avatarId))
             {
+                String avatar = filesService.getFurl(avatarId);
                 AjaxResult ajax = AjaxResult.success();
                 ajax.put("imgUrl", avatar);
                 // 更新缓存用户头像
-                loginUser.getUser().setAvatarId(avatar);
+                loginUser.getUser().setAvatar(avatar);
                 tokenService.setLoginUser(loginUser);
                 return ajax;
             }

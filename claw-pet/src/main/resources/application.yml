@@ -36,7 +36,7 @@ mybatis-plus:
   # 指定Mapper XML文件的位置，使用classpath通配符指定路径。
   mapper-locations: classpath*:mapper/**.xml
   # 指定实体类的包路径，用于自动扫描并注册类型别名。
-  type-aliases-package: com.zskx.service.card.model.*
+  type-aliases-package: com.moments.claw.domain.base.entity.*
   # 全局配置
   global-config:
     db-config:
@@ -72,6 +72,6 @@ oss:
     accessKey: OSElehf53cj6E7VG0eObBuGHK42VRNnYiumv_POy
     secretKey: ateu3UUtYXG6I18WZ6plBq9k6zwZH_TX2DK8R6-S
     bucket: claw-moments
-    fileUrl: http://sb41ue17x.hn-bkt.clouddn.com/
+    fileUrl: http://scx5os5ct.hn-bkt.clouddn.com/
     avatarsPathName: avatars
     imagesPathName: images
