@@ -50,10 +50,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectDeptListByRoleId" resultType="Long">
 		select d.dept_id
 		from claw_dept d
-            left join sys_role_dept rd on d.dept_id = rd.dept_id
+            left join claw_role_dept rd on d.dept_id = rd.dept_id
         where rd.role_id = #{roleId}
             <if test="deptCheckStrictly">
-              and d.dept_id not in (select d.parent_id from claw_dept d inner join sys_role_dept rd on d.dept_id = rd.dept_id and rd.role_id = #{roleId})
+              and d.dept_id not in (select d.parent_id from claw_dept d inner join claw_role_dept rd on d.dept_id = rd.dept_id and rd.role_id = #{roleId})
             </if>
 		order by d.parent_id, d.order_num
 	</select>
@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
     
     <select id="checkDeptExistUser" parameterType="Long" resultType="int">
-		select count(1) from sys_user where dept_id = #{deptId} and del_flag = '0'
+		select count(1) from claw_user where dept_id = #{deptId} and del_flag = '0'
 	</select>
 	
 	<select id="hasChildByDeptId" parameterType="Long" resultType="int">
@@ -153,7 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteDeptById" parameterType="Long">
-		update claw_dept set del_flag = '2' where dept_id = #{deptId}
+		update claw_dept set del_flag = '-1' where dept_id = #{deptId}
 	</delete>
 
 </mapper> 

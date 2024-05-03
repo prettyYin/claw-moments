@@ -41,7 +41,7 @@ public class SysUser extends BaseEntity
 
     /** 用户昵称 */
     @Excel(name = "用户名称")
-    private String nickName;
+    private String nickname;
 
     /** 用户邮箱 */
     @Excel(name = "用户邮箱")
@@ -52,8 +52,8 @@ public class SysUser extends BaseEntity
     private String mobile;
 
     /** 用户性别 */
-    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
-    private String sex;
+    @Excel(name = "用户性别", readConverterExp = "0=保密,1=男,2=女")
+    private Integer gender;
 
     /** 用户头像id */
     private String avatarId;
@@ -140,14 +140,14 @@ public class SysUser extends BaseEntity
 
     @Xss(message = "用户昵称不能包含脚本字符")
     @Size(min = 0, max = 30, message = "用户昵称长度不能超过30个字符")
-    public String getNickName()
+    public String getNickname()
     {
-        return nickName;
+        return nickname;
     }
 
-    public void setNickName(String nickName)
+    public void setNickname(String nickname)
     {
-        this.nickName = nickName;
+        this.nickname = nickname;
     }
 
     @Xss(message = "用户账号不能包含脚本字符")
@@ -186,14 +186,14 @@ public class SysUser extends BaseEntity
         this.mobile = mobile;
     }
 
-    public String getSex()
+    public Integer getGender()
     {
-        return sex;
+        return gender;
     }
 
-    public void setSex(String sex)
+    public void setGender(Integer gender)
     {
-        this.sex = sex;
+        this.gender = gender;
     }
 
     public String getAvatarId()
@@ -320,10 +320,10 @@ public class SysUser extends BaseEntity
             .append("userId", getId())
             .append("deptId", getDeptId())
             .append("userName", getUserName())
-            .append("nickName", getNickName())
+            .append("nickName", getNickname())
             .append("email", getEmail())
             .append("mobile", getMobile())
-            .append("sex", getSex())
+            .append("sex", getGender())
             .append("avatar", getAvatarId())
             .append("password", getPassword())
             .append("status", getStatus())

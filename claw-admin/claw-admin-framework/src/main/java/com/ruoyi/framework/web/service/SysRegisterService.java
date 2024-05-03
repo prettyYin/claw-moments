@@ -75,7 +75,7 @@ public class SysRegisterService
         }
         else
         {
-            sysUser.setNickName(username);
+            sysUser.setNickname(username);
             sysUser.setPassword(SecurityUtils.encryptPassword(password));
             boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag)

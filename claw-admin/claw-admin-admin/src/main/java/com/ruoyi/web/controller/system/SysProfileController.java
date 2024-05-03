@@ -61,10 +61,10 @@ public class SysProfileController extends BaseController
     {
         LoginUser loginUser = getLoginUser();
         SysUser currentUser = loginUser.getUser();
-        currentUser.setNickName(user.getNickName());
+        currentUser.setNickname(user.getNickname());
         currentUser.setEmail(user.getEmail());
         currentUser.setMobile(user.getMobile());
-        currentUser.setSex(user.getSex());
+        currentUser.setGender(user.getGender());
         if (StringUtils.isNotEmpty(user.getMobile()) && !userService.checkPhoneUnique(currentUser))
         {
             return error("修改用户'" + loginUser.getUsername() + "'失败，手机号码已存在");

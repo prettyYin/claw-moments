@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id     property="id"       	column="id"      />
         <result property="deptId"       column="dept_id"      />
         <result property="userName"     column="user_name"    />
-        <result property="nickName"     column="nickname"    />
+        <result property="nickname"     column="nickname"    />
         <result property="email"        column="email"        />
         <result property="mobile"  		column="mobile"  />
-        <result property="sex"          column="sex"          />
+        <result property="gender"          column="gender"          />
         <result property="avatar"       column="avatar"       />
         <result property="password"     column="password"     />
         <result property="status"       column="status"       />
@@ -147,28 +147,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="id != null and id != 0">id,</if>
  			<if test="deptId != null and deptId != 0">dept_id,</if>
  			<if test="userName != null and userName != ''">user_name,</if>
- 			<if test="nickName != null and nickName != ''">nickname,</if>
+ 			<if test="nickname != null and nickname != ''">nickname,</if>
  			<if test="email != null and email != ''">email,</if>
- 			<if test="avatar != null and avatar != ''">avatar_id,</if>
+ 			<if test="avatarId != null and avatarId != ''">avatar_id,</if>
  			<if test="mobile != null and mobile != ''">mobile,</if>
- 			<if test="sex != null and sex != ''">gender,</if>
+ 			<if test="gender != null and gender != ''">gender,</if>
  			<if test="password != null and password != ''">password,</if>
  			<if test="status != null and status != ''">status,</if>
- 			<if test="createBy != null and createBy != ''">created_by,</if>
+ 			<if test="createdBy != null and createdBy != ''">created_by,</if>
  			<if test="remark != null and remark != ''">remark,</if>
  			created_at
  		)values(
  			<if test="id != null and id != ''">#{id},</if>
  			<if test="deptId != null and deptId != ''">#{deptId},</if>
  			<if test="userName != null and userName != ''">#{userName},</if>
- 			<if test="nickName != null and nickName != ''">#{nickName},</if>
+ 			<if test="nickname != null and nickname != ''">#{nickname},</if>
  			<if test="email != null and email != ''">#{email},</if>
  			<if test="avatar != null and avatar != ''">#{avatar},</if>
  			<if test="mobile != null and mobile != ''">#{mobile},</if>
- 			<if test="sex != null and sex != ''">#{sex},</if>
+ 			<if test="gender != null and gender != ''">#{gender},</if>
  			<if test="password != null and password != ''">#{password},</if>
  			<if test="status != null and status != ''">#{status},</if>
- 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			<if test="createdBy != null and createdBy != ''">#{createdBy},</if>
  			<if test="remark != null and remark != ''">#{remark},</if>
  			sysdate()
  		)
@@ -179,10 +179,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		<set>
  			<if test="deptId != null and deptId != 0">dept_id = #{deptId},</if>
  			<if test="userName != null and userName != ''">user_name = #{userName},</if>
- 			<if test="nickName != null and nickName != ''">nickname = #{nickName},</if>
+ 			<if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
  			<if test="email != null ">email = #{email},</if>
  			<if test="mobile != null ">mobile = #{mobile},</if>
- 			<if test="sex != null and sex != ''">sex = #{sex},</if>
+ 			<if test="gender != null and gender != ''">gender = #{gender},</if>
  			<if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
  			<if test="password != null and password != ''">password = #{password},</if>
  			<if test="status != null and status != ''">status = #{status},</if>
@@ -208,11 +208,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<delete id="deleteUserById" parameterType="Long">
- 		update claw_user set del_flag = '2' where id = #{userId}
+ 		update claw_user set del_flag = '-1' where id = #{userId}
  	</delete>
 
  	<delete id="deleteUserByIds" parameterType="Long">
- 		update claw_user set del_flag = '2' where id in
+ 		update claw_user set del_flag = '-1' where id in
  		<foreach collection="array" item="userId" open="(" separator="," close=")">
  			#{userId}
         </foreach> 
