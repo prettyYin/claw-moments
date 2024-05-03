@@ -35,12 +35,11 @@ public class User extends BaseEntity {
     @ApiModelProperty(name = "id", value = "主键", hidden = true)
     private Long id;
         
-    @ApiModelProperty(name = "username", value = "用户名")
-    private String username;
+    @ApiModelProperty(name = "userName", value = "用户名")
+    private String userName;
 
     @JsonProperty(value = "password_hash",access = JsonProperty.Access.READ_WRITE)
     @JSONField(name = "password_hash")
-    @TableField(value = "password_hash")
     @ApiModelProperty(name = "password", value = "密码")
     private String password;
 

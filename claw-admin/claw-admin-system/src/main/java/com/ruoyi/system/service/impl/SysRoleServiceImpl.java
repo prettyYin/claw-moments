@@ -98,7 +98,7 @@ public class SysRoleServiceImpl implements ISysRoleService
         {
             if (StringUtils.isNotNull(perm))
             {
-                permsSet.addAll(Arrays.asList(perm.getRoleKey().trim().split(",")));
+                permsSet.addAll(Arrays.asList(perm.getPermissionKey().trim().split(",")));
             }
         }
         return permsSet;
@@ -167,7 +167,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     public boolean checkRoleKeyUnique(SysRole role)
     {
         Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-        SysRole info = roleMapper.checkRoleKeyUnique(role.getRoleKey());
+        SysRole info = roleMapper.checkRoleKeyUnique(role.getPermissionKey());
         if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue())
         {
             return UserConstants.NOT_UNIQUE;

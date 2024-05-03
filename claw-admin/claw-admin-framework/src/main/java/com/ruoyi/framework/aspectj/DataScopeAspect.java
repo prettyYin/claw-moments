@@ -131,7 +131,7 @@ public class DataScopeAspect
             {
                 if (StringUtils.isNotBlank(userAlias))
                 {
-                    sqlString.append(StringUtils.format(" OR {}.user_id = {} ", userAlias, user.getUserId()));
+                    sqlString.append(StringUtils.format(" OR {}.user_id = {} ", userAlias, user.getId()));
                 }
                 else
                 {

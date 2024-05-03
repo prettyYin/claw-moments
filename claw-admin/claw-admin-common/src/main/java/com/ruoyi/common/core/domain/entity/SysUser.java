@@ -3,6 +3,10 @@ package com.ruoyi.common.core.domain.entity;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -17,13 +21,15 @@ import com.ruoyi.common.xss.Xss;
  * 
  * @author ruoyi
  */
+@TableName("claw_user")
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 用户ID */
+    @TableId
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
-    private Long userId;
+    private Long id;
 
     /** 部门ID */
     @Excel(name = "部门编号", type = Type.IMPORT)
@@ -43,14 +49,14 @@ public class SysUser extends BaseEntity
 
     /** 手机号码 */
     @Excel(name = "手机号码", cellType = ColumnType.TEXT)
-    private String phonenumber;
+    private String mobile;
 
     /** 用户性别 */
     @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
 
-    /** 用户头像 */
-    private String avatar;
+    /** 用户头像id */
+    private String avatarId;
 
     /** 密码 */
     private String password;
@@ -89,29 +95,32 @@ public class SysUser extends BaseEntity
     /** 角色ID */
     private Long roleId;
 
+    @TableField(exist = false)
+    private String avatar;
+
     public SysUser()
     {
 
     }
 
-    public SysUser(Long userId)
+    public SysUser(Long id)
     {
-        this.userId = userId;
+        this.id = id;
     }
 
-    public Long getUserId()
+    public Long getId()
     {
-        return userId;
+        return id;
     }
 
-    public void setUserId(Long userId)
+    public void setId(Long id)
     {
-        this.userId = userId;
+        this.id = id;
     }
 
     public boolean isAdmin()
     {
-        return isAdmin(this.userId);
+        return isAdmin(this.id);
     }
 
     public static boolean isAdmin(Long userId)
@@ -167,14 +176,14 @@ public class SysUser extends BaseEntity
     }
 
     @Size(min = 0, max = 11, message = "手机号码长度不能超过11个字符")
-    public String getPhonenumber()
+    public String getMobile()
     {
-        return phonenumber;
+        return mobile;
     }
 
-    public void setPhonenumber(String phonenumber)
+    public void setMobile(String mobile)
     {
-        this.phonenumber = phonenumber;
+        this.mobile = mobile;
     }
 
     public String getSex()
@@ -187,13 +196,21 @@ public class SysUser extends BaseEntity
         this.sex = sex;
     }
 
-    public String getAvatar()
+    public String getAvatarId()
     {
+        return avatarId;
+    }
+
+    public void setAvatarId(String avatarId)
+    {
+        this.avatarId = avatarId;
+    }
+
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar)
-    {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -300,23 +317,23 @@ public class SysUser extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("userId", getUserId())
+            .append("userId", getId())
             .append("deptId", getDeptId())
             .append("userName", getUserName())
             .append("nickName", getNickName())
             .append("email", getEmail())
-            .append("phonenumber", getPhonenumber())
+            .append("mobile", getMobile())
             .append("sex", getSex())
-            .append("avatar", getAvatar())
+            .append("avatar", getAvatarId())
             .append("password", getPassword())
             .append("status", getStatus())
             .append("delFlag", getDelFlag())
             .append("loginIp", getLoginIp())
             .append("loginDate", getLoginDate())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
+            .append("createBy", getCreatedBy())
+            .append("createTime", getCreatedAt())
+            .append("updateBy", getUpdatedBy())
+            .append("updateTime", getUpdatedAt())
             .append("remark", getRemark())
             .append("dept", getDept())
             .toString();

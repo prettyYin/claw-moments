@@ -92,10 +92,10 @@ public class SysNotice extends BaseEntity
             .append("noticeType", getNoticeType())
             .append("noticeContent", getNoticeContent())
             .append("status", getStatus())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
+            .append("createBy", getCreatedBy())
+            .append("createTime", getCreatedAt())
+            .append("updateBy", getUpdatedBy())
+            .append("updateTime", getUpdatedAt())
             .append("remark", getRemark())
             .toString();
     }

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
@@ -14,6 +16,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@TableName("claw_menu")
 public class SysMenu extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -249,10 +252,10 @@ public class SysMenu extends BaseEntity
             .append("status ", getStatus())
             .append("perms", getPerms())
             .append("icon", getIcon())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
+            .append("createBy", getCreatedBy())
+            .append("createTime", getCreatedAt())
+            .append("updateBy", getUpdatedBy())
+            .append("updateTime", getUpdatedAt())
             .append("remark", getRemark())
             .toString();
     }

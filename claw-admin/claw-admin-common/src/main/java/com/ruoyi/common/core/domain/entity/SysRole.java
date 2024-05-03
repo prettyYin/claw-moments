@@ -4,6 +4,8 @@ import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -15,6 +17,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@TableName("claw_role")
 public class SysRole extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -29,7 +32,7 @@ public class SysRole extends BaseEntity
 
     /** 角色权限 */
     @Excel(name = "角色权限")
-    private String roleKey;
+    private String permissionKey;
 
     /** 角色排序 */
     @Excel(name = "角色排序")
@@ -108,14 +111,14 @@ public class SysRole extends BaseEntity
 
     @NotBlank(message = "权限字符不能为空")
     @Size(min = 0, max = 100, message = "权限字符长度不能超过100个字符")
-    public String getRoleKey()
+    public String getPermissionKey()
     {
-        return roleKey;
+        return permissionKey;
     }
 
-    public void setRoleKey(String roleKey)
+    public void setPermissionKey(String permissionKey)
     {
-        this.roleKey = roleKey;
+        this.permissionKey = permissionKey;
     }
 
     @NotNull(message = "显示顺序不能为空")
@@ -224,17 +227,17 @@ public class SysRole extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("roleId", getRoleId())
             .append("roleName", getRoleName())
-            .append("roleKey", getRoleKey())
+            .append("roleKey", getPermissionKey())
             .append("roleSort", getRoleSort())
             .append("dataScope", getDataScope())
             .append("menuCheckStrictly", isMenuCheckStrictly())
             .append("deptCheckStrictly", isDeptCheckStrictly())
             .append("status", getStatus())
             .append("delFlag", getDelFlag())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
+            .append("createBy", getCreatedBy())
+            .append("createTime", getCreatedAt())
+            .append("updateBy", getUpdatedBy())
+            .append("updateTime", getUpdatedAt())
             .append("remark", getRemark())
             .toString();
     }

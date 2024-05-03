@@ -167,9 +167,9 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public boolean checkUserNameUnique(SysUser user)
     {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
         SysUser info = userMapper.checkUserNameUnique(user.getUserName());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
         }
@@ -185,9 +185,9 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public boolean checkPhoneUnique(SysUser user)
     {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
-        SysUser info = userMapper.checkPhoneUnique(user.getPhonenumber());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
+        SysUser info = userMapper.checkPhoneUnique(user.getMobile());
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
         }
@@ -203,9 +203,9 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public boolean checkEmailUnique(SysUser user)
     {
-        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        Long userId = StringUtils.isNull(user.getId()) ? -1L : user.getId();
         SysUser info = userMapper.checkEmailUnique(user.getEmail());
-        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue())
+        if (StringUtils.isNotNull(info) && info.getId().longValue() != userId.longValue())
         {
             return UserConstants.NOT_UNIQUE;
         }
@@ -220,7 +220,7 @@ public class SysUserServiceImpl implements ISysUserService
     @Override
     public void checkUserAllowed(SysUser user)
     {
-        if (StringUtils.isNotNull(user.getUserId()) && user.isAdmin())
+        if (StringUtils.isNotNull(user.getId()) && user.isAdmin())
         {
             throw new ServiceException("不允许操作超级管理员用户");
         }
@@ -237,7 +237,7 @@ public class SysUserServiceImpl implements ISysUserService
         if (!SysUser.isAdmin(SecurityUtils.getUserId()))
         {
             SysUser user = new SysUser();
-            user.setUserId(userId);
+            user.setId(userId);
             List<SysUser> users = SpringUtils.getAopProxy(this).selectUserList(user);
             if (StringUtils.isEmpty(users))
             {
@@ -287,7 +287,7 @@ public class SysUserServiceImpl implements ISysUserService
     @Transactional
     public int updateUser(SysUser user)
     {
-        Long userId = user.getUserId();
+        Long userId = user.getId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
@@ -382,7 +382,7 @@ public class SysUserServiceImpl implements ISysUserService
      */
     public void insertUserRole(SysUser user)
     {
-        this.insertUserRole(user.getUserId(), user.getRoleIds());
+        this.insertUserRole(user.getId(), user.getRoleIds());
     }
 
     /**
@@ -400,7 +400,7 @@ public class SysUserServiceImpl implements ISysUserService
             for (Long postId : posts)
             {
                 SysUserPost up = new SysUserPost();
-                up.setUserId(user.getUserId());
+                up.setUserId(user.getId());
                 up.setPostId(postId);
                 list.add(up);
             }
@@ -500,7 +500,7 @@ public class SysUserServiceImpl implements ISysUserService
                 {
                     BeanValidators.validateWithException(validator, user);
                     user.setPassword(SecurityUtils.encryptPassword(password));
-                    user.setCreateBy(operName);
+                    user.setCreatedBy(operName);
                     userMapper.insertUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 导入成功");
@@ -509,9 +509,9 @@ public class SysUserServiceImpl implements ISysUserService
                 {
                     BeanValidators.validateWithException(validator, user);
                     checkUserAllowed(u);
-                    checkUserDataScope(u.getUserId());
-                    user.setUserId(u.getUserId());
-                    user.setUpdateBy(operName);
+                    checkUserDataScope(u.getId());
+                    user.setId(u.getId());
+                    user.setUpdatedBy(operName);
                     userMapper.updateUser(user);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、账号 " + user.getUserName() + " 更新成功");

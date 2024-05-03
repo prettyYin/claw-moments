@@ -128,7 +128,7 @@ public class SysUserController extends BaseController
         {
             return error("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
-        else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(user))
+        else if (StringUtils.isNotEmpty(user.getMobile()) && !userService.checkPhoneUnique(user))
         {
             return error("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
         }
@@ -136,7 +136,7 @@ public class SysUserController extends BaseController
         {
             return error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
-        user.setCreateBy(getUsername());
+        user.setCreatedBy(getUsername());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return toAjax(userService.insertUser(user));
     }
@@ -150,12 +150,12 @@ public class SysUserController extends BaseController
     public AjaxResult edit(@Validated @RequestBody SysUser user)
     {
         userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        userService.checkUserDataScope(user.getId());
         if (!userService.checkUserNameUnique(user))
         {
             return error("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
-        else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(user))
+        else if (StringUtils.isNotEmpty(user.getMobile()) && !userService.checkPhoneUnique(user))
         {
             return error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         }
@@ -163,7 +163,7 @@ public class SysUserController extends BaseController
         {
             return error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
-        user.setUpdateBy(getUsername());
+        user.setUpdatedBy(getUsername());
         return toAjax(userService.updateUser(user));
     }
 
@@ -191,9 +191,9 @@ public class SysUserController extends BaseController
     public AjaxResult resetPwd(@RequestBody SysUser user)
     {
         userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        userService.checkUserDataScope(user.getId());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
-        user.setUpdateBy(getUsername());
+        user.setUpdatedBy(getUsername());
         return toAjax(userService.resetPwd(user));
     }
 
@@ -206,8 +206,8 @@ public class SysUserController extends BaseController
     public AjaxResult changeStatus(@RequestBody SysUser user)
     {
         userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
-        user.setUpdateBy(getUsername());
+        userService.checkUserDataScope(user.getId());
+        user.setUpdatedBy(getUsername());
         return toAjax(userService.updateUserStatus(user));
     }
 

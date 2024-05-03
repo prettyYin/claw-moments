@@ -10,15 +10,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="configKey"     column="config_key"     />
         <result property="configValue"   column="config_value"   />
         <result property="configType"    column="config_type"    />
-        <result property="createBy"      column="create_by"      />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateBy"      column="update_by"      />
-        <result property="updateTime"    column="update_time"    />
+        <result property="createdBy"      column="created_by"      />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedBy"      column="updated_by"      />
+        <result property="updatedAt"    column="updated_at"    />
     </resultMap>
     
     <sql id="selectConfigVo">
-        select config_id, config_name, config_key, config_value, config_type, create_by, create_time, update_by, update_time, remark 
-		from sys_config
+        select config_id, config_name, config_key, config_value, config_type, created_by, created_at, updated_by, updated_at, remark 
+		from claw_config
     </sql>
     
     <!-- 查询条件 -->
@@ -51,10 +51,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND config_key like concat('%', #{configKey}, '%')
 			</if>
 			<if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-				and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+				and date_format(created_at,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
 			</if>
 			<if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-				and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+				and date_format(created_at,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
 			</if>
 		</where>
     </select>
@@ -70,14 +70,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <insert id="insertConfig" parameterType="SysConfig">
-        insert into sys_config (
+        insert into claw_config (
 			<if test="configName != null and configName != '' ">config_name,</if>
 			<if test="configKey != null and configKey != '' ">config_key,</if>
 			<if test="configValue != null and configValue != '' ">config_value,</if>
 			<if test="configType != null and configType != '' ">config_type,</if>
-			<if test="createBy != null and createBy != ''">create_by,</if>
+			<if test="createBy != null and createBy != ''">created_by,</if>
 			<if test="remark != null and remark != ''">remark,</if>
- 			create_time
+ 			created_at
         )values(
 			<if test="configName != null and configName != ''">#{configName},</if>
 			<if test="configKey != null and configKey != ''">#{configKey},</if>
@@ -90,25 +90,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 	 
     <update id="updateConfig" parameterType="SysConfig">
-        update sys_config 
+        update claw_config 
         <set>
             <if test="configName != null and configName != ''">config_name = #{configName},</if>
             <if test="configKey != null and configKey != ''">config_key = #{configKey},</if>
             <if test="configValue != null and configValue != ''">config_value = #{configValue},</if>
             <if test="configType != null and configType != ''">config_type = #{configType},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateBy != null and updateBy != ''">updated_by = #{updateBy},</if>
             <if test="remark != null">remark = #{remark},</if>
- 			update_time = sysdate()
+ 			updated_at = sysdate()
         </set>
         where config_id = #{configId}
     </update>
 	
     <delete id="deleteConfigById" parameterType="Long">
-        delete from sys_config where config_id = #{configId}
+        delete from claw_config where config_id = #{configId}
     </delete>
     
     <delete id="deleteConfigByIds" parameterType="Long">
-        delete from sys_config where config_id in 
+        delete from claw_config where config_id in 
         <foreach item="configId" collection="array" open="(" separator="," close=")">
         	#{configId}
         </foreach>

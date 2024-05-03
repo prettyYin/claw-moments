@@ -22,18 +22,18 @@ public class BaseEntity implements Serializable
     private String searchValue;
 
     /** 创建者 */
-    private String createBy;
+    private String createdBy;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private Date createdAt;
 
     /** 更新者 */
-    private String updateBy;
+    private String updatedBy;
 
     /** 更新时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date updateTime;
+    private Date updatedAt;
 
     /** 备注 */
     private String remark;
@@ -52,44 +52,44 @@ public class BaseEntity implements Serializable
         this.searchValue = searchValue;
     }
 
-    public String getCreateBy()
+    public String getCreatedBy()
     {
-        return createBy;
+        return createdBy;
     }
 
-    public void setCreateBy(String createBy)
+    public void setCreatedBy(String createdBy)
     {
-        this.createBy = createBy;
+        this.createdBy = createdBy;
     }
 
-    public Date getCreateTime()
+    public Date getCreatedAt()
     {
-        return createTime;
+        return createdAt;
     }
 
-    public void setCreateTime(Date createTime)
+    public void setCreatedAt(Date createdAt)
     {
-        this.createTime = createTime;
+        this.createdAt = createdAt;
     }
 
-    public String getUpdateBy()
+    public String getUpdatedBy()
     {
-        return updateBy;
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy)
+    public void setUpdatedBy(String updatedBy)
     {
-        this.updateBy = updateBy;
+        this.updatedBy = updatedBy;
     }
 
-    public Date getUpdateTime()
+    public Date getUpdatedAt()
     {
-        return updateTime;
+        return updatedAt;
     }
 
-    public void setUpdateTime(Date updateTime)
+    public void setUpdatedAt(Date updatedAt)
     {
-        this.updateTime = updateTime;
+        this.updatedAt = updatedAt;
     }
 
     public String getRemark()

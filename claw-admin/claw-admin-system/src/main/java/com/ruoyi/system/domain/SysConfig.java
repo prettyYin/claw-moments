@@ -101,10 +101,10 @@ public class SysConfig extends BaseEntity
             .append("configKey", getConfigKey())
             .append("configValue", getConfigValue())
             .append("configType", getConfigType())
-            .append("createBy", getCreateBy())
-            .append("createTime", getCreateTime())
-            .append("updateBy", getUpdateBy())
-            .append("updateTime", getUpdateTime())
+            .append("createBy", getCreatedBy())
+            .append("createdAt", getCreatedAt())
+            .append("updateBy", getUpdatedBy())
+            .append("updatedAt", getUpdatedAt())
             .append("remark", getRemark())
             .toString();
     }

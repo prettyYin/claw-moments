@@ -173,7 +173,7 @@ public class SysLoginService
     public void recordLoginInfo(Long userId)
     {
         SysUser sysUser = new SysUser();
-        sysUser.setUserId(userId);
+        sysUser.setId(userId);
         sysUser.setLoginIp(IpUtils.getIpAddr());
         sysUser.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(sysUser);

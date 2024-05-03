@@ -79,7 +79,7 @@ public class PetLoginServiceImpl implements PetLoginService {
 		String encodePwd = passwordEncoder.encode(registerDto.getPassword());
 		registerDto.setPassword(encodePwd);
 		User registerUser = CopyBeanUtils.copyBean(registerDto, User.class);
-		registerUser.setUsername(registerDto.getMobile()); // 用户名默认为手机号
+		registerUser.setUserName(registerDto.getMobile()); // 用户名默认为手机号
 		userService.save(registerUser);
 		PetLoginDomain loginUserInfoVo = CopyBeanUtils.copyBean(registerUser, PetLoginDomain.class);
 		return loginUserInfoVo;

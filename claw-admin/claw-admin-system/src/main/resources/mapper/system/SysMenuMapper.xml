@@ -20,16 +20,16 @@
 		<result property="status"         column="status"         />
 		<result property="perms"          column="perms"          />
 		<result property="icon"           column="icon"           />
-		<result property="createBy"       column="create_by"      />
-		<result property="createTime"     column="create_time"    />
-		<result property="updateTime"     column="update_time"    />
-		<result property="updateBy"       column="update_by"      />
+		<result property="createdBy"       column="created_by"      />
+		<result property="createdAt"     column="created_at"    />
+		<result property="updatedAt"     column="updated_at"    />
+		<result property="updatedBy"       column="updated_by"      />
 		<result property="remark"         column="remark"         />
 	</resultMap>
 
 	<sql id="selectMenuVo">
-        select menu_id, menu_name, parent_id, order_num, path, component, `query`, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time 
-		from sys_menu
+        select menu_id, menu_name, parent_id, order_num, path, component, `query`, is_frame, is_cache, menu_type, visible, status, ifnull(perms,'') as perms, icon, created_at 
+		from claw_menu
     </sql>
     
     <select id="selectMenuList" parameterType="SysMenu" resultMap="SysMenuResult">
@@ -49,14 +49,14 @@
 	</select>
 	
 	<select id="selectMenuTreeAll" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m where m.menu_type in ('M', 'C') and m.status = 0
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.created_at
+		from claw_menu m where m.menu_type in ('M', 'C') and m.status = 0
 		order by m.parent_id, m.order_num
 	</select>
 	
 	<select id="selectMenuListByUserId" parameterType="SysMenu" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.created_at
+		from claw_menu m
 		left join sys_role_menu rm on m.menu_id = rm.menu_id
 		left join sys_user_role ur on rm.role_id = ur.role_id
 		left join sys_role ro on ur.role_id = ro.role_id
@@ -74,8 +74,8 @@
 	</select>
     
     <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.created_at
+		from claw_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 			 left join sys_role ro on ur.role_id = ro.role_id
@@ -86,25 +86,25 @@
 	
 	<select id="selectMenuListByRoleId" resultType="Long">
 		select m.menu_id
-		from sys_menu m
+		from claw_menu m
             left join sys_role_menu rm on m.menu_id = rm.menu_id
         where rm.role_id = #{roleId}
             <if test="menuCheckStrictly">
-              and m.menu_id not in (select m.parent_id from sys_menu m inner join sys_role_menu rm on m.menu_id = rm.menu_id and rm.role_id = #{roleId})
+              and m.menu_id not in (select m.parent_id from claw_menu m inner join sys_role_menu rm on m.menu_id = rm.menu_id and rm.role_id = #{roleId})
             </if>
 		order by m.parent_id, m.order_num
 	</select>
 	
 	<select id="selectMenuPerms" resultType="String">
 		select distinct m.perms
-		from sys_menu m
+		from claw_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 	</select>
 
 	<select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
 		select distinct m.perms
-		from sys_menu m
+		from claw_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 			 left join sys_user_role ur on rm.role_id = ur.role_id
 			 left join sys_role r on r.role_id = ur.role_id
@@ -113,7 +113,7 @@
 	
 	<select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
 		select distinct m.perms
-		from sys_menu m
+		from claw_menu m
 			 left join sys_role_menu rm on m.menu_id = rm.menu_id
 		where m.status = '0' and rm.role_id = #{roleId}
 	</select>
@@ -124,7 +124,7 @@
 	</select>
 	
 	<select id="hasChildByMenuId" resultType="Integer">
-	    select count(1) from sys_menu where parent_id = #{menuId}  
+	    select count(1) from claw_menu where parent_id = #{menuId}  
 	</select>
 	
 	<select id="checkMenuNameUnique" parameterType="SysMenu" resultMap="SysMenuResult">
@@ -133,7 +133,7 @@
 	</select>
 	
 	<update id="updateMenu" parameterType="SysMenu">
-		update sys_menu
+		update claw_menu
 		<set>
 			<if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
 			<if test="parentId != null">parent_id = #{parentId},</if>
@@ -149,14 +149,14 @@
 			<if test="perms !=null">perms = #{perms},</if>
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
 			<if test="remark != null and remark != ''">remark = #{remark},</if>
-			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
-			update_time = sysdate()
+			<if test="updateBy != null and updateBy != ''">updated_by = #{updateBy},</if>
+			updated_at = sysdate()
 		</set>
 		where menu_id = #{menuId}
 	</update>
 
 	<insert id="insertMenu" parameterType="SysMenu">
-		insert into sys_menu(
+		insert into claw_menu(
 		<if test="menuId != null and menuId != 0">menu_id,</if>
 		<if test="parentId != null and parentId != 0">parent_id,</if>
 		<if test="menuName != null and menuName != ''">menu_name,</if>
@@ -172,8 +172,8 @@
 		<if test="perms !=null and perms != ''">perms,</if>
 		<if test="icon != null and icon != ''">icon,</if>
 		<if test="remark != null and remark != ''">remark,</if>
-		<if test="createBy != null and createBy != ''">create_by,</if>
-		create_time
+		<if test="createBy != null and createBy != ''">created_by,</if>
+		created_at
 		)values(
 		<if test="menuId != null and menuId != 0">#{menuId},</if>
 		<if test="parentId != null and parentId != 0">#{parentId},</if>
@@ -196,7 +196,7 @@
 	</insert>
 	
 	<delete id="deleteMenuById" parameterType="Long">
-	    delete from sys_menu where menu_id = #{menuId}
+	    delete from claw_menu where menu_id = #{menuId}
 	</delete>
 
 </mapper> 
