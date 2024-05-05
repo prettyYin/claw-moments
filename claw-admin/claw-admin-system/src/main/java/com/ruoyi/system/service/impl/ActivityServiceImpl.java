@@ -31,4 +31,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     public void deleteActivityByIds(List<String>  ids) {
         activityMapper.deleteActivityById(ids);
     }
+
+    @Override
+    public void insertActivity(Activity activity) {
+        activityMapper.insertActivity(activity);
+    }
 }

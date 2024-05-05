@@ -4,11 +4,15 @@ import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.Article;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.service.ActivityService;
+import com.ruoyi.system.service.FileUploadService;
+import com.ruoyi.system.service.FilesService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +30,8 @@ import java.util.List;
 public class ActivityController extends BaseController {
 
     private final ActivityService activityService;
+    private final FileUploadService fileUploadService;
+    private final FilesService filesService;
 
     /**
      * 活动列表
@@ -46,4 +52,25 @@ public class ActivityController extends BaseController {
         activityService.deleteActivityByIds(ids);
         return success();
     }
+
+    @PostMapping("/uploadImg")
+    public AjaxResult uploadImg(@RequestParam("file") MultipartFile file) {
+        String fileId = fileUploadService.uploadImg(file);
+        AjaxResult ajax = success();
+        ajax.put(AjaxResult.DATA_TAG, fileId);
+        return ajax;
+    }
+
+    @PostMapping("/insert")
+    public AjaxResult insertActivity(Activity activity) {
+        activityService.insertActivity(activity);
+        return success();
+    }
+
+    @GetMapping("/furl")
+    public R<?> getFurlById(String fid) {
+        String furl = filesService.getFurl(fid);
+        return R.ok(furl);
+    }
+
 }

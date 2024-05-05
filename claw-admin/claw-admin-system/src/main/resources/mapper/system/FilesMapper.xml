@@ -59,5 +59,10 @@
             #{imageId}
         </foreach>
     </select>
+    <select id="getFileById" resultMap="FilesResult">
+        select *
+        from claw_files
+        where file_id = #{id}
+    </select>
 
 </mapper>

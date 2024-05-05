@@ -1,12 +1,12 @@
 package com.ruoyi.system.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.moments.claw.domain.base.entity.Files;
 import com.ruoyi.system.mapper.FilesMapper;
 import com.ruoyi.system.service.FilesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +38,7 @@ public class FilesServiceImpl extends ServiceImpl<FilesMapper, Files> implements
 		if (id == null) {
 			return null;
 		}
-		Files file = filesMapper.getById(id);
+		Files file = filesMapper.getFileById(id);
 		if (Objects.isNull(file)) {
 			return null;
 		}

@@ -86,17 +86,16 @@ public class FileUploadServiceImpl implements FileUploadService {
 		String filePath = PathUtils.generateFilePath(originalFilename,imagesPathName);
 		String fileId = NanoId.randomNanoId(GlobalConstants.FILE_ID_MAX_LENGTH);
 		String furl = uploadToOSS(img, filePath);
-		filesService.save(
-				Files
-						.builder()
-						.fileId(fileId)
-						.fileUrl(furl)
-						.fileName(originalFilename)
-						.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
-						.fileSize(img.getSize())
-						.status(GlobalConstants.NORMAL_STATUS)
-						.build()
-		);
+		Files file = Files
+				.builder()
+				.fileId(fileId)
+				.fileUrl(furl)
+				.fileName(originalFilename)
+				.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
+				.fileSize(img.getSize())
+				.status(GlobalConstants.NORMAL_STATUS)
+				.build();
+		filesService.insertFile(file);
 		return fileId;
 	}
 

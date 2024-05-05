@@ -22,4 +22,6 @@ public interface FilesMapper extends BaseMapper<Files> {
 	Files getById(@Param("id") String id);
 
 	List<Files> listInImageIds(List<String> imageIds);
+
+    Files getFileById(@Param("id") String id);
 }

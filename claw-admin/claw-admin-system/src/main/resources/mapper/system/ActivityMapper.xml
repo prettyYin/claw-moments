@@ -25,6 +25,46 @@
         <result property="remark"       column="remark"       />
         <result property="delFlag"      column="del_flag"     />
     </resultMap>
+
+    <insert id="insertActivity">
+        insert into claw_activity
+        (
+        <if test="id != null">id,</if>
+        <if test="publishUserId != null and publishUserId != ''">publish_user_id,</if>
+        <if test="imageIds != null and imageIds != ''">image_ids,</if>
+        <if test="title != null and title != ''">title,</if>
+        <if test="content != null and content != ''">content,</if>
+        <if test="thumbCount != null and thumbCount != ''">thumb_count,</if>
+        <if test="participantCount != null and participantCount != ''">participant_count,</if>
+        <if test="surplusCount != null and surplusCount != ''">surplus_count,</if>
+        <if test="capacity != null and capacity != ''">capacity,</if>
+        <if test="status != null and status != ''">status,</if>
+        <if test="startTime != null and startTime != ''">start_time,</if>
+        <if test="endTime != null and endTime != ''">end_time,</if>
+        <if test="createdBy != null and createdBy != ''">created_by,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        created_at
+        )values(
+        <if test="id != null">#{id},</if>
+        <if test="publishUserId != null and publishUserId != ''">#{publishUserId},</if>
+        <if test="imageIds != null and imageIds != ''">#{imageIds},</if>
+        <if test="title != null and title != ''">#{title},</if>
+        <if test="content != null and content != ''">#{content},</if>
+        <if test="thumbCount != null and thumbCount != ''">#{thumbCount},</if>
+        <if test="participantCount != null and participantCount != ''">#{participantCount},</if>
+        <if test="surplusCount != null and surplusCount != ''">#{surplusCount},</if>
+        <if test="capacity != null and capacity != ''">#{capacity},</if>
+        <if test="status != null and status != ''">#{status},</if>
+        <if test="startTime != null and startTime != ''">#{startTime},</if>
+        <if test="endTime != null and endTime != ''">#{endTime},</if>
+        <if test="createdBy != null and createdBy != ''">#{createdBy},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate()
+        )
+    </insert>
+
     <delete id="deleteActivityById">
         update claw_activity
         set del_flag = '-1'

@@ -3,7 +3,6 @@ package com.moments.claw.domain;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -43,8 +41,4 @@ public class BaseEntity implements Serializable {
 
 	@ApiModelProperty(value = "备注")
 	private String remark;
-
-	/** 请求参数 */
-	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private Map<String, Object> params;
 }
