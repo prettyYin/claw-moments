@@ -12,8 +12,11 @@
     <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-admin/claw-admin-system/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-gateway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/claw-pet/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/claw-pet/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -13,10 +13,10 @@ public class UserConstants
     public static final String SYS_USER = "SYS_USER";
 
     /** 正常状态 */
-    public static final String NORMAL = "0";
+    public static final String NORMAL = "1";
 
     /** 异常状态 */
-    public static final String EXCEPTION = "1";
+    public static final String EXCEPTION = "-1";
 
     /** 用户封禁状态 */
     public static final String USER_DISABLE = "1";

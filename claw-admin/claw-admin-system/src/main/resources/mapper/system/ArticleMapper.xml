@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ArticleMapper">
+
+    <resultMap type="com.moments.claw.domain.base.entity.Article" id="ArticleResult">
+        <id     property="id"       	column="id"      />
+        <result property="userId"       column="user_id"      />
+        <result property="title"     column="title"    />
+        <result property="content"     column="content"    />
+        <result property="isTop"        column="is_top"        />
+        <result property="nickname"  		column="nickname"  />
+        <result property="mode"       column="mode"          />
+        <result property="money"     column="money"     />
+        <result property="refundCondition"       column="refund_condition"       />
+        <result property="type"      column="type"     />
+        <result property="cate"      column="cate"     />
+        <result property="breed"    column="breed"   />
+        <result property="gender"    column="gender"   />
+        <result property="age"    column="age"   />
+        <result property="weight"    column="weight"   />
+        <result property="vaccine"    column="vaccine"   />
+        <result property="vaccineName"    column="vaccine_name"   />
+        <result property="sterilize"    column="sterilize"   />
+        <result property="sterilizeName"    column="sterilize_name"   />
+        <result property="deworm"    column="deworm"   />
+        <result property="dewormName"    column="deworm_name"   />
+        <result property="source"    column="source"   />
+        <result property="sourceName"    column="source_name"   />
+        <result property="size"    column="size"   />
+        <result property="sizeName"    column="size_name"   />
+        <result property="hair"    column="hair"   />
+        <result property="hairName"    column="hair_name"   />
+        <result property="otherRequirement"    column="other_requirement"   />
+        <result property="imageIds"    column="image_ids"   />
+        <result property="videoId"    column="video_id"    />
+        <result property="province"   	column="province"  />
+        <result property="city"    column="city"    />
+        <result property="area"   	column="area"  />
+        <result property="address"   	column="address"  />
+        <result property="view"   	column="view"  />
+        <result property="praise"   	column="praise"  />
+        <result property="dislike"       column="dislike"       />
+        <result property="comment"       column="comment"       />
+        <result property="share"       column="share"       />
+        <result property="status"       column="status"       />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdAt"   	column="created_at"  />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedAt"   	column="updated_at"  />
+        <result property="remark"       column="remark"       />
+        <result property="delFlag"      column="del_flag"     />
+    </resultMap>
+
+
+    <select id="selectArticleList" parameterType="SysUser" resultMap="ArticleResult">
+        select *
+        from claw_article
+        where del_flag = '0'
+    </select>
+</mapper>

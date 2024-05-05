@@ -17,8 +17,6 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
-    <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

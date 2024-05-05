@@ -4,7 +4,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SysMenuMapper">
 
-	<resultMap type="SysMenu" id="SysMenuResult">
+	<resultMap type="com.ruoyi.common.core.domain.entity.SysMenu" id="SysMenuResult">
 		<id     property="menuId"         column="menu_id"        />
 		<result property="menuName"       column="menu_name"      />
 		<result property="parentName"     column="parent_name"    />
@@ -54,7 +54,7 @@
 		order by m.parent_id, m.order_num
 	</select>
 	
-	<select id="selectMenuListByUserId" parameterType="SysMenu" resultMap="SysMenuResult">
+	<select id="selectMenuListByUserId" parameterType="com.ruoyi.common.core.domain.entity.SysMenu" resultMap="SysMenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.created_at
 		from claw_menu m
 		left join claw_role_menu rm on m.menu_id = rm.menu_id
@@ -149,7 +149,7 @@
 			<if test="perms !=null">perms = #{perms},</if>
 			<if test="icon !=null and icon != ''">icon = #{icon},</if>
 			<if test="remark != null and remark != ''">remark = #{remark},</if>
-			<if test="updateBy != null and updateBy != ''">updated_by = #{updateBy},</if>
+			<if test="updatedBy != null and updatedBy != ''">updated_by = #{updatedBy},</if>
 			updated_at = sysdate()
 		</set>
 		where menu_id = #{menuId}
@@ -172,7 +172,7 @@
 		<if test="perms !=null and perms != ''">perms,</if>
 		<if test="icon != null and icon != ''">icon,</if>
 		<if test="remark != null and remark != ''">remark,</if>
-		<if test="createBy != null and createBy != ''">created_by,</if>
+		<if test="createdBy != null and createdBy != ''">created_by,</if>
 		created_at
 		)values(
 		<if test="menuId != null and menuId != 0">#{menuId},</if>
@@ -190,7 +190,7 @@
 		<if test="perms !=null and perms != ''">#{perms},</if>
 		<if test="icon != null and icon != ''">#{icon},</if>
 		<if test="remark != null and remark != ''">#{remark},</if>
-		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="createdBy != null and createdBy != ''">#{createdBy},</if>
 		sysdate()
 		)
 	</insert>

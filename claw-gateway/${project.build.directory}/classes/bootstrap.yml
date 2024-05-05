@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        #        不同的命名空间下会被隔离，网关服务和renren-fast服务放到public下
+        #        namespace: 9077e1fa-3e9c-4fc0-976a-c787585a515a
+        group: dev
+        file-extension: yaml
+      discovery:
+        server-addr: 127.0.0.1:8848
+        locator:
+          enabled: true
+          lower-case-service-id: true
+  application:
+    name: claw-gateway
+  profiles:
+    active: dev

@@ -18,10 +18,7 @@
         <module name="claw-pet" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="claw-member" target="8" />
-      <module name="claw-merchant" target="8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="8" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
