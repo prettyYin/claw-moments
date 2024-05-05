@@ -26,4 +26,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     public List<Article> selectList(Activity activity) {
         return activityMapper.selectList(activity);
     }
+
+    @Override
+    public void deleteActivityByIds(List<String>  ids) {
+        activityMapper.deleteActivityById(ids);
+    }
 }

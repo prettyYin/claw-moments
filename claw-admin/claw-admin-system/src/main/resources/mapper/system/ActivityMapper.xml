@@ -25,8 +25,16 @@
         <result property="remark"       column="remark"       />
         <result property="delFlag"      column="del_flag"     />
     </resultMap>
+    <delete id="deleteActivityById">
+        update claw_activity
+        set del_flag = '-1'
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
-    <select id="selectList" resultMap="ActivityResult">
+    <select id="selectList"  resultMap="ActivityResult">
         select *
         from claw_activity
         where del_flag = '0'

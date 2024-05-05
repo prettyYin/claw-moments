@@ -15,4 +15,6 @@ import java.util.List;
 public interface ActivityService extends IService<Activity> {
 
     List<Article> selectList(Activity activity);
+
+    void deleteActivityByIds(List<String>  ids);
 }

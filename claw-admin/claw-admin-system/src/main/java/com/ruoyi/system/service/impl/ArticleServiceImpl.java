@@ -31,4 +31,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public List<Article> selectList(Article article) {
         return articleMapper.selectArticleList(article);
     }
+
+    @Override
+    public void deleteArticle(List<String> ids) {
+        articleMapper.deleteArticleById(ids);
+    }
 }

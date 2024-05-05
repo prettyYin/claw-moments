@@ -2,15 +2,15 @@ package com.ruoyi.web.controller.content;
 
 import com.moments.claw.domain.base.entity.Article;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.system.service.ArticleService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,5 +33,15 @@ public class ArticleController extends BaseController {
         startPage();
         List<Article> list = articleService.selectList(article);
         return getDataTable(list);
+    }
+
+    /**
+     * 删除文章
+     */
+    @DeleteMapping("/{id}")
+    public AjaxResult deleteArticle(@PathVariable("id") String id) {
+        List<String> ids = Arrays.asList(id.split(","));
+        articleService.deleteArticle(ids);
+        return success();
     }
 }

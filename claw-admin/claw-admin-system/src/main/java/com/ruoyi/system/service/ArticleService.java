@@ -15,4 +15,6 @@ import java.util.List;
 public interface ArticleService extends IService<Article> {
 
 	List<Article> selectList(Article article);
+
+	void deleteArticle(List<String> id);
 }

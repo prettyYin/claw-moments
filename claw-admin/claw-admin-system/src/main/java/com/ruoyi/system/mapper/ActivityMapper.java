@@ -3,6 +3,7 @@ package com.ruoyi.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.Article;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ import java.util.List;
 public interface ActivityMapper extends BaseMapper<Activity> {
 
     List<Article> selectList(Activity activity);
+
+    void deleteActivityById(@Param("ids") List<String> id);
 }
