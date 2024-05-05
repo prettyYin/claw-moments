@@ -39,8 +39,8 @@
         <if test="surplusCount != null and surplusCount != ''">surplus_count,</if>
         <if test="capacity != null and capacity != ''">capacity,</if>
         <if test="status != null and status != ''">status,</if>
-        <if test="startTime != null and startTime != ''">start_time,</if>
-        <if test="endTime != null and endTime != ''">end_time,</if>
+        <if test="startTime != null">start_time,</if>
+        <if test="endTime != null">end_time,</if>
         <if test="createdBy != null and createdBy != ''">created_by,</if>
         <if test="delFlag != null and delFlag != ''">del_flag,</if>
         <if test="remark != null and remark != ''">remark,</if>
@@ -56,8 +56,8 @@
         <if test="surplusCount != null and surplusCount != ''">#{surplusCount},</if>
         <if test="capacity != null and capacity != ''">#{capacity},</if>
         <if test="status != null and status != ''">#{status},</if>
-        <if test="startTime != null and startTime != ''">#{startTime},</if>
-        <if test="endTime != null and endTime != ''">#{endTime},</if>
+        <if test="startTime != null">#{startTime},</if>
+        <if test="endTime != null">#{endTime},</if>
         <if test="createdBy != null and createdBy != ''">#{createdBy},</if>
         <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
         <if test="remark != null and remark != ''">#{remark},</if>

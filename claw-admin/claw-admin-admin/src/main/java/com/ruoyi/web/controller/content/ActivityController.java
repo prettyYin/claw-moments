@@ -6,6 +6,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.service.ActivityService;
 import com.ruoyi.system.service.FileUploadService;
 import com.ruoyi.system.service.FilesService;
@@ -62,7 +63,8 @@ public class ActivityController extends BaseController {
     }
 
     @PostMapping("/insert")
-    public AjaxResult insertActivity(Activity activity) {
+    public AjaxResult insertActivity(@RequestBody Activity activity) {
+        activity.setPublishUserId(SecurityUtils.getUserId());
         activityService.insertActivity(activity);
         return success();
     }
