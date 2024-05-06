@@ -4,6 +4,7 @@ import com.moments.claw.domain.base.entity.Article;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.system.service.ArticleService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,9 @@ public class ArticleController extends BaseController {
      */
     @DeleteMapping("/{id}")
     public AjaxResult deleteArticle(@PathVariable("id") String id) {
+        if (id == null) {
+            throw new ServiceException("请选择要删除的评论");
+        }
         List<String> ids = Arrays.asList(id.split(","));
         articleService.deleteArticle(ids);
         return success();

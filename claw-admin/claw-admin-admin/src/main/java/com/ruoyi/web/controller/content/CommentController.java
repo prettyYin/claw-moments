@@ -2,14 +2,16 @@ package com.ruoyi.web.controller.content;
 
 import com.moments.claw.domain.base.entity.Comment;
 import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.system.service.CommentService;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 @Api(tags = "")
 @RestController
@@ -31,5 +33,15 @@ public class CommentController extends BaseController {
     public TableDataInfo selectAll(Comment comment) {
         startPage();
         return getDataTable(commentService.selectCommentList(comment));
+    }
+
+    @DeleteMapping("/{id}")
+    public AjaxResult delete(@PathVariable("id") String id) {
+        if (id == null) {
+            throw new ServiceException("请选择要删除的评论");
+        }
+        List<String> ids = Arrays.asList(id.split(","));
+        commentService.deleteBatchByIds(ids);
+        return success();
     }
 }

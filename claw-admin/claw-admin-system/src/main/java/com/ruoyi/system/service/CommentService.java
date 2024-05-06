@@ -15,4 +15,6 @@ import java.util.List;
 public interface CommentService extends IService<Comment> {
 
     List<CommentVo> selectCommentList(Comment comment);
+
+    void deleteBatchByIds(List<String> ids);
 }

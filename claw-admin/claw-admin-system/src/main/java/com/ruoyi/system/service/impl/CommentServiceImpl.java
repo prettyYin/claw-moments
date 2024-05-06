@@ -26,4 +26,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public List<CommentVo> selectCommentList(Comment comment) {
         return commentMapper.selectCommentList(comment);
     }
+
+    @Override
+    public void deleteBatchByIds(List<String> ids) {
+        commentMapper.deleteBatchByIds(ids);
+    }
 }

@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.CommentMapper">
 
+    <delete id="deleteBatchByIds" parameterType="java.util.Collection">
+        update claw_comment
+        set del_flag = '-1'
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="selectCommentList"
             parameterType="com.moments.claw.domain.base.entity.Comment"
             resultType="com.ruoyi.system.domain.vo.CommentVo">
