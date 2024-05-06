@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.moments.claw.domain.base.entity.IntegralItem;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
 public interface IntegralItemMapper extends BaseMapper<IntegralItem> {
 
     List<IntegralItem> selectIntegralItemList(IntegralItem integralItem);
+
+    IntegralItem selectIntegralById(@Param("id") Long id);
 }

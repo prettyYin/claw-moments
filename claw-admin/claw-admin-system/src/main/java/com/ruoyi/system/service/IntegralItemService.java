@@ -14,4 +14,6 @@ import java.util.List;
 public interface IntegralItemService extends IService<IntegralItem> {
 
     List<IntegralItem> selectList(IntegralItem integralItem);
+
+    IntegralItem selectIntegralById(Long integralId);
 }

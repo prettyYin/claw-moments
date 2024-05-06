@@ -31,4 +31,9 @@
             AND date_format(created_at,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
+    <select id="selectIntegralById" resultMap="IntegralItemResult">
+        select *
+        from claw_integral_item
+        where id = #{id}
+    </select>
 </mapper>

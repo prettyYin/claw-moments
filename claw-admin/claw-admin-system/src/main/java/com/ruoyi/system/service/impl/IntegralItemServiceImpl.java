@@ -25,4 +25,9 @@ public class IntegralItemServiceImpl extends ServiceImpl<IntegralItemMapper, Int
     public List<IntegralItem> selectList(IntegralItem integralItem) {
         return integralItemMapper.selectIntegralItemList(integralItem);
     }
+
+    @Override
+    public IntegralItem selectIntegralById(Long integralId) {
+        return integralItemMapper.selectIntegralById(integralId);
+    }
 }
