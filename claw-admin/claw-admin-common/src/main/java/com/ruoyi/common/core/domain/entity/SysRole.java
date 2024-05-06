@@ -1,16 +1,16 @@
 package com.ruoyi.common.core.domain.entity;
 
-import java.util.Set;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import com.baomidou.mybatisplus.annotation.TableName;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * 角色表 sys_role
@@ -227,7 +227,7 @@ public class SysRole extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("roleId", getRoleId())
             .append("roleName", getRoleName())
-            .append("roleKey", getPermissionKey())
+            .append("permissionKey", getPermissionKey())
             .append("roleSort", getRoleSort())
             .append("dataScope", getDataScope())
             .append("menuCheckStrictly", isMenuCheckStrictly())

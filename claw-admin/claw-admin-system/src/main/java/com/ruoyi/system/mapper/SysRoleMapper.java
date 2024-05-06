@@ -1,7 +1,9 @@
 package com.ruoyi.system.mapper;
 
-import java.util.List;
 import com.ruoyi.common.core.domain.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 角色表 数据层
@@ -71,7 +73,7 @@ public interface SysRoleMapper
      * @param roleKey 角色权限
      * @return 角色信息
      */
-    public SysRole checkRoleKeyUnique(String roleKey);
+    public SysRole checkRoleKeyUnique(@Param("roleKey") String roleKey);
 
     /**
      * 修改角色信息
