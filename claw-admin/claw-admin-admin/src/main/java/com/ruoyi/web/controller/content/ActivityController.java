@@ -75,4 +75,9 @@ public class ActivityController extends BaseController {
         return R.ok(furl);
     }
 
+    @GetMapping("/getActivityById")
+    public AjaxResult getActivityById(String id) {
+        Activity activity = activityService.getActivityById(id);
+        return success(activity);
+    }
 }

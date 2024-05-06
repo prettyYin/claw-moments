@@ -5,6 +5,7 @@ import com.moments.claw.domain.base.entity.Activity;
 import com.moments.claw.domain.base.entity.Article;
 import com.ruoyi.system.mapper.ActivityMapper;
 import com.ruoyi.system.service.ActivityService;
+import com.ruoyi.system.service.FilesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
 
     private final ActivityMapper activityMapper;
+    private final FilesService filesService;
 
     @Override
     public List<Article> selectList(Activity activity) {
@@ -35,5 +37,16 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     @Override
     public void insertActivity(Activity activity) {
         activityMapper.insertActivity(activity);
+    }
+
+    @Override
+    public Activity getActivityById(String id) {
+        Activity activity = activityMapper.getActivityById(id);
+        if (activity.getImageIds() != null) {
+            String[] ids = activity.getImageIds().split(",");
+            List<String> images = filesService.getFurlBatch(ids);
+            activity.setCoverImageUrl(images.get(0));
+        }
+        return activity;
     }
 }

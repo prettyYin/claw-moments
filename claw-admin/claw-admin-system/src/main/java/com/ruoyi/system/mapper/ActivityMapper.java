@@ -20,4 +20,6 @@ public interface ActivityMapper extends BaseMapper<Activity> {
     void deleteActivityById(@Param("ids") List<String> id);
 
     void insertActivity(Activity activity);
+
+    Activity getActivityById(@Param("id") String id);
 }

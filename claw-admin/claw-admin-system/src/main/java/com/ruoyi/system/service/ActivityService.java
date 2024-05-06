@@ -19,4 +19,6 @@ public interface ActivityService extends IService<Activity> {
     void deleteActivityByIds(List<String>  ids);
 
     void insertActivity(Activity activity);
+
+    Activity getActivityById(String id);
 }
