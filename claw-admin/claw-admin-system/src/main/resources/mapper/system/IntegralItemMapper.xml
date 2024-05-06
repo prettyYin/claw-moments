@@ -16,6 +16,58 @@
         <result column="remark" property="remark" />
         <result column="del_flag" property="delFlag" />
     </resultMap>
+    
+    <insert id="insertIntegralItem">
+        insert into claw_integral_item
+        (
+            <if test="id != null and id != '' ">id,</if>
+            <if test="goodsDesc != null and goodsDesc != ''">goods_desc,</if>
+            <if test="goodsScore != null and goodsScore != ''">goods_score,</if>
+            <if test="goodsUrl != null and goodsUrl != ''">goods_url,</if>
+            <if test="updatedAt != null">updated_at,</if>
+            <if test="createdBy != null and createdBy != ''">created_by,</if>
+            <if test="updatedBy != null and updatedBy != ''">updated_by,</if>
+            <if test="remark != null and remark != ''">remark,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            created_at
+        )
+        values (
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="goodsDesc != null and goodsDesc != ''">#{goodsDesc},</if>
+            <if test="goodsScore != null and goodsScore != ''">#{goodsScore},</if>
+            <if test="goodsUrl != null and goodsUrl != ''">#{goodsUrl},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+            <if test="createdBy != null and createdBy != ''">#{createdBy},</if>
+            <if test="updatedBy != null and updatedBy != ''">#{updatedBy},</if>
+            <if test="remark != null and remark != ''">#{remark},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            sysdate()
+        )
+    </insert>
+    
+    <update id="updateIntegralItem">
+        update claw_integral_item
+        <set>
+            <if test="goodsDesc != null and goodsDesc != ''">goods_desc = #{goodsDesc},</if>
+            <if test="goodsScore != null and goodsScore != ''">goods_score = #{goodsScore},</if>
+            <if test="goodsUrl != null and goodsUrl != ''">goods_url = #{goodsUrl},</if>
+            <if test="createdBy != null and createdBy != ''">created_by = #{createdBy},</if>
+            <if test="updatedBy != null and updatedBy != ''">updated_by = #{updatedBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            updated_at = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIntegralItem">
+        update claw_integral_item
+        set del_flag = '-1'
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
     <select id="selectIntegralItemList" resultMap="IntegralItemResult">
         select *

@@ -49,13 +49,36 @@ public class FileUploadServiceImpl implements FileUploadService {
 	private final FilesService filesService;
 
 	/**
+	 * 指定上传文件夹路径
+	 */
+	@Transactional
+	@Override
+	public Files uploadFileToDirectory(MultipartFile img, String directory) {
+		String originalFilename = img.getOriginalFilename()!= null ? img.getOriginalFilename() : NanoId.randomNanoId(16);;
+		FileUtils.checkFileEndWith(originalFilename);
+		String filePath = PathUtils.generateFilePath(originalFilename,directory);
+		String fileId = NanoId.randomNanoId(GlobalConstants.FILE_ID_MAX_LENGTH);
+		String furl = uploadToOSS(img, filePath);
+		Files file = Files
+				.builder()
+				.fileId(fileId)
+				.fileUrl(furl)
+				.fileType(originalFilename.substring(originalFilename.lastIndexOf(".")))
+				.fileSize(img.getSize())
+				.status(GlobalConstants.NORMAL_STATUS)
+				.build();
+		filesService.insertFile(file);
+		return file;
+	}
+
+	/**
 	 * 上传头像
 	 * return 文件id
 	 */
 	@Override
 	@Transactional
-	public String uploadAvatar(MultipartFile img) {
-		String originalFilename = img.getOriginalFilename();
+	public String uploadFileToDirectory(MultipartFile img) {
+		String originalFilename = img.getOriginalFilename()!= null ? img.getOriginalFilename() : NanoId.randomNanoId(16);;
 		FileUtils.checkFileEndWith(originalFilename);
 		String filePath = PathUtils.generateFilePath(originalFilename,avatarsPathName);
 		String fileId = NanoId.randomNanoId(GlobalConstants.FILE_ID_MAX_LENGTH);
@@ -81,7 +104,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 	@Override
 	@Transactional
 	public String uploadImg(MultipartFile img) {
-		String originalFilename = img.getOriginalFilename();
+		String originalFilename = img.getOriginalFilename() != null ? img.getOriginalFilename() : NanoId.randomNanoId(16);
 		FileUtils.checkFileEndWith(originalFilename);
 		String filePath = PathUtils.generateFilePath(originalFilename,imagesPathName);
 		String fileId = NanoId.randomNanoId(GlobalConstants.FILE_ID_MAX_LENGTH);

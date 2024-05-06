@@ -30,4 +30,19 @@ public class IntegralItemServiceImpl extends ServiceImpl<IntegralItemMapper, Int
     public IntegralItem selectIntegralById(Long integralId) {
         return integralItemMapper.selectIntegralById(integralId);
     }
+
+    @Override
+    public void insertIntegralItem(IntegralItem integralItem) {
+        integralItemMapper.insertIntegralItem(integralItem);
+    }
+
+    @Override
+    public void updateIntegralItem(IntegralItem integralItem) {
+        integralItemMapper.updateIntegralItem(integralItem);
+    }
+
+    @Override
+    public void deleteIntegralItem(List<String> ids) {
+        integralItemMapper.deleteIntegralItem(ids);
+    }
 }

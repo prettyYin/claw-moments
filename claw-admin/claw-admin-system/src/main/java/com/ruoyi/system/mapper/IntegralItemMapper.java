@@ -17,4 +17,10 @@ public interface IntegralItemMapper extends BaseMapper<IntegralItem> {
     List<IntegralItem> selectIntegralItemList(IntegralItem integralItem);
 
     IntegralItem selectIntegralById(@Param("id") Long id);
+
+    void insertIntegralItem(IntegralItem integralItem);
+
+    void updateIntegralItem(IntegralItem integralItem);
+
+    void deleteIntegralItem(@Param("ids") List<String> ids);
 }

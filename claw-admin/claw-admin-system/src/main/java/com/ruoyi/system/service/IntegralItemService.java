@@ -16,4 +16,10 @@ public interface IntegralItemService extends IService<IntegralItem> {
     List<IntegralItem> selectList(IntegralItem integralItem);
 
     IntegralItem selectIntegralById(Long integralId);
+
+    void insertIntegralItem(IntegralItem integralItem);
+
+    void updateIntegralItem(IntegralItem integralItem);
+
+    void deleteIntegralItem(List<String> ids);
 }
