@@ -62,9 +62,34 @@
     </delete>
 
 
-    <select id="selectArticleList" parameterType="SysUser" resultMap="ArticleResult">
+    <select id="selectArticleList" parameterType="com.moments.claw.domain.base.entity.Article" resultMap="ArticleResult">
         select *
         from claw_article
-        where del_flag = '0'
+        where 1 = 1
+        <if test="title != null and title != ''">
+            AND title like concat('%', #{title}, '%')
+        </if>
+          <if test="content != null and content != ''">
+            AND content like concat('%', #{content}, '%')
+        </if>
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+        <if test="cate != null and cate != ''">
+            AND cate = #{cate}
+        </if>
+        <if test="breed != null and breed != ''">
+            AND breed = #{breed}
+        </if>
+        <if test="gender != null and gender != ''">
+            AND gender = #{gender}
+        </if>
+        <if test="age != null and age != ''">
+            AND age = #{age}
+        </if>
+        AND del_flag = '0'
     </select>
 </mapper>
