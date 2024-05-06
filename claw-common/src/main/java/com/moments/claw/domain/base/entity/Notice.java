@@ -1,18 +1,14 @@
 package com.moments.claw.domain.base.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.moments.claw.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.moments.claw.domain.BaseEntity;
-
-import java.util.Date;
 
 /**
  * 公告表(Notice)表实体类
@@ -27,46 +23,20 @@ import java.util.Date;
 @TableName("claw_notice")
 @ApiModel(value = "claw_notice实体类",description = "用于存储传输claw_notice信息")
 public class Notice extends BaseEntity {
-    //主键    
+
+    /** 公告ID */
     @TableId(type = IdType.AUTO)
-    @ApiModelProperty(name = "id", value = "主键", hidden = true)
-    private Long id;
-        
-    @ApiModelProperty(name = "memberId", value = "会员id")
-    private Long memberId;
-        
-    @ApiModelProperty(name = "merchantId", value = "商品id")
-    private Long merchantId;
-        
-    @ApiModelProperty(name = "title", value = "商品标题")
-    private String title;
-        
-    @ApiModelProperty(name = "content", value = "商品内容（html格式）")
-    private String content;
-        
-    @ApiModelProperty(name = "cover", value = "路径")
-    private String cover;
-        
-    @ApiModelProperty(name = "synopsis", value = "摘要")
-    private String synopsis;
-        
-    @ApiModelProperty(name = "view", value = "点击次数")
-    private Long view;
-        
-    @ApiModelProperty(name = "sort", value = "排序")
-    private Integer sort;
-        
-    @ApiModelProperty(name = "status", value = "状态（0异常，1正常，2禁用）")
-    private Integer status;
+    private Long noticeId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty(value = "开始时间")
-    private Date startTime;
+    /** 公告标题 */
+    private String noticeTitle;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty(value = "结束时间")
-    private Date endTime;
+    /** 公告类型（1通知 2公告） */
+    private String noticeType;
 
-    @ApiModelProperty(value = "是否永久有效（0不是，1是）")
-    private Integer isPermanent;
+    /** 公告内容 */
+    private String noticeContent;
+
+    /** 公告状态（0正常 1关闭） */
+    private String status;
 }
