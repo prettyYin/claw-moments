@@ -49,4 +49,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
         }
         return activity;
     }
+
+    @Override
+    public void updateActivity(Activity activity) {
+        activityMapper.updateActivity(activity);
+    }
 }

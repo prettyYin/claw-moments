@@ -80,4 +80,10 @@ public class ActivityController extends BaseController {
         Activity activity = activityService.getActivityById(id);
         return success(activity);
     }
+
+    @PutMapping("/update")
+    public AjaxResult updateActivity(@RequestBody Activity activity) {
+        activityService.updateActivity(activity);
+        return success();
+    }
 }
