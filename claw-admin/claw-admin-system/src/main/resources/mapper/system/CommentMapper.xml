@@ -20,5 +20,8 @@
         FROM claw_comment c
         LEFT JOIN claw_article a ON c.article_id = a.id
         WHERE c.del_flag = '0' AND a.del_flag = '0'
+        <if test="content != null and content != ''">
+            AND c.content like concat('%', #{content}, '%')
+        </if>
     </select>
 </mapper>
