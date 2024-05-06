@@ -1,5 +1,6 @@
 package com.moments.claw.domain.base.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -61,4 +62,10 @@ public class Pet extends BaseEntity {
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthday;
+
+    /**
+     * 主人昵称
+     */
+    @TableField(exist = false)
+    private String nickname;
 }
