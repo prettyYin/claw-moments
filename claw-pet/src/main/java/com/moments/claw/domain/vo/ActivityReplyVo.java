@@ -1,9 +1,13 @@
 package com.moments.claw.domain.vo;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -61,4 +65,9 @@ public class ActivityReplyVo {
 
 	@ApiModelProperty(name = "videoUrl", value = "视频地址")
 	private String videoUrl;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+	@ApiModelProperty(value = "创建时间")
+	@TableField(fill = FieldFill.INSERT)
+	private Date createdAt;
 }
