@@ -196,6 +196,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		activityArticleService.save(activityArticle);
 	}
 
+	@Transactional
 	@Override
 	public void communityForm(SendOrUpdateArticleFromCommunityDto dto) {
 		// 编辑：imageIds有值；发布：images有值
@@ -219,6 +220,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		} else { // 修改文章
 			article.setId(dto.getArticleId());
 			updateById(article);
+		}
+		// 如果活动id不为空，关联活动和文章
+		if (Objects.nonNull(dto.getActivityId())) {
+			ActivityArticle activityArticle =
+					ActivityArticle.builder().articleId(article.getId()).activityId(dto.getActivityId()).build();
+			ActivityArticle one = activityArticleService.getOne(new LambdaQueryWrapper<ActivityArticle>().eq(ActivityArticle::getArticleId,
+					activityArticle.getArticleId()).eq(ActivityArticle::getActivityId, activityArticle.getActivityId()));
+			if (one == null) {
+				activityArticleService.save(activityArticle);
+			}
 		}
 	}
 

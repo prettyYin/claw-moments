@@ -14,6 +14,9 @@ public class SendOrUpdateArticleFromCommunityDto {
 	@ApiModelProperty(name = "articleId", value = "文章id")
 	private Long articleId;
 
+	@ApiModelProperty(name = "activityId", value = "活动id")
+	private Long activityId;
+
 	@NotNull(message = "文章标题不能为空")
 	@Min(1)
 	@Max(100)
