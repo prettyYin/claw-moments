@@ -17,8 +17,10 @@ public class PetController extends BaseController {
     private final PetService petService;
 
     @GetMapping("/list")
-    public R<?> list() {
-        Long userId = SecurityUtils.getUserId();
+    public R<?> list(Long userId) {
+        if (userId == null) {
+            userId = SecurityUtils.getUserId();
+        }
         return R.success(petService.listMyPets(userId));
     }
 
