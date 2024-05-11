@@ -116,7 +116,7 @@ public class ChatMessageServiceImpl extends ServiceImpl<ChatMessageMapper, ChatM
 				ChatMessageVo messageVo = chatHistoryList.get(chatHistoryList.size() - 1);
 				if (messageVo.getSendUserId().equals(userId) || messageVo.getAcceptUserId().equals(userId)) { // 自己是这条消息的参与者
 					Long id = userId.equals(messageVo.getSendUserId()) ? messageVo.getAcceptUserId() : messageVo.getSendUserId();
-					String nickname = userService.getById(messageVo.getAcceptUserId()).getNickname();
+					String nickname = userService.getById(id).getNickname();
 					int unReadCount = getUnreadMessages(userId).size();
 					ChatWithUserVo resultItem = ChatWithUserVo.builder()
 							.id(id)
