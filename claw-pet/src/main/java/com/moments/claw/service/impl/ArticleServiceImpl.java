@@ -133,8 +133,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
 	@Override
 	public ArticleVo viewArticleDetailById(Serializable id) {
-		Long userId = SecurityUtils.getUserId();
 		Article article = getById(id);
+		Long userId = article.getUserId();
 		ArticleVo articleVo = CopyBeanUtils.copyBean(article, ArticleVo.class);
 		setImageUrl(articleVo);
 		setMember(articleVo, userId);
