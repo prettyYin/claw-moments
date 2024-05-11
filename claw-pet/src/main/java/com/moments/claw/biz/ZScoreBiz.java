@@ -6,6 +6,7 @@ import com.moments.claw.domain.base.entity.Article;
 import com.moments.claw.domain.base.entity.User;
 import com.moments.claw.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class ZScoreBiz {
     private final UserMemberService userMemberService;
     private final AdvertiseService advertiseService;
 
-    @SuppressWarnings("unused")
+    @Scheduled(cron = "0 0 * * *") // 24小时执行一次
     public List<Double> computeActivtiyZScore() {
         List<Double> ZScores = new ArrayList<>();
 

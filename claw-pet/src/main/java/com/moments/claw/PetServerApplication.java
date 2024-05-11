@@ -5,9 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableMPP
 @SpringBootApplication
+@EnableScheduling //开启基于注解的任务调度器
+@EnableAsync //开启异步
 @MapperScan("com.moments.claw.**.mapper")
 @Slf4j
 public class PetServerApplication {
