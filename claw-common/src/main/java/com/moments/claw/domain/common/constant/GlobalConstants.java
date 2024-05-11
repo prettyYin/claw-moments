@@ -71,4 +71,9 @@ public class GlobalConstants {
 	 * 已读
 	 */
 	public static final Integer READED = 0;
+
+	/**
+	 * 活动类型(3已结束)
+	 */
+	public static final Integer ACTIVITY_ENDED_TYPE = 1;
 }

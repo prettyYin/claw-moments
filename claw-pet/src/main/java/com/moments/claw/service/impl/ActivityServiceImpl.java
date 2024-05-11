@@ -273,5 +273,13 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 		activity.setImageIds(String.join(",", dto.getImages()));
 		save(activity);
 	}
+
+	@Override
+	public List<Activity> getEndedActivityList() {
+		return lambdaQuery()
+				.eq(Activity::getStatus, GlobalConstants.ACTIVITY_ENDED_TYPE)
+				.list();
+	}
+
 }
 

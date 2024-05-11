@@ -62,4 +62,10 @@ public interface ActivityService extends IService<Activity> {
 	List<Activity> getMyPublishActivityList(Long userId);
 
 	void publish(ActivityPublishDto dto);
+
+	/**
+	 * 获取已结束的活动列表
+	 * @return 已结束的活动列表
+	 */
+	List<Activity> getEndedActivityList();
 }

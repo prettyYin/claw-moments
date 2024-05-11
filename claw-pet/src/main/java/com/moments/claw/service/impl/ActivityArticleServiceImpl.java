@@ -23,5 +23,10 @@ public class ActivityArticleServiceImpl extends ServiceImpl<ActivityArticleMappe
 	public List<ActivityArticle> getActivityArticleInArticleIds(List<Long> articleIds) {
 		return lambdaQuery().in(ActivityArticle::getArticleId, articleIds).list();
 	}
+
+	@Override
+	public List<ActivityArticle> getActivityArticleByActivityId(Long activityId) {
+		return lambdaQuery().eq(ActivityArticle::getActivityId, activityId).list();
+	}
 }
 

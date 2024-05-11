@@ -45,4 +45,11 @@ public interface ArticleService extends IService<Article> {
 	List<Article> getMyParticipate(Long userId);
 
 	ArticleVo myArticleView(Long articleId);
+
+	/**
+	 * 根据文章ids获取文章列表信息
+	 * @param articleIds 文章ids
+	 * @return 文章列表信息
+	 */
+	List<Article> selectListByIds(List<Long> articleIds);
 }

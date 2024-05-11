@@ -299,5 +299,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 		return articleVo;
 	}
 
+	@Override
+	public List<Article> selectListByIds(List<Long> articleIds) {
+		return lambdaQuery().eq(Article::getId, articleIds).list();
+	}
+
 }
 

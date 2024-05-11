@@ -21,5 +21,17 @@ public interface ActivityArticleService extends IService<ActivityArticle> {
 		return lambdaQuery().select(columns);
 	}
 
+	/**
+	 * 根据文章id列表查询活动文章关联信息
+	 * @param articleIds 文章id类别
+	 * @return 活动文章管理信息
+	 */
 	List<ActivityArticle> getActivityArticleInArticleIds(List<Long> articleIds);
+
+	/**
+	 * 根据活动id获取查询活动文章关联信息
+	 * @param activityId
+	 * @return
+	 */
+	List<ActivityArticle> getActivityArticleByActivityId(Long activityId);
 }
